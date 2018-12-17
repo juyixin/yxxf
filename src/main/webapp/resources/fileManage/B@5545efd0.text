@@ -1,0 +1,6 @@
+SmartHome 0:[DEBUG]-04-17 09:31:24.337 click_device_list onPluginChanged recordList size 0 java.lang.Throwable
+	at com.xiaomi.smarthome.frame.core.CoreApi.a(CoreApi.java:2062)
+	at com.xiaomi.smarthome.frame.core.ClientApiStub.onCoreReady(ClientApiStub.java:92)
+	at com.xiaomi.smarthome.core.client.IClientApi$Stub.onTransact(IClientApi.java:80)
+	at android.os.Binder.execTransact(Binder.java:453)
+

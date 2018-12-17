@@ -1,0 +1,339 @@
+/*
+Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.html or http://ckeditor.com/license
+*/
+
+body
+{
+	/* Font */
+	font-family: sans-serif, Arial, Verdana, "Trebuchet MS";
+	font-size: 12px;
+
+	/* Text color */
+	color: #333;
+
+	/* Remove the background color to make it transparent */
+	background-color: #fff;
+
+	margin: 20px;
+}
+
+.cke_editable
+{
+	font-size: 11px;
+}
+
+blockquote
+{
+	font-style: italic;
+	font-family: Georgia, Times, "Times New Roman", serif;
+	padding: 2px 0;
+	border-style: solid;
+	border-color: #ccc;
+	border-width: 0;
+}
+
+.cke_contents_ltr blockquote
+{
+	padding-left: 20px;
+	padding-right: 8px;
+	border-left-width: 5px;
+}
+
+.cke_contents_rtl blockquote
+{
+	padding-left: 8px;
+	padding-right: 20px;
+	border-right-width: 5px;
+}
+
+a
+{
+	color: #0782C1;
+}
+
+ol,ul,dl
+{
+	/* IE7: reset rtl list margin. (#7334) */
+	*margin-right: 0px;
+	/* preserved spaces for list items with text direction other than the list. (#6249,#8049)*/
+	padding: 0 40px;
+}
+
+h1,h2,h3,h4,h5,h6
+{
+	font-weight: normal;
+	line-height: 1.2em;
+}
+
+hr
+{
+	border: 0px;
+	border-top: 1px solid #ccc;
+}
+
+img.right {
+    border: 1px solid #ccc;
+    float: right;
+    margin-left: 15px;
+    padding: 5px;
+}
+
+img.left {
+    border: 1px solid #ccc;
+    float: left;
+    margin-right: 15px;
+    padding: 5px;
+}
+
+img:hover {
+	opacity: .9;
+	filter: alpha(opacity = 90);
+}
+
+pre
+{
+	white-space: pre-wrap; /* CSS 2.1 */
+	word-wrap: break-word; /* IE7 */
+}
+
+
+/* default button css */
+
+.normalButton {
+    height: 25px;
+    width: 78px;
+}
+
+.btn, .btn:visited, .btn-icon:visited, .btn-mini:visited {
+    background-color: #FF9900;
+    background-image: url("/styles/easybpm/images/bg-lite.png");
+    border-color: #D58000;
+    color: #FFFFFF;
+}
+.btn{
+	background-position: 0 -80px;
+    font-size: 12px;
+    line-height: 29px;
+    vertical-align: middle;
+    border-image: none;
+    border-radius: 4px 4px 4px 4px;
+    background-repeat: repeat-x;
+    border-style: solid;
+    border-width: 1px;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: bold;
+    margin: 0;
+    padding: 0 15px 4px;
+    position: relative;
+    text-decoration: none;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+.btn:hover, .btn-icon:hover, .btn-mini:hover { background-color: #D58000; color: #FFF; }
+
+
+img.cke_radio{
+	background-image: url("/scripts/ckeditor/plugins/formchanges/images/radio_off.gif");
+	width: 16px !important;
+	height: 16px !important;
+	cursor:pointer;
+}
+
+img.cke_radio_checked{
+	background-image: url("/scripts/ckeditor/plugins/formchanges/images/radio_on.gif");
+	width: 16px !important;
+	height: 16px !important;
+	cursor:pointer;
+}
+
+img.cke_checkbox_checked{
+	background-image: url("/scripts/ckeditor/plugins/formchanges/images/checkbox_on.gif");
+	width: 16px !important;
+	height: 16px !important;
+	cursor:pointer;
+}
+
+img.cke_checkbox{
+	background-image: url("/scripts/ckeditor/plugins/formchanges/images/checkbox_off.gif");
+	width: 16px !important;
+	height: 16px !important;
+	cursor:pointer;
+}
+
+img.cke_textfield{
+	background-image: url("/scripts/ckeditor/plugins/formchanges/images/new_textfield.png");
+	width: 220px !important;
+	height: 30px !important;
+	cursor:pointer;
+}
+
+img.cke_numberfield{
+	background-image: url("/scripts/ckeditor/plugins/formchanges/images/new_textfield.png");
+	width: 220px !important;
+	height: 30px !important;
+	cursor:pointer;
+}
+
+img.cke_fileupload{
+	background-image: url("/scripts/ckeditor/plugins/fileupload/images/filebrowse.png");
+	width: 315px !important;
+	height: 25px !important;
+	cursor:pointer;
+}
+
+img.cke_label{
+	background-image: url("/scripts/ckeditor/plugins/formchanges/images/label.png");
+	width: 180px !important;
+	height: 25px !important;
+	cursor:pointer;
+}
+
+img.cke_datefield{
+	background-image: url("/scripts/ckeditor/plugins/datetimepicker/images/datetimefield.png");
+	width: 180px !important;
+	height: 25px !important;
+	cursor:pointer;
+}
+
+
+img.cke_textarea{
+	background-image: url("/scripts/ckeditor/plugins/formchanges/images/new_textarea.png");
+	width: 220px !important;
+	height: 63px !important;
+	cursor:pointer;
+}
+
+img.cke_select{
+	background-image: url("/scripts/ckeditor/plugins/formchanges/images/new_selectbox.png");
+	width: 220px !important;
+	height: 30px !important;
+}
+
+img.cke_button{
+	background-image: url("/scripts/ckeditor/plugins/formchanges/images/button.png");
+	width: 60px !important;
+	height: 25px !important;
+	cursor:pointer;
+}
+
+img.cke_submit_btn{
+	background-image: url("/scripts/ckeditor/plugins/formchanges/images/submit_btn.png");
+	width: 60px !important;
+	height: 25px !important;
+	cursor:pointer;
+}
+
+
+img.cke_userlist{
+	background-image: url("/scripts/ckeditor/plugins/formchanges/images/new_textfield.png");
+	width: 220px !important;
+	height: 30px !important;
+	cursor:pointer;
+}
+
+img.cke_departmentlist{
+	background-image: url("/scripts/ckeditor/plugins/formchanges/images/new_textfield.png");
+	width: 220px !important;
+	height: 30px !important;
+	cursor:pointer;
+}
+
+img.cke_rolelist{
+	background-image: url("/scripts/ckeditor/plugins/formchanges/images/new_textfield.png");
+	width: 220px !important;
+	height: 30px !important;
+	cursor:pointer;
+}
+
+img.cke_grouplist{
+	background-image: url("/scripts/ckeditor/plugins/formchanges/images/new_textfield.png");
+	width: 220px !important;
+	height: 30px !important;
+	cursor:pointer;
+}
+
+img.cke_richtextbox{
+	background-image: url("/scripts/ckeditor/plugins/richtextbox/images/cke_richtextbox.png");
+	height: 306px;
+    width: 763px;
+    cursor:pointer;
+}
+
+
+img.cke_gridview{
+	background-image: url("/scripts/ckeditor/plugins/gridviewcontrol/images/gridview.png");
+	height: 234px;
+    width: 893px;
+    cursor:pointer;
+}
+
+img.cke_autocomplete{
+	background-image: url("/scripts/ckeditor/plugins/formchanges/images/new_textfield.png");
+	width: 220px !important;
+	height: 30px !important;
+	cursor:pointer;
+}
+
+img.cke_radio, img.cke_radio_checked, img.cke_checkbox, img.cke_checkbox_checked, img.cke_select, img.cke_textfield, img.cke_textarea, 
+img.cke_datefield, img.cke_userlist, img.cke_departmentlist, img.cke_rolelist, img.cke_numberfield, img.cke_fileupload, img.cke_grouplist, 
+img.cke_button,img.cke_label,img.cke_submit_btn, img.cke_richtextbox, img.cke_gridview, img.cke_autocomplete{
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+/*
+img.cke_radio, img.cke_radio_checked, img.cke_checkbox, img.cke_checkbox_checked, img.cke_textfield, img.cke_textarea {    
+	background-position: center center;    
+	background-repeat: no-repeat;    
+}
+
+img.cke_radio {    
+	background-image: url('/scripts/ckeditor/plugins/formchanges/images/radio_off.gif');
+	width: 16px !important;
+	height: 16px !important;
+}
+
+img.cke_radio_checked {
+	background-image: url('/scripts/ckeditor/plugins/formchanges/images/radio_on.gif');
+	width: 16px !important;
+	height: 16px !important;
+}
+
+img.cke_checkbox {
+	background-image: url('/scripts/ckeditor/plugins/formchanges/images/checkbox_off.gif');
+	width: 16px !important;
+	height: 16px !important;
+}
+
+img.cke_checkbox_checked {
+	background-image: url('/scripts/ckeditor/plugins/formchanges/images/checkbox_on.gif');
+	width: 16px !important;
+	height: 16px !important;
+}
+
+img.cke_select, img.cke_selects {
+	background-position: center center;
+	background-repeat: no-repeat;
+	width: 100px;
+}
+
+img.cke_select {
+	background-image: url('/scripts/ckeditor/plugins/formchanges/images/select.gif');
+	height: 19px;
+}
+
+img.cke_selects {
+	background-image: url('/scripts/ckeditor/plugins/formchanges/images/selects.gif');
+	height: 47px;
+}
+*/
+
+#form_onloadevent{
+	background-image: url("/scripts/ckeditor/plugins/formchanges/images/onloadscript.jpg");
+	width: 35px !important;
+	height: 38px !important;
+	background-repeat: no-repeat;
+	cursor:pointer;
+}

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="activiti.qa.db">
+
+	<target name="create.db.schema">
+		<echo message="creating database schema"/>
+		<echo message="  basedir: E:\\Workspaces\\eclipse\\yxxf"/>
+		<echo message="  database: oracle"/>
+		<property file="C:\\Users\\admin/.activiti/jdbc/oracle.properties"/>
+		<echo message="  jdbc.driver: oracle.jdbc.driver.OracleDriver"/>
+		<echo message="  jdbc.url: jdbc:oracle:thin:@(DESCRIPTION =(ADDRESS_LIST =(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.1.120)(PORT = 1521)))(CONNECT_DATA =(SERVICE_NAME = orcl)))"/>
+		<echo message="  jdbc.username: yxxf"/>
+		<echo message="  jdbc.password: qwe123ASD"/>
+		<echo message="  test_classpath: ${test_classpath}" />
+		<path id="test.classpath">
+			<pathelement path="${test_classpath}"/>
+		</path>
+		<sql driver="oracle.jdbc.driver.OracleDriver" password="qwe123ASD" url="jdbc:oracle:thin:@(DESCRIPTION =(ADDRESS_LIST =(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.1.120)(PORT = 1521)))(CONNECT_DATA =(SERVICE_NAME = orcl)))" userid="yxxf" classpathref="test.classpath">
+			<javaresource name="org/activiti/db/create/activiti.oracle.create.engine.sql" classpathref="test.classpath"/>
+			<javaresource name="org/activiti/db/create/activiti.oracle.create.history.sql" classpathref="test.classpath"/>
+			<javaresource name="org/activiti/db/create/activiti.oracle.create.identity.sql" classpathref="test.classpath"/>
+		</sql>
+	</target>
+
+	<target name="drop.db.schema">
+		<echo message="dropping database schema"/>
+		<echo message="  basedir: E:\\Workspaces\\eclipse\\yxxf"/>
+		<echo message="  database: oracle"/>
+		<property file="C:\\Users\\admin/.activiti/jdbc/oracle.properties"/>
+		<echo message="  jdbc.driver: oracle.jdbc.driver.OracleDriver"/>
+		<echo message="  jdbc.url: jdbc:oracle:thin:@(DESCRIPTION =(ADDRESS_LIST =(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.1.120)(PORT = 1521)))(CONNECT_DATA =(SERVICE_NAME = orcl)))"/>
+		<echo message="  jdbc.username: yxxf"/>
+		<echo message="  jdbc.password: qwe123ASD"/>
+		<!-- echo message="  test_classpath: ${test_classpath}" / -->
+		<path id="test.classpath">
+			<pathelement path="${test_classpath}"/>
+		</path>
+		<sql driver="oracle.jdbc.driver.OracleDriver" password="qwe123ASD" url="jdbc:oracle:thin:@(DESCRIPTION =(ADDRESS_LIST =(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.1.120)(PORT = 1521)))(CONNECT_DATA =(SERVICE_NAME = orcl)))" userid="yxxf" classpathref="test.classpath">
+			<javaresource name="org/activiti/db/drop/activiti.oracle.drop.engine.sql" classpathref="test.classpath"/>
+      <javaresource name="org/activiti/db/drop/activiti.oracle.drop.history.sql" classpathref="test.classpath"/>
+      <javaresource name="org/activiti/db/drop/activiti.oracle.drop.identity.sql" classpathref="test.classpath"/>
+		</sql>
+	</target>
+	
+	<target name="create.activiti.cfg">
+		<echo message="creating activiti.cfg.xml in target environment"/>
+		<echo message="  basedir: E:\\Workspaces\\eclipse\\yxxf"/>
+		<echo message="  database: oracle"/>
+		
+		<property file="C:\\Users\\admin/.activiti/jdbc/oracle.properties"/>
+
+		<echo message="  jdbc.driver: oracle.jdbc.driver.OracleDriver"/>
+		<echo message="  jdbc.url: jdbc:oracle:thin:@(DESCRIPTION =(ADDRESS_LIST =(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.1.120)(PORT = 1521)))(CONNECT_DATA =(SERVICE_NAME = orcl)))"/>
+		<echo message="  jdbc.username: yxxf"/>
+		<echo message="  jdbc.password: qwe123ASD"/>
+		
+		<replaceregexp file="./target/test-classes/activiti.cfg.xml" flags="s"
+		                match='databaseType" value=".*?"' 
+			              replace='databaseType" value="oracle"'/>
+		<replaceregexp file="./target/test-classes/activiti.cfg.xml" flags="s"
+		                    match='jdbcDriver" value=".*?"' 
+		                    replace='jdbcDriver" value="oracle.jdbc.driver.OracleDriver"'/>
+		<replaceregexp file="./target/test-classes/activiti.cfg.xml" flags="s"
+		                        match='jdbcUrl" value=".*?"' 
+		                        replace='jdbcUrl" value="jdbc:oracle:thin:@(DESCRIPTION =(ADDRESS_LIST =(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.1.120)(PORT = 1521)))(CONNECT_DATA =(SERVICE_NAME = orcl)))"'/>
+		<replaceregexp file="./target/test-classes/activiti.cfg.xml" flags="s"
+		                        match='jdbcUsername" value=".*?"' 
+		                        replace='jdbcUsername" value="yxxf"'/>
+		<replaceregexp file="./target/test-classes/activiti.cfg.xml" flags="s"
+		                        match='jdbcPassword" value=".*?"' 
+		                        replace='jdbcPassword" value="qwe123ASD"'/>
+		<replaceregexp file="./target/test-classes/activiti.cfg.xml" flags="s"
+		                        match='databaseSchemaUpdate" value=".*?"' 
+		                        replace='databaseSchemaUpdate" value="false"'/>
+	</target>
+	
+</project>

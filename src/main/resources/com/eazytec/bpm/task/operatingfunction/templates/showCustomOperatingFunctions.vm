@@ -1,0 +1,30 @@
+<div class="fontBold fontSize13 pad-T20 pad-B5 text-center-align">
+Custom Functions
+</div>
+<div class="">
+#if($operatingFunction.getCustomOperations()=='null')	
+	No custom operating functions found
+#end
+<ul class="noStyleList">
+#foreach($customOperatingFunction in $operatingFunction.getCustomOperations())	
+	<script>
+   	${customOperatingFunction.getJsFunction()}
+   </script>
+   <li>
+		<table>
+		<tr>
+			<td>
+			<img src="${customOperatingFunction.getPictureByteArrayId()}" class="thumbnail"/>
+			</td>
+			   				
+			<td valign="middle" class="padding5">
+			<a href="#" onClick="${customOperatingFunction.getCallFunction()}()" style="${customOperatingFunction.getHtmlProperty()}">
+				${customOperatingFunction.getName()}
+			</a>
+			</td>
+		</tr>
+		</table>   			 
+  	</li>
+#end    
+</ul>
+</div>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.eazytec.model.MetaTable">
+
+  <!-- ATTACHMENT INSERT -->
+
+  <select id="insertValues" parameterType="org.activiti.engine.impl.RtQueryImpl">
+  	<include refid="insertValuesSql"/> 
+  </select>
+  
+  <select id="insertSubFormValuesFromMap" parameterType="java.util.Map">
+  	<include refid="insertSubFormValuesSql"/> 
+  </select>
+  
+   <select id="insertValuesFromMap" parameterType="java.util.Map">
+  	<include refid="insertValuesSql"/> 
+  </select>
+  
+  <select id="updateValues" parameterType="org.activiti.engine.impl.RtQueryImpl">
+  	<include refid="updateValuesSql"/> 
+  </select>
+  
+  <select id="updateValues_oracle" parameterType="org.activiti.engine.impl.RtQueryImpl">
+  	<include refid="updateValuesSql_oracle"/> 
+  </select>  
+  
+    <select id="insertProcessTableValues_oracle" parameterType="java.util.Map">
+  		<include refid="insertProcessTableValuesSql_oracle"/> 
+  	</select>
+  	  
+    <select id="insertProcessTableValues" parameterType="java.util.Map">
+  		<include refid="insertProcessTableValuesSql"/> 
+  	</select>
+
+	<delete id="deleteValues" parameterType="map">
+		delete from ${tableName} where ID = ${primaryKeyVal}
+	</delete>  
+  
+ <sql  id="updateValuesSql">
+    update
+    	 ${parameter.tableName}
+    set 
+		<foreach collection="parameter.columns" index="index" item="column" separator=",">
+	        ${column} = #{parameter.${column},jdbcType=VARCHAR}
+		</foreach>
+     where ${parameter.primaryKey} = ${parameter.primaryKeyVal}
+  </sql> 
+  
+ <sql  id="updateValuesSql_oracle">
+    update
+    	 ${parameter.tableName}
+    set 
+		<foreach collection="parameter.bulkInsert" index="index" item="column" separator="," >
+	        ${column}
+		</foreach>
+     where ${parameter.primaryKey} = ${parameter.primaryKeyVal}		
+  </sql> 
+  
+  <sql id="insertValuesSql">
+    insert into ${parameter.tableName} 
+    <foreach collection="parameter.columns" index="index" item="column"  open="(" separator="," close=")">
+         ${column}
+    </foreach>    
+    values 
+   	<foreach collection="parameter.fieldValues" index="index" item="fieldValue" open="(" separator="," close=")">
+		 ${fieldValue}
+    </foreach>        
+  </sql>
+  
+  <sql id="insertProcessTableValuesSql">
+      insert into ${prefix}RE_PROCESS_TABLE_DETAILS
+		    (PROC_INST_ID_,TABLE_NAME_) 
+		    values 
+		   	('${parameter.processInstId}','${parameter.tableName}')
+  </sql>
+  
+  <sql id="insertProcessTableValuesSql_oracle">
+      insert into ${prefix}RE_PROCESS_TABLE_DETAILS
+		    (id_,PROC_INST_ID_,TABLE_NAME_) 
+		    values 
+		   	(process_table_details.nextval,'${parameter.processInstId}','${parameter.tableName}')
+  </sql>  
+  		   
+  
+  <sql id="insertSubFormValuesSql">
+    insert into ${parameter.tableName} 
+    <foreach collection="parameter.columns" index="index" item="column" open="(" separator="," close=")">
+         ${column}
+    </foreach>    
+    values 
+    	<foreach collection="parameter.fieldValues" index="index" item="fieldValueList" separator=",">
+    		<foreach collection="fieldValueList" index="index1" item="fieldValue" open="(" separator="," close=")">
+		         ${fieldValue}
+   			 </foreach>        
+   	    </foreach>
+  </sql>
+  
+  <select id="insertSubFormValuesFromMap_oracle" parameterType="java.util.Map">
+  	<include refid="insertSubFormValuesSql_oracle"/> 
+  </select>
+  
+
+  <sql id="insertSubFormValuesSql_oracle">
+    INSERT ALL 
+    	<foreach collection="parameter.fieldValues" index="index" item="fieldValueList">
+    	${parameter.bulkInsert}
+    		<foreach collection="fieldValueList" index="index1" item="fieldValue" open="(" separator="," close=")">
+		        ${fieldValue}
+   			 </foreach>        
+   	    </foreach>
+   	    SELECT * FROM dual
+  </sql>
+    
+  <select id="updateSubFormValues" parameterType="org.activiti.engine.impl.RtQueryImpl">
+  	<include refid="updateSubFormValuesSql"/> 
+  </select>
+  
+  <sql id="updateSubFormValuesSql">
+  <foreach collection="parameter.columnsWithValue" index="index" item="columnWithValue">
+  	update
+    	 ${parameter.tableName} 
+    set 
+		<foreach collection="parameter.columns" index="index" item="column" separator=",">
+	        ${column} = ${columnWithValue.${column},jdbcType=VARCHAR}
+		</foreach>
+     where ID = ${columnWithValue.ID}
+  </foreach>
+  </sql>
+  
+  <select id="deleteSubFormValues" parameterType="map">
+  	<include refid="deleteSubFormValuesSql"/> 
+  </select>
+  
+  <sql id="deleteSubFormValuesSql">
+  	update ${parameter.tableName} set IS_DELETE = 1 where ${parameter.foreignKeyName} = #{parameter.primaryKeyVal}
+  </sql>
+  
+  <select id="getValuesForPrimaryKey" parameterType="java.util.Map" resultType="string">
+  	 select ID from ${parameter.tableName} where ${parameter.primaryKey} = ${parameter.primaryKeyVal}
+  </select>
+  
+    <select id="getFormFieldTraceData" parameterType="java.util.Map" resultType="map">
+	SELECT 
+		MODIFIED_TIME_ AS modifiedTime, 
+		(SELECT users.full_name	FROM ETEC_USER AS users where MODIFIED_BY_ = users.id ) AS modifiedBy,
+		FILED_NAME_ AS fieldName, 	
+		CHINESE_FILED_NAME_ AS chineseName, 	
+		CASE WHEN OLD_VALUE_ IS NULL THEN '' ELSE OLD_VALUE_ END AS oldValue, 
+		CASE WHEN NEW_VALUE_ IS NULL THEN '' ELSE NEW_VALUE_ END AS newValue
+	FROM 
+	    ${prefix}ACT_HI_FORM_FILED_AUDIT		
+    WHERE
+    	PROC_INST_ID_ = #{parameter.processInstanceId}  AND FORM_ID_ = #{parameter.formId}
+    ORDER BY 
+    	MODIFIED_TIME_
+  </select>
+  
+      <select id="getFormFieldTraceData_oracle" parameterType="java.util.Map" resultType="map">
+	SELECT 
+		TO_CHAR(MODIFIED_TIME_,'YYYY-MM-DD HH24:MI:SS') AS modifiedTime,
+		(SELECT users.full_name	FROM ETEC_USER users where MODIFIED_BY_ = users.id ) AS modifiedBy,
+		FILED_NAME_ AS fieldName, 	
+		CHINESE_FILED_NAME_ AS chineseName, 	
+		CASE WHEN OLD_VALUE_ IS NULL THEN N'' ELSE OLD_VALUE_ END AS oldValue,  <!-- character set mismatch error. So adding N. N denotes NVARCHAR -->
+		CASE WHEN NEW_VALUE_ IS NULL THEN N'' ELSE NEW_VALUE_ END AS newValue
+	FROM 
+	    ${prefix}ACT_HI_FORM_FILED_AUDIT		
+    WHERE
+    	PROC_INST_ID_ = #{parameter.processInstanceId}  AND FORM_ID_ = #{parameter.formId}
+    ORDER BY 
+    	MODIFIED_TIME_
+  </select>
+  
+  
+  
+</mapper>

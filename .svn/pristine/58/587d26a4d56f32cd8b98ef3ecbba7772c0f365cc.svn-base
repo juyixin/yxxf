@@ -1,0 +1,183 @@
+<script type="text/javascript">
+$(function () {
+
+	#if($needTreeCheckbox == true)
+		$("#organizationTreeLeft").jstree({
+		    "json_data": {
+		        "ajax" : {
+		        	"url" : function( node ){
+						if( node == -1 ){
+                      		#if($selection == 'role' || $selection == 'process')
+                      			return '$rootNodeURL?currentNode=&rootNode=&nodeLevel=0&isGraduationTree=$isGraduationTree&userRoles=$userAdminPrivileges'
+                      		#else
+                  				return "$rootNodeURL?currentNode=&rootNode=&nodeLevel=0"
+                  			#end
+						} else {
+                      		//console.log(node);
+	                		var currentNode = node.context.parentNode.getAttribute("id");
+	                		var currentNodeName = node.context.parentNode.getAttribute("name");
+	                		//console.log("currentNode         "+currentNode+"  currentNodeName   "+currentNodeName);
+	                		var nodePath = $("#organizationTreeLeft").jstree("get_path", $("#"+currentNode), true); 
+	                		var nodeLevel = nodePath.length;
+	                		var rootNode = nodePath[0];
+		                	#if($selection == 'menuQuick')
+		                		return "$childNodeURL?currentNode="+currentNode+"&rootNode="+rootNode+"&nodeLevel="+nodeLevel
+		                	#else
+		                		return "$childNodeURL?currentNode="+currentNodeName+"&rootNode="+rootNode+"&nodeLevel="+nodeLevel+"&currentUser=$currentUser&appendTo=$appendTo"
+		                	#end
+						}
+					},
+		            "type" : "get",  
+		            "success" : function(ops) {
+		            	var data = [];
+		            	var dataCheckBox = [];
+		            	for( opnum in ops ){
+		                	var op = ops[opnum]
+		                    node = {
+		               		 	 "data" : op.data,
+			                     "metadata" :  op.metadata ,
+			                     "attr"   :op.attr,
+			                     "state" : "closed"
+		                    }
+		               		if((typeof op.attr != 'undefined' && typeof op.attr.isUser != 'undefined' && op.attr.isUser == true) || 
+		               			(typeof op.attr != 'undefined' && typeof op.attr.isMenu != 'undefined' && op.attr.isMenu == true)){
+		               			
+		                        dataCheckBox.push( op.attr.id );
+		                    }
+		                    data.push( node );
+		               	}
+		                #if($selection == 'user')
+			            	if(dataCheckBox.length > 0){
+			                  	setTimeout(function(){isNeedCheckbox(dataCheckBox);isCheckboxCheckedForLabelValue();},200);
+			            	}
+			            #elseif($selection == 'department' || $selection == 'role' || $selection == 'group')
+			            
+			            	setTimeout(function(){isCheckboxCheckedForLabelValue();},200);
+			            	
+			            #elseif($selection == 'menuQuick')
+			            	if(dataCheckBox.length > 0){
+			            		setTimeout(function(){isNeedCheckbox(dataCheckBox);isCheckboxChecked();},200);
+			            	}
+			            #else
+			              	setTimeout(function(){isCheckboxChecked();},200);
+			            #end
+			       		return data; 
+		            }
+		         }
+		     },
+		    "checkbox": {
+		          real_checkboxes: false,
+		          two_state: true
+		       },
+		    "plugins" : [ "themes", "json_data", "ui", "checkbox", "crrm"]
+		}).bind("loaded.jstree", function(e, data) {
+			#if($selection == 'user' || $selection == 'department' || $selection == 'role' || $selection == 'group' || $selection == 'dataDictionary')
+				addSelectedValuesAsLabelValue('$selectionType', '$selectedValues');
+			#elseif($selection == 'widgetImportFiles')
+				addFilesSelectedValuesAsLabelValue('$selectionType', '$selectedValues');
+			#elseif($selection == 'selectedListView')
+				addListViewSelectedValuesAsLabelValue('$selectionType', '$selectedValues');
+			#elseif($selection == 'selectedReport')
+				addReportSelectedValuesAsLabelValue('$selectionType', '$selectedValues');
+			#elseif($selection == 'widgetSelection')
+				addWidgetsSelectedValuesAsLabelValue('$selectionType', '$selectedValues');
+			#elseif($selection == 'menuQuick')
+				addQuickNavUrlSelectedValuesAsLabelValue('$selectionType', '$selectedValues');	
+			#elseif($selection == 'selectedJsp')
+				addJspFromSoruce('$selectionType', '$selectedValues');		
+			#else
+				addSelectedValues('$selectionType', '$selectedValues');
+			#end			
+		}).bind("select_node.jstree", function (e, data) { 
+			//renderChildNodes(e,data,'$selection');
+			var currentNode = data.rslt.obj.attr("id");
+       		$("div#organizationTreeLeft ul li[id~='"+currentNode+"'] > ins.jstree-icon").trigger('click');
+		}).bind('check_node.jstree', function(e, data) {
+		    addCheckedOption(e,data,'$selectionType','$selection','${userAdminPrivileges}'); 
+		}).bind('uncheck_node.jstree', function(e, data) {
+			removeUnCheckedOption(e,data);	
+		});
+		#if($selection == 'user' || $selection == 'menu' || $selection == 'menuQuick')
+			function isNeedCheckbox(dataCheckBox){
+			    for(var index = 0; index < dataCheckBox.length; index++){
+			    	$("li#"+dataCheckBox[index]+"  > a > ins.jstree-checkbox").css('display','inline-block');
+			    }
+			}
+		#end		
+	 #elseif($needContextMenu == true)
+	 	var nodes = eval($nodes);
+		$("#folderTree").jstree({
+	        "json_data": {
+		        "data" : nodes, 
+		    },
+		    "contextmenu" : {
+      	  		"items" : getMangeDmsMenus
+    		},
+	        "plugins" : [ "themes", "json_data", "ui", "contextmenu", "crrm"]
+		}).bind("loaded.jstree", function(e, data) {
+		}).bind("select_node.jstree", function (e, data) {
+			renderFolderChildNodes(e,data); 
+		}).bind("open_node.jstree", function (e, data) { // this binding will collapse all nodes whenever user expands any single node
+    		var currentNode = data.rslt.obj.attr("id");
+	    	$('#folderTree').jstree('select_node', '#'+currentNode);
+    	});
+     #elseif($needTreeCheckbox == false)
+		$("#"+'$orgTreeId').jstree({
+		    "json_data": {
+		        "ajax" : {
+		            "url" : function( node ){
+		            		  if( node == -1 ){
+		                      		return "$rootNodeURL?currentNode=&rootNode=&nodeLevel=0"
+		                      } else {
+		                      		//console.log(node);
+			                		var currentNode = node.context.parentNode.getAttribute("id");
+			                		var currentNodeName = node.context.parentNode.getAttribute("name");
+			                		//console.log("currentNode         "+currentNode+"  currentNodeName   "+currentNodeName);
+			                		var nodePath = $("#"+'$orgTreeId').jstree("get_path", $("#"+currentNode), true); 
+			                		var nodeLevel = nodePath.length;
+			                		var rootNode = nodePath[0];
+			                		if(nodeLevel == 1){
+			                			rootNode = currentNode;
+			                		}
+			                		return "$childNodeURL?currentNode="+currentNodeName+"&rootNode="+rootNode+"&nodeLevel="+nodeLevel
+		                      }
+		                    },
+		            "type" : "get",  
+		            "success" : function(ops) {
+		                  var data = [];
+		                  for( opnum in ops ){
+		                    var op = ops[opnum]
+		                    node = {
+		               		 	 "data" : op.data,
+			                     "metadata" :  op.metadata ,
+			                     "attr"   :op.attr,
+			                     "state" : "closed"
+		                    }
+		                    data.push( node );
+		                  }
+		                  return data; 
+		            }
+		         }
+		     },
+		    "plugins" : [ "themes", "json_data", "ui"]
+		}).bind("select_node.jstree", function (e, data) { 
+			var currentNode = data.rslt.obj.attr("id");
+
+       		
+       		
+       		if('$orgTreeId' == 'layoutTree'){
+       			showSelectedLayout(e, data,'${userAdminDept}','${userAdminDepRoles}');
+       		}
+       		$("li[id~='"+currentNode+"'] > ins.jstree-icon").trigger('click');
+		});
+	 #end
+});
+
+</script>
+#if($selection == 'user' || $selection == 'menu' || $selection == 'menuQuick')
+	<style type="text/css">
+	ins.jstree-checkbox {
+	    display:none;
+	}
+	</style>
+#end

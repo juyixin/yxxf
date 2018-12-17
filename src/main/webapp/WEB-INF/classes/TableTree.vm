@@ -1,0 +1,52 @@
+<script type="text/javascript">
+
+$(function () {
+	    $("#all_table_tree").jstree({
+	        "json_data": {
+		         "ajax" : {
+		          "url" : function( node){
+		         	        if(node == -1){
+		                   			return '$childNodeUrl?currentNode=default&rootNode=default&nodeLevel=1&selectedValues='+$("#fromQuery").val()+'&defaultNodes='+JSON.stringify($defaultNodes);
+		                    }else if(node.attr("name")=="Run_Time_Tables" || node.attr("name")=="Meta_Tables"){
+		                    	 return '$childNodeUrl?currentNode='+node.attr("name")+'&rootNode='+node.attr("name")+'&nodeLevel=1&selectedValues=allTables&defaultNodes=""';
+		                    }else if(node.attr("name")!="Run_Time_Tables" && node.attr("name")!="Meta_Tables"){
+		                  		  return 'bpm/listView/showColumnSelection?currentNode='+node.attr("name")+'&rootNode='+node.attr("name")+'&nodeLevel=2&selectedValues=""&defaultNodes=""';
+		                    	//return 'bpm/listView/showColumnSelection?currentNode='+node.attr("name")+'&rootNode='+node.attr("name")+'&nodeLevel=2&selectedValues=""&defaultNodes=""';
+		                    }
+	                  },
+		          "type" : "post", 
+		          "success" : function(ops) {
+		          	
+		                data = []
+		                for( opnum in ops ){
+		                  var op = ops[opnum]
+		                  node = {
+		                      "data" : op.data,
+		                      "metadata" :  op.metadata ,
+		                      "attr"   :op.attr,
+		                      "state" : "closed"
+		                  }
+		                  data.push( node );
+		                }
+                    return data;
+		          }
+		       }, 
+		    },
+		   "plugins" : [ "themes", "json_data", "ui", "crrm"]
+	        
+		}).bind("loaded.jstree", function(e, data) {
+		}).bind("select_node.jstree", function (e, data) {
+			var level = data.inst.get_path().length;
+			var currentNode = data.rslt.obj.attr("id");
+       		$("li[id~='"+currentNode+"'] > ins.jstree-icon").trigger('click');
+			if(level == 2){
+				var params = 'tableName='+data.rslt.obj.attr("name");            	
+            	document.location.href = "#bpm/table/showTableDatas";
+            	_execute('rightPanel',params);
+	    	}
+		}).bind('check_node.jstree', function(e, data) {
+		}).bind('uncheck_node.jstree', function(e, data) {
+		});
+	
+});
+</script>

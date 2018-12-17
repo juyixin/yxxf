@@ -1,0 +1,92 @@
+/*
+-----------------------------------------------
+All Custom Tables we can include in Easy BPM - Table CSS
+----------------------------------------------- */
+
+table.gridview{	
+	background:url("/styles/easybpm/images/grit_title.jpg");
+	table-layout:fixed;
+	margin:0em;
+	overflow: hidden;
+	position:relative;
+	width:500px;
+	padding: 20px;
+	margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
+
+table.gridview tr{
+	background: url("/images/easybpm/jqueryUI/ui-bg_highlight-soft_100_eeeeee_1x100.png") repeat-x scroll 50% top #EEEEEE;
+    border: 1px solid #DDDDDD;
+    color: #333333;
+    background-image: url("/styles/easybpm/images/palette_line.jpg");
+}
+
+table.gridview tr.header{
+	height: 30px;
+	background:url("/styles/easybpm/images/grit_title.jpg");
+}
+
+table.gridview tr td{
+	border: 1px solid #EFEFEF; 
+	padding:5px;
+}
+
+table.gridview tr.header th{	
+	background:url("/styles/easybpm/images/grit_title.jpg");
+	table-layout:fixed;
+	margin:0em;
+	overflow: hidden; 
+	position:relative;
+	color: #595959;
+	background: url("") repeat scroll 0 0 transparent;
+	vertical-align: middle;
+}
+
+/*
+-------------------------------------------------------
+Task Events
+-----------------------------------------
+*/
+
+table.gridview1{	
+	background:url("/styles/easybpm/images/grit_title.jpg");
+	table-layout:fixed;
+	margin:0em;
+	overflow: hidden;
+	position:relative;
+	width:400px;
+	padding: 20px;
+	margin:20px;	
+}
+
+table.gridview1 tr{
+	background: url("/images/easybpm/jqueryUI/ui-bg_highlight-soft_100_eeeeee_1x100.png") repeat-x scroll 50% top #EEEEEE;
+    /* border: 1px solid #DDDDDD; */
+    color: #333333;
+    background-image: url("/styles/easybpm/images/palette_line.jpg");
+}
+
+table.gridview1 tr.header{
+	height: 30px;
+	background:url("/styles/easybpm/images/grit_title.jpg");
+}
+
+
+table.gridview1 tr td{
+	/* border: 1px solid #EFEFEF;  */
+	padding:5px;
+	font-size:12px;
+}
+
+table.gridview1 tr.header th{	
+	background:url("/styles/easybpm/images/grit_title.jpg");
+	table-layout:fixed;
+	margin:0em;
+	overflow: hidden; 
+	position:relative;
+	color: #595959;
+	background: url("") repeat scroll 0 0 transparent;
+	vertical-align: middle;
+}

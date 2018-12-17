@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="processArchive.js"></script>
+<script>
+
+document.write('<link rel="stylesheet" type="text/css" media="all" href="bootstrap-2.2.1.min.css" />');
+document.write('<link rel="stylesheet" type="text/css" media="all" href="bootstrap-responsive-2.2.1.css" />');
+document.write('<link rel="stylesheet" type="text/css" media="all" href="layout.css" />');
+document.write('<link rel="stylesheet" type="text/css" media="all" href="common.css" />');
+$(function(){
+	changeWizardByTab();
+});
+</script>
+
+</head
+ <p>&nbsp;</p>
+ <div class="floatLeft department-jstree jstree jstree-2 jstree-focused jstree-default" style="width:74%;">
+	<div class="span12 box">
+	 	<h2>Operate Page
+		</h2>
+	</div>
+	<div class="span11">
+	
+		<div class="wizard-steps">
+			<ul id="formWizardTabs">
+				<div id="formValuesDiv" class="active-step"><a href="javascript:loadValuesForTab('formValuesDiv');" class="fontSize13">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Form Values&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></div>
+				#if($opinionList)
+					<div class="completed-step" id="inputOpinion"><a href="javascript:loadValuesForTab('inputOpinion');" class="fontSize13">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Input Opinions&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></div>
+				#end
+				#if($workFlowTrace)
+				<div class="completed-step" id="WorkFlowTrace"><a href="javascript:loadValuesForTab('WorkFlowTrace');" class="fontSize13">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Instance Trace&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></div>
+				#end
+			</ul>
+		</div>
+		<div class="height50"></div>
+		<div id= "formPageDetail" class="displayBlock fontSize13">
+			${html}
+		</div>
+		#if($opinionList)
+			<div class="displayNone" id= "inputOpinionDetail">
+				<table width="100%">
+				<tr><td>&nbsp;<hr width="100%"></td></tr>
+					#foreach($opinion in $opinionList)
+						<tr>
+							<td><label class="style3 style18 ">Submitted By :&nbsp;$opinion.userFullName</label></td>	
+						</tr>
+						<tr>
+							<td><label class="style3 style18 ">Opinion : &nbsp;$opinion.message</label> </td>
+							
+						</tr>
+						<tr><td>&nbsp;<hr width="100%"></td></tr>
+					#end
+				</table>
+			</div>
+		#end
+		#if($workFlowTrace)
+			<div class="displayNone" id= "WorkFlowTraceDetail">
+				${workFlowTrace}
+				<div id ="workflowTraceTableDiv">	
+				<b>Process Input Trace :</b>
+					<table id="workflowTraceTable" border="1">
+						<tr bgcolor="#CECECE">
+							<th>No</th>
+							<th>Node Name</th>
+							<th>Organizer</th>
+							<th>Operation Time</th>
+							<th>Operate Type</th>		
+						</tr>
+					</table> 
+				</div>
+				<div>&nbsp;</div>
+				<div id ="formFieldTraceTableDiv"></div>
+				<table id="formFieldTraceTable" border="1">
+					 <tr bgcolor="#CECECE">
+					</tr> 
+				</table> 
+				<script>loadWorkFlowTraceGrid(${traceJsonArray},${formFieldAuditValues});</script>
+				<div class="height60"></div>
+			</div>
+		#end
+	</div>
+</div>
+
+<script>
+
+$(function(){
+	loadDataDictionaryValues($listBoxData, $autoCompleteData, $radioButtonData, $checkBoxData);
+	setSubmittedValues('${formId}',${valueJson});
+	replaceAllValueAsArchiveReadOnly('${formId}');
+});
+
+</script>

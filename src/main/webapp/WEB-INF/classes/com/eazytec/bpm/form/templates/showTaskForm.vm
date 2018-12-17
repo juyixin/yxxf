@@ -1,0 +1,39 @@
+<div class="height10"></div>
+	<form id="taskForm" name="taskForm" action="/bpm/manageTasks/completeTask" method="post">
+	
+<left>
+		<input name="taskId" type="hidden" value="${taskId}" />
+		    ${html}
+			</table>		
+			<tr height="5px"></tr>
+			<tr>							
+				<td></td>							
+				<td class="pad-L10">
+				
+					<button type="submit" name="Complete" class="btn btn-info"> Complete </button>
+					<span class="empty_space"></span> 
+					<button type="button" name="Cancel" class="btn btn-info" onClick="cancelTaskView(${taskId});"> Cancel </button>
+
+				</td>
+			</tr>						
+		</table>					
+	</form>
+</left>
+<script type="text/javascript">
+$(document).ready(function() {
+    $(".datetimepicker").datetimepicker({
+        showOn: 'both',
+        buttonImage: '/images/easybpm/form/rbl/_cal.gif',
+        dateFormat: 'dd-mm-yy',
+        timeFormat: 'hh:mm',
+        constrainInput: true
+    });
+
+    $(".ui-datepicker-trigger").mouseover(function() {
+        $(this).css('cursor', 'pointer');
+    });
+
+});	 
+</script>
+
+

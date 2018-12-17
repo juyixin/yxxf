@@ -1,0 +1,25 @@
+<decorators defaultdir="/decorators">
+
+    <excludes>
+        <pattern>/40*.jsp</pattern>
+        <pattern>/*ajax=true*</pattern>
+        <pattern>/struts/*</pattern>
+        <pattern>/resources/*</pattern>
+    </excludes>
+    
+    <decorator name="main" page="default.jsp">
+        <pattern>/mainMenu</pattern>
+    </decorator>
+    
+	<!-- show the task form in new tab -->
+	<decorator name="task" page="taskDefault.jsp">
+        <pattern>/showTaskFormDetail</pattern>
+        <pattern>/showTaskFormDetailForReader</pattern>
+        <pattern>/printPreviewDetail</pattern>
+    </decorator>
+    
+    <decorator name="loginDefault" page="loginDefault.jsp">
+        <pattern>/login</pattern>
+    </decorator>
+    
+</decorators>

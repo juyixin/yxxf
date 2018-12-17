@@ -1,0 +1,108 @@
+<script type="text/javascript">
+
+//var nodes = "";
+var isNeedCheckbox = true;
+$(function () {
+	#if($needTreeCheckbox == true)
+	    $("#treeLeft").jstree({
+	        "json_data": {
+		         "ajax" : {
+		          "url" : function( node){
+		         	        if(node == -1){
+		         	        	isNeedCheckbox = false;
+		                   		return '$childNodeUrl?currentNode=default&rootNode=default&nodeLevel=1&selectedValues='+$("#fromQuery").val()+'&defaultNodes='+JSON.stringify($defaultNodes);
+		                    }else if(node.attr("name")=="Run_Time_Tables" || node.attr("name")=="Meta_Tables"){
+		                    	isNeedCheckbox = true;
+		                    	var selectedValues="";
+		                    	if('${isSelectedValues}'=='true'){
+		                    		selectedValues="allTables";
+		                    	}
+		                    	return '$childNodeUrl?currentNode='+node.attr("name")+'&rootNode='+node.attr("name")+'&nodeLevel=1&selectedValues='+selectedValues+'&defaultNodes=""';
+		                    }else if(node.attr("name")!="Run_Time_Tables" && node.attr("name")!="Meta_Tables"){
+		                    	isNeedCheckbox = true;
+		                    	return '$childNodeUrl?currentNode='+node.attr("name")+'&rootNode='+node.attr("name")+'&nodeLevel=1&selectedValues=""&defaultNodes=""';
+		                    }
+	                  },
+		          "type" : "post", 
+		          "success" : function(ops) {
+		          		var dataCheckBox = [];
+		                var data = []
+		                for( opnum in ops ){
+		                  var op = ops[opnum]
+		                  node = {
+		                      "data" : op.data,
+		                      "metadata" :  op.metadata ,
+		                      "attr"   :op.attr,
+		                      "state" : "closed"
+		                  }
+		                  if(isNeedCheckbox){
+			                 dataCheckBox.push( op.attr.id );
+		           		  }
+		                  data.push( node );
+		                }
+                
+             		if(isNeedCheckbox){
+		                  if(dataCheckBox.length > 0){
+		                  	setTimeout(function(){showCheckboxIsNeedArray(dataCheckBox);},200);
+		                  }
+		            }
+                  	setTimeout(function(){addSelectedTreeValues('$selectionType', '$selectedValues');},500);
+		        
+	                return data;
+		          }
+		       }, 
+		    },
+		    "checkbox": {
+	              real_checkboxes: false,
+	              two_state: true
+	           },
+      		"plugins" : [ "themes", "json_data", "ui","checkbox", "crrm"]
+	        
+		}).bind("loaded.jstree", function(e, data) {
+			removeTableRootNodeCheckBox();
+			/*if('$selection' == 'fromTable'){
+				removeTableRootNodeCheckBox();			
+			}
+			setTimeout(function(){addSelectedTreeValues('$selectionType', '$selectedValues');},500);*/
+		}).bind("select_node.jstree", function (e, data) {
+			removeTableRootNodeCheckBox();
+			var currentNode = data.rslt.obj.attr("id");
+       		$("li[id~='"+currentNode+"'] > ins.jstree-icon").trigger('click');
+       		//renderChildNodesInJSTree(e, data, '$childNodeUrl');
+		}).bind('check_node.jstree', function(e, data) {
+			removeTableRootNodeCheckBox();
+			addCheckedOptionInRightJSTree(e, data, '$selectionType', '$selection');
+		}).bind('uncheck_node.jstree', function(e, data) {
+			removeTableRootNodeCheckBox();
+			removeUnCheckedOptionInJSTree(e,data);	
+		});
+		
+		function showCheckboxIsNeedArray(dataCheckBox){
+		    for(var index = 0; index < dataCheckBox.length; index++){
+		    	$("#"+dataCheckBox[index]+"  > a > ins.jstree-checkbox").css('display','inline-block');
+		    }
+		}
+		
+	 #else if($needContextMenu == true)
+		$("#treeLeft").jstree({
+	        "json_data": {
+		        "data" : nodes, 
+		    },
+		    "contextmenu" : {
+      	  		"items" : getTreeContextMenus
+    		},
+	        "plugins" : [ "themes", "json_data", "ui", "contextmenu", "crrm"]
+		}).bind("loaded.jstree", function(e, data) {
+		}).bind("select_node.jstree", function (e, data) {
+			renderFolderChildNodes(e,data); 
+		});
+	 #end
+});
+
+</script>
+
+<style type="text/css">
+	ins.jstree-checkbox {
+	    display:none;
+	}
+</style>

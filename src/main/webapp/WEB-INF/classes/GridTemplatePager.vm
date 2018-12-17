@@ -1,0 +1,157 @@
+<script type="text/javascript">
+
+     var header="";
+    var noOfRecords="10";
+    var headTag='<div id="headerTag" class="page-header"><div class="pull-left"><img src="/images/listcode.png " style="float:left; margin:9px 6px 5px 5px" /><h2>$title</h2></div>  <div id="grid_header_links" align="right"></div>';
+
+    var createLink="";
+    var length=$link.isEmpty();
+    var needMultiSelect=false;
+        #if(!$link.isEmpty())
+            #if(!$params.isEmpty())
+            createLink='<div><a id="createNew" href="#$link" data-role="button" data-theme="b"  onClick="callLink(\'${params}\');"  data-icon="" title="Create New"><span class="badge badge-success">Create New</span></a></div>';
+            #else
+            createLink='<div><a id="createNew" href="#$link" data-role="button" data-theme="b"  onClick="callLink();"  data-icon="" title="Create New"><span class="badge badge-success">Create New</span></a></div>';
+            #end
+        #end
+
+        #if($needCheckbox==true)
+        needMultiSelect=true;
+        #end
+
+    var endTag="</div></div>";
+    header=headTag.concat(createLink,endTag);
+
+        #if(!$noOfRecords.isEmpty())
+        noOfRecords = $noOfRecords;
+        #end
+    var gridObj = $("#_$gridId");
+    $(function(){
+        $("#_$gridId").jqGrid({
+
+            datatype: "json",
+            url:'${reurl}',
+            #if($dynamicGridWidth != '')
+                width: $dynamicGridWidth(),
+            #else
+                width: getGridWidth(),
+            #end
+            #if($dynamicGridHeight != '')
+                height: $dynamicGridHeight(),
+            #else
+                height: getGridHeight(),
+            #end
+            multiselect: needMultiSelect,
+            colNames:$columnNames,
+            colModel :[
+
+                #foreach($fieldName in $fieldNameList)
+                    {
+                        name: '$fieldName.index'
+                        ,index: '$fieldName.index'
+                        ,width: $fieldName.width
+                        ,align: '$fieldName.textAlign'
+                        ,hidden: $fieldName.isHidden
+                        #if($fieldName.isSort != '')
+                            ,sortable:$fieldName.isSort
+                        #end
+                        #if($fieldName.title != '')
+                            ,title:'$fieldName.title'
+                        #end
+                        #if($fieldName.sorttype != '')
+                            ,sorttype:'$fieldName.sorttype'
+                        #end
+                        #if($fieldName.onRenderEvent != '')
+                            ,formatter: $fieldName.onRenderEvent
+                        #end
+                    },
+                #end
+            ],
+            pager: '#_${gridId}_PAGER',
+            rowNum: noOfRecords,
+            rowList : [ 10, 20, 30 ],
+            viewrecords: true,
+            shrinkToFit: true,
+            scrollrows : true,
+            gridview: true,
+            #if($needTitle && $title != '')
+                caption: header,
+            #end
+            #if($sortname != '')
+                sortname:'$sortname',
+                sortorder: 'asc',
+            #end
+            hidegrid: false,
+            loadComplete: function() {
+                $("#_${gridId} tr.jqgrow:odd").css("background", "#f0f0f0");
+            },
+            onSortCol:function(index,iCol,sortorder){
+            	sortListViewResult(index,sortorder);
+            }
+        });
+    });
+
+    $(window).bind('resize', function() {
+
+            setTimeout(function() {
+                var winWidth = parseInt($("#target").width());
+                $("#_${gridId}").jqGrid('setGridWidth', winWidth-3);
+            },1);
+
+    }).trigger('resize');
+
+        #if($needHeader)
+        $('#pageHeader').html(header);
+        #end
+
+    function constructHeadLink(){
+        #if($headerLink)
+            var  htmlContent="";
+            #foreach($header in $headerLink)
+                htmlContent=htmlContent+"<a style='padding:10px;' id='$header.linkId' href='javascript:void(0);' data-role='button' data-theme='b'  data-icon=''><span class='badge badge-success'>$.linkName</span></a>";
+            #end
+            htmlContent = htmlContent + '<span class="simple-search pad-R10">Search </span><input type="text" style="width:10px;" name="searchBox" id="searchBox" onkeyup="_simpleSearch(\'$gridId\', \'$listViewId\', this);"/>';
+            htmlContent = htmlContent + '<a href="javascript:void(0);" class="advance-search pad-L10" onClick="listViewAdvanceSearch(\'$listViewId\');"><span class="badge badge-success">Advance Search</span></a>';
+            $("#grid_header_links").html(htmlContent);
+        #end
+    }
+    constructHeadLink();
+
+    function constructGroupHeaders(){
+        #if(${gridId} == "Flow_Statistics")
+            $("#_${gridId}").jqGrid('destroyGroupHeader');
+            $("#_${gridId}").jqGrid('setGroupHeaders', {
+                useColSpanStyle: false,
+                groupHeaders:	[
+                    #foreach($groupHeaderMap in $groupHeaderList)
+                        {
+                            startColumnName: '$groupHeaderMap.startColumnName'
+                            ,numberOfColumns: $groupHeaderMap.numberOfColumns
+                            ,titleText: '$groupHeaderMap.titleText'
+                        },
+                    #end
+                ],
+            });
+        #end
+    }
+
+    $(window).resize(_.debounce(function(){
+        constructGroupHeaders();
+    },500));
+</script>
+
+#if($headerLink)
+<script type="text/javascript">
+        #foreach($header in $headerLink)
+        $("#$header.linkId").click($header.linkEvent);
+        #end
+</script>
+#end
+
+<div class="row-fluid">
+    <div id="pageHeader"></div>
+</div>
+<div class="row-fluid">
+    <table id="_$gridId"><tr><td/></tr></table>
+    <div id="_${gridId}_PAGER"></div>
+</div>	  

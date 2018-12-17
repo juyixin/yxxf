@@ -1,0 +1,138 @@
+/*********************************************/
+body{
+	background:#ececec;
+}
+
+#side_menu{
+	margin-top:10px;	
+}
+
+.left-sidebar{left:0px;width:190px;}
+
+.left-sidebar .user-details{
+	padding-left:5px;
+	padding-right:5px;
+	margin-top:0px;
+}
+
+.left-sidebar .user-details .welcome-text .name{
+	color:#212121;
+}
+
+
+#main-nav {
+  position: relative;
+  padding: 0px; }
+  #main-nav ul li {
+    width: 189px;
+    position: relative;
+    margin-right: 1px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    background: #FCFCFC;
+    border-bottom:1px solid #ececec;
+    -webkit-transition: All 0.2s ease;
+    -moz-transition: All 0.2s ease;
+    -ms-transition: All 0.2s ease;
+    -o-transition: All 0.2s ease;
+    transition: All 0.2s ease; }
+    #main-nav ul li ul {
+      /*padding: 0;*/
+      position: absolute;
+      top: 0px;
+      left: 0;
+      width: 160px;
+      left:200px;
+      -webkit-transition: all 0.2s ease;
+      -moz-transition: all 0.2s ease;
+      -ms-transition: all 0.2s ease;
+      -o-transition: all 0.2s ease;
+      transition: all 0.2s ease; }
+      #main-nav ul li ul li {
+      	left:-10px;
+        background: #428bca;
+        display: block;
+        margin-right: 0;
+        color: white;
+        float: none;
+        border-bottom: 1px solid #428bca;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        border-radius: 0; }
+        #main-nav ul li ul li:hover {
+           background: #3071a9;}                       /* chandra mohan singh */
+        #main-nav ul li ul li:last-child {
+          -webkit-border-radius: 0 0 2px 2px;
+          -moz-border-radius: 0 0 2px 2px;
+          border-radius: 0 0 2px 2px;
+          border-bottom: 0; }
+        #main-nav ul li ul li a {
+          height: 14px;
+          line-height: 14px; }
+		/*rajasekar submenu start*/         
+		#main-nav ul li ul li .subdown{
+          	display:none;
+         	left:200px;
+         	/*top:-5px; */
+         	top:0px;
+         	visibility:hidden;
+         	position:absolute;
+         	margin-right:-1px;
+         }
+         #main-nav ul li ul li:hover ul{
+         	display: block;
+        	opacity: 1;
+        	visibility: visible;
+         }
+		/*rajasekar submenu end*/ 
+    #main-nav ul li a {
+      height: 18px;
+      line-height: 18px;
+      display: block;
+      padding: 10px;
+      color: #404040;
+      font-size: 13px;
+      text-align: left; }
+      #main-nav ul li a [data-icon]:before {
+        float: left;
+        margin: 0 5px 0 0;
+        line-height: 18px; }
+    #main-nav ul li .selected {
+      -webkit-border-radius: 0px;
+      -moz-border-radius: 0px;
+      border-radius: 0px;
+      background: #428bca;
+      color: white; }
+    #main-nav ul li:last-child {}
+    #main-nav ul li:hover {
+      background: #428bca;
+      color: white; }
+      #main-nav ul li:hover a {
+        color: white; }
+      #main-nav ul li:hover ul {
+        display: block;
+        opacity: 1;
+        visibility: visible; 
+      }
+      
+.dropdown-menu{
+	background-color：white;
+}
+
+#main-nav-sec{
+	margin-top:10px;
+}
+
+.dashboard-wrapper{
+	margin-bottom:0px;
+}
+
+.dashboard-wrapper .main-container{
+	border-top:0px;
+	border-radius:0px;
+}
+
+.container-fluid{padding-right:0px;padding-left:0px;}
+
+/*********************************************/

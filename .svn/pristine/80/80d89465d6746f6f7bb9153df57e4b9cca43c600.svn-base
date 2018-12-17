@@ -1,0 +1,270 @@
+<div class="height10"></div>
+<form id="startForm" name="startForm" action="bpm/form/submitStartForm" method="post">
+<input name="processDefinitionId" type="hidden" value="${processDefinition.id}" />
+<div id="processFormDesignValues" class="padding20">
+<div class="span11 scroll">
+<div class="padding5 fontBold fontSize14">${processDefinition.displayName}</div>
+<!--<div class="padding5 fontSize10">Version : ${processDefinition.version}, Deployed On : ${processCreatedDate} </div>-->
+<div class="table-create-user">
+	<table width="100%" height="100%" class="line-height46">			
+		#foreach($formProperty in $formProperties)
+			#set ($required = "")
+			#set ($readOnly = "")
+			#set ($onClick = "")
+			#set ($onChange = "")
+			#set ($onBlur = "")
+			#set ($onFocus = "")
+			
+			#set ($maxLength = "")
+			#set ($size = "")
+			#set ($value = "")
+			#set ($mask = "")
+			
+			#if($formProperty.mask)
+			 #set ($mask = $formProperty.mask)
+			#end
+			
+			#if($formProperty.maxLength)
+			 #set ($maxLength = $formProperty.maxLength)
+			#end
+		
+			#if($formProperty.size)
+			 #set ($size = $formProperty.size)
+			#end
+			
+			#if($formProperty.defValue)
+			 #set ($value = $formProperty.defValue)
+			#end
+			
+			#if($formProperty.isRequired())
+				#set ($required = "true")
+			#end
+			
+			#if($formProperty.isReadOnly())
+				#set ($readOnly = "true")
+			#end
+			#if($formProperty.onClick)
+			  #set ($onClick = $formProperty.onClick)
+	  			<script type="text/javascript">
+					$(document).ready(function() {
+						$("#${formProperty.name}").click($onClick);
+						});
+				</script>	
+			#end
+			
+			#if($formProperty.onFocus)
+			  #set ($onFocus = $formProperty.onFocus)
+				<script type="text/javascript">
+					$(document).ready(function() {
+						$("#${formProperty.name}").focus($onFocus);
+						});
+				</script>	
+			#end
+			
+			#if($formProperty.onChange)
+			 #set ($onChange = $formProperty.onChange)
+			 	<script type="text/javascript">
+					$(document).ready(function() {
+						$("#${formProperty.name}").change($onChange);
+						});
+				</script>
+			#end
+			#if($formProperty.onBlur)
+			 #set ($onBlur = $formProperty.onBlur)
+			 <script type="text/javascript">
+				$(document).ready(function() {
+					$("#${formProperty.name}").blur($onBlur);
+					});
+			</script>
+			#end
+			#if($formProperty.subType == "textarea" || $formProperty.subType == "text" || $formProperty.subType == "email")
+				#if($formProperty.subType == "textarea")
+					<tr>							
+						<td valign="top">
+							<span class="style3 style18">$formProperty.label</span>
+							#if($required == "true")
+								<font size="2" face="Verdana, Arial, Helvetica" color="#FF0066">*</font>
+							#end
+						</td>							
+						<td class="pad-L20"><textarea name="${formProperty.name}" id="${formProperty.name}" #if($required == "true") required = "$required" #end #if($readOnly == "true") readonly = "$readOnly" #end cols="$maxLength" value="$value" rows="$size"></textarea>
+							#if($formProperty.helpText)
+								<img class='imghelp'  src='/images/easybpm/form/rbl/help-browser.png' border='0' name="${formProperty.name}" title="${formProperty.helpText}" alt="${formProperty.helpText}" width='16' height='16' hspace='10'/>
+							#end
+						</td>
+						
+					</tr>
+					<tr height="4px"></tr>
+				#else											
+					<tr>							
+						<td>
+							<span class="style3 style18">$formProperty.label</span>
+							 #if($required == "true")
+								<font size="2" face="Verdana, Arial, Helvetica" color="#FF0066">*</font>
+							 #end
+						</td>							
+						<td class="pad-L20"><input type="text" id="${formProperty.name}" name="${formProperty.name}" #if($required == "true") required = "$required" #end #if($readOnly == "true") readonly = "$readOnly" #end maxlength="$maxLength" value="$value"/>
+							#if($formProperty.helpText)
+								<img class='imghelp'  src='/images/easybpm/form/rbl/help-browser.png' border='0' title="${formProperty.helpText}" alt="${formProperty.helpText}" width='16' height='16' hspace='10'/>
+							#end
+						</td>
+					</tr>
+					<tr height="4px"></tr>
+				#end
+			#elseif($formProperty.subType =="date" )																	
+				<tr>							
+					<td>
+						<span class="style3 style18">$formProperty.label</span>
+						#if($required == "true")
+							<font size="2" face="Verdana, Arial, Helvetica" color="#FF0066">*</font>
+						#end
+					</td>							
+					<td class="pad-L20"><input name="${formProperty.name}" type="date" id="${formProperty.name}" name="${formProperty.name}" class="datetimepicker" #if($required == "true") required = "$required" #end maxlength="$maxLength" size="$size" mask="$mask"/>
+						#if($formProperty.helpText)
+							<img class='imghelp'  src='/images/easybpm/form/rbl/help-browser.png' border='0' title="${formProperty.helpText}" alt="${formProperty.helpText}" width='16' height='16' hspace='10'/>
+						#end
+					</td>
+				</tr>
+				<tr height="4px"></tr>		
+			#elseif($formProperty.type.name=="password")													
+				<tr>							
+					<td>
+						<span class="style3 style18">$formProperty.label</span>
+						#if($required == "true")
+							<font size="2" face="Verdana, Arial, Helvetica" color="#FF0066">*</font>
+						#end
+					</td>							
+					<td class="pad-L20"><input name="${formProperty.name}"  type="password" id="${formProperty.name}" #if($required == "true") required = "$required" #end #if($readOnly == "true") readonly = "$readOnly" #end maxlength="$maxLength" />
+						#if($formProperty.helpText)
+							<img class='imghelp'  src='/images/easybpm/form/rbl/help-browser.png' border='0' title="${formProperty.helpText}" alt="${formProperty.helpText}" width='16' height='16' hspace='10'/>
+						#end
+					</td>
+				</tr>
+				<tr height="4px"></tr>	
+			#elseif($formProperty.subType=="checkbox")													
+					<tr>							
+						<td>
+							<span class="style3 style18">$formProperty.label</span>
+							#if($required == "true")
+								<font size="2" face="Verdana, Arial, Helvetica" color="#FF0066">*</font>
+							#end
+						</td>							
+						<td class="pad-L10">
+							#set($formPropertyvalue ="")
+							#set($formPropertyvalue=$formProperty.getType().getInformation("values"))
+							#foreach($entry in $formPropertyvalue.entrySet())
+								<input name="${formProperty.name}" type="checkbox"  value="$entry.getKey()" ><span class="pad-L5 pad-R5">$entry.getValue()</span></input>
+							#end
+							#if($formProperty.helpText)
+								<img class='imghelp'  src='/images/easybpm/form/rbl/help-browser.png' border='0' title="${formProperty.helpText}" alt="${formProperty.helpText}" width='16' height='16' hspace='10'/>
+							#end
+						</td>
+					</tr>
+					<tr height="4px"></tr>
+                #elseif($formProperty.subType=="radio")
+                    <tr>
+                        <td>
+                            <span class="style3 style18">$formProperty.label</span>
+                            #if($required == "true")
+                                <font size="2" face="Verdana, Arial, Helvetica" color="#FF0066">*</font>
+                            #end
+                        </td>
+                        <td class="pad-L10">
+							#set($formPropertyvalue ="")
+							#set($formPropertyvalue=$formProperty.getType().getInformation("values"))
+							#foreach($entry in $formPropertyvalue.entrySet())
+								<input name="${formProperty.name}" type="radio" #if($required == "true") required = "$required" #end value="$entry.getKey()" ><span class="pad-L5 pad-R5">$entry.getValue()</span></input>
+							#end
+							
+							#if($formProperty.helpText)
+								<img class='imghelp'  src='/images/easybpm/form/rbl/help-browser.png' border='0' title="${formProperty.helpText}" alt="${formProperty.helpText}" width='16' height='16' hspace='10'/>
+							#end
+						</td>
+                    </tr>
+                    <tr height="4px"></tr>
+			#elseif($formProperty.subType == "file")											                                                                                                                                                                                                              		
+				<tr>							
+					<td>
+						<span class="style3 style18">$formProperty.label</span>
+						#if($required == "true")
+							<font size="2" face="Verdana, Arial, Helvetica" color="#FF0066">*</font>
+						#end
+					</td>							
+					<td class="pad-L20">
+							<input  name="${formProperty.name}" type="file" id="${formProperty.name}" #if($required == "true") required = "$required" #end />
+							#if($formProperty.helpText)
+								<img class='imghelp'  src='/images/easybpm/form/rbl/help-browser.png' border='0' title="${formProperty.helpText}" alt="${formProperty.helpText}" width='16' height='16' hspace='10'/>
+							#end
+					</td>
+						
+				</tr>
+				<tr height="4px"></tr>		
+			#elseif($formProperty.subType =="select")
+				<tr>				
+					<td>
+						<span class="style3 style18">$formProperty.label</span>
+						#if($required == "true")
+							<font size="2" face="Verdana, Arial, Helvetica" color="#FF0066">*</font>
+						#end
+					</td>							
+					<td class="pad-L20">
+						<select id="${formProperty.name}" class="medium" name="${formProperty.name}" #if($required == "true") required = "$required" #end >
+									#foreach($formPropertyvalue in $formProperty.getType().getInformation("values").entrySet())
+										<option value="$formPropertyvalue.getKey()">$formPropertyvalue.getValue()</option>
+									#end
+								</select>
+						#if($formProperty.helpText)
+							<img class='imghelp'  src='/images/easybpm/form/rbl/help-browser.png' border='0' title="${formProperty.helpText}" alt="${formProperty.helpText}" width='16' height='16' hspace='10'/>
+						#end
+					</td>
+				</tr>
+				<tr height="4px"></tr>
+			#elseif($formProperty.subType == "submitbutton" || $formProperty.subType == "savebutton" || $formProperty.subType == "printbutton" || $formProperty.subType == "closebutton" )
+				<tr>							
+					<td colspan="2" class="pad-L20">
+						#if($formProperty.subType == "submitbutton")	
+							<input type="submit" id="${formProperty.name}"  class="btn btn-info"  value="Submit"/ ><span class="empty_space"></span>
+						#else
+							<input type="button" id="${formProperty.name}"  class="btn btn-info"  value="${value}"/ ><span class="empty_space"></span>
+						#end
+					</td>
+				</tr>
+				<tr height="4px"></tr>		
+			#end
+		#end
+		<tr height="5px"></tr>
+		<tr>							
+			<td></td>							
+			<td class="pad-L20">
+						<button type="submit" name="Start" class="btn btn-info">Start </button><span class="empty_space"></span> 
+						<button type="reset" value="Cancel" class="btn btn-info">Reset</button>
+			</td>
+		</tr>						
+	</table>	
+	</div>				
+</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	$(".file-upload-control").each(function( index ) {
+		var element_id = this.getAttribute("id");
+		var html_content = "<span onClick=clearFileUpload('"+element_id+"');>Remove</span>";
+		$("#"+element_id).after(html_content); 
+	});
+	
+    $(".datetimepicker").datetimepicker({
+        showOn: 'both',
+        buttonImage: '/images/easybpm/form/rbl/_cal.gif',
+        dateFormat: 'dd-mm-yy',
+        timeFormat: 'hh:mm',
+        minDate: 0,
+        constrainInput: true
+    });
+
+    $(".ui-datepicker-trigger").mouseover(function() {
+        $(this).css('cursor', 'pointer');
+    });
+    
+
+});	 
+</script>

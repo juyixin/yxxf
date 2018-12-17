@@ -1,0 +1,147 @@
+<div id="column">
+#set ($counter = 1)
+#set ($divCntr = 1)
+#foreach($widgetEach in $widgetList)
+ #set ($counter = $counter + 1)
+ #set ($divCntr = $divCntr + 1)
+ #if($widgetEach.id != 'QuickNavigation')
+<div id="column$counter" class="column column$noOfColumns widget">
+	<div class="dragbox" id="item$counter">
+		 <div class="widget-header">
+		 <div id="${widgetEach.id}_MainContainer" class="style8 style13 panel-title">
+		  <div style="float:left;" class="title"> $widgetEach.name </div> <div align="right"> <a href="#" onclick="clearWidgetContents('column$counter','${widgetEach.id}');" class="delete opIcons"> <img src="/images/easybpm/form/close_btn.jpg" /> </a> </div></div>
+		  </div> 
+		
+		<div class="dragbox-content widget-body">
+				<div id="generalProperties" class="content-border"  >
+						<div class="title-home-widget1 viewport">	
+							<div id= "_${widgetEach.id}_SubContainer" class="style15" style="overflow: auto"> 
+								<script> 
+								noOfColumn = $noOfColumns;
+							 setMainContainerHeight("${widgetEach.id}_MainContainer","${noOfColumns}");
+							 setMainContainerWidth("${widgetEach.id}_MainContainer","${noOfColumns}");
+							 setSubContainerWidth("_${widgetEach.id}_SubContainer","${noOfColumns}");
+							 setSubContainerHeight("_${widgetEach.id}_SubContainer","${noOfColumns}",'$widgetEach.linkType');
+							 
+							  #if ($widgetEach.linkType == 'listView')
+						   	 newsListDisplay('$widgetEach.listView','','${widgetEach.id}_SubContainer','');
+						   	 #end
+						   	 #if($widgetEach.linkType == 'report')
+						   	 	getReport('$widgetEach.report','${widgetEach.id}_SubContainer');
+						   	 #end
+						   	  </script>
+							 #if ($widgetEach.linkType == 'JSP')
+								#include($fileDetails.get($widgetEach.id))
+						   	   #end
+						   	#if($widgetEach.linkType == 'JSP')
+							 	<!--</div>-->
+							#else
+								</div>
+							#end
+						   	  #if ($widgetEach.linkType == 'listView')
+							<div class="small small style3 readmore-home" style="padding-top:20px;"> <a id="readMore"  href="javascript:void(0);" data-role="button" data-theme="b"  onClick="showListViewsWithContainer('${widgetEach.listView}','${widgetEach.listView}','item$counter'); _execute('target','');"  data-icon="">11  $readMore</a></div>
+							#end
+						 
+						 </div>
+				</div>
+		</div>
+	</div>
+</div>
+#end
+#end
+
+<div id="column1" class="column column$noOfColumns widget">
+	<div class="dragbox" id="item1">
+		 <div class="widget-header">
+		 <div id="QuickNavigation_MainContainer" class="style8 style13 panel-title title">快速导航</div>
+		  </div> 
+		<div class="dragbox-content" widget-body id="quickNav">
+				<div id="generalProperties" class="content-border">
+					<div class="title-home-widget1 viewport">
+							 <div id= "_QuickNavigation_SubContainer" class="style15"  > 
+							  <script> 
+							 setQuartzContainerHeight("_QuickNavigation_SubContainer","${noOfColumns}");
+							 setQuartzMainContainerHeight("QuickNavigation_MainContainer","${noOfColumns}");							
+							 setMainContainerWidth("QuickNavigation_MainContainer","${noOfColumns}");
+							 setSubContainerWidth("_QuickNavigation_SubContainer","${noOfColumns}");
+						   	 </script>
+							#foreach($quickNavigationEach in $quickNavigationList)
+								<ul class="quicknav main" id="quickNaviList" >
+									#if($quickNavigationEach.urlType == 'external')
+										<li id="NavigationNewTab" style="list-style-image:none;list-style-type:none;width:100px;padding:15px;">
+											<a id="$quickNavigationEach.quickNavigationUrl" href="$quickNavigationEach.quickNavigationUrl" name="newTab" data-role="button" data-theme="b"   data-icon="" class="navigationLink"  >
+											<div style="width:100px;height:50px;" align="center">
+												<img class="quick-menu-img" src="$quickNavigationEach.iconPath" height="12px" width="16px"/><br/>
+												<span style=" text-align:center;top: 4px;">$quickNavigationEach.name</span>
+											</div>
+										</li>
+									#else
+										#if ($quickNavigationEach.urlType == 'process')
+											<li style="list-style-image:none;list-style-type:none;width:100px;padding:15px;">
+												<a  data-role="button" data-theme="b"  onClick="createNewBtnRedirect('$quickNavigationEach.menuLink')" data-icon="" >
+												<div style="width:100px;height:50px;" align="center">
+													<img class="quick-menu-img" src="$quickNavigationEach.iconPath" height="12px" width="16px"/><br/>
+													<span style=" text-align:center;top: 4px;">$quickNavigationEach.name</span>
+												</div>
+												</a>
+											</li>										
+										#end
+										#if ($quickNavigationEach.urlType == 'listViewQuick')										
+											<li style="list-style-image:none;list-style-type:none;width:100px;padding:15px;">
+												<a  data-role="button" data-theme="b"  onClick = "showListViews('$quickNavigationEach.menuLink', '$quickNavigationEach.menuLink')" data-icon="" >
+												<div style="width:100px;height:50px;" align="center">
+													<img class="quick-menu-img" src="$quickNavigationEach.iconPath" height="12px" width="16px"/><br/>
+													<span style=" text-align:center;top: 4px;">$quickNavigationEach.name</span>
+												</div>
+												</a>
+											</li>
+										#end
+										#if ($quickNavigationEach.menuType == 'url')
+											<li style="list-style-image:none;list-style-type:none;width:100px;padding:15px;">
+												<a id="$quickNavigationEach.menuId" href="#bpm$quickNavigationEach.menuLink" data-role="button" data-theme="b"  onClick="resetSubSideMenu();showSideMenu('$quickNavigationEach.rootNodeName','$quickNavigationEach.menuId');setIndexPage('$quickNavigationEach.menuId');checkMenu('','$quickNavigationEach.menuType','$quickNavigationEach.quickNavigationUrl','$quickNavigationEach.menuId','','','','side');" data-icon="" >
+												<div style="width:100px;height:50px;" align="center">
+													<img class="quick-menu-img" src="$quickNavigationEach.iconPath" height="12px" width="16px"/><br/>
+													<span style=" text-align:center;top: 4px;">$quickNavigationEach.name</span>
+												</div>
+												</a>
+											</li>
+										#end
+										#if ($quickNavigationEach.menuType == 'script')
+										
+											<li style="list-style-image:none;list-style-type:none;width:100px;padding:15px;">
+												<a id="$quickNavigationEach.menuId" href="javascript:void(0);" data-role="button" data-theme="b"  onClick="$quickNavigationEach.menuLink;resetSubSideMenu();showSideMenu('$quickNavigationEach.rootNodeName','$quickNavigationEach.menuId');setIndexPage('$quickNavigationEach.menuId');checkMenu('','$quickNavigationEach.menuType','','$quickNavigationEach.menuId');"" data-icon="">
+												<div style="width:100px;height:50px;" align="center">
+													<img class="quick-menu-img" src="$quickNavigationEach.iconPath" height="12px" width="16px"/><br/>
+													<span style=" text-align:center;top: 4px;">$quickNavigationEach.name</span>
+												</div>
+												</a>
+											</li>
+										#end
+										#if ($quickNavigationEach.menuType == 'newTab')
+											<li id="NavigationNewTab" style="list-style-image:none;list-style-type:none;width:100px;padding:15px;">
+												<a id="$quickNavigationEach.menuId" href="$quickNavigationEach.menuLink" name="newTab" data-role="button" data-theme="b"   data-icon="" class="navigationLink"  >
+												<div style="width:100px;height:50px;" align="center">
+													<img class="quick-menu-img" src="$quickNavigationEach.iconPath" height="12px" width="16px"/><br/>
+													<span style=" text-align:center;top: 4px;">$quickNavigationEach.name</span>
+												</div>
+											</li>
+										#end
+									#end
+								</ul>
+							#end
+							
+					   	 </div>
+				   	</div>						   	
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	var newHeight = $(".column").height();
+	var quickNavHeight = parseInt(newHeight) - 45;
+	$('#quickNav').css({height: quickNavHeight,overflow: 'auto'});
+	$('#sched').css({height: quickNavHeight, overflow: 'auto'});
+	
+	
+</script>

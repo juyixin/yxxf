@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="org.activiti.engine.impl.persistence.entity.HistoricIdentityLinkDetailEntity">
+
+  <!-- INSERT IDENTITY LINK -->
+  
+  <insert id="insertHistoricIdentityLinkDetail" parameterType="org.activiti.engine.impl.persistence.entity.HistoricIdentityLinkDetailEntity">
+    insert into ${prefix}ACT_HI_IDENTITYLINK_DET (ID_, TASK_ID_, USER_ID_,IS_READ_,PROC_INST_ID_)
+    values (#{id, jdbcType=VARCHAR},
+    #{taskId, jdbcType=VARCHAR},
+    #{userId, jdbcType=VARCHAR},
+     #{isRead, jdbcType=BOOLEAN},
+     #{proInsId,jdbcType=VARCHAR}
+    )
+            
+  </insert>
+
+  <!-- IDENTITY LINK RESULTMAP -->
+
+  <resultMap id="historicIdentityLinkDetailResultMap" type="org.activiti.engine.impl.persistence.entity.HistoricIdentityLinkDetailEntity">
+    <id property="id" column="ID_" jdbcType="VARCHAR" />
+    <result property="taskId" column="TASK_ID_" jdbcType="VARCHAR" />
+    <result property="userId" column="USER_ID_" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <!-- IDENTITY LINK SELECT -->
+
+  <select id="selectHistoricIdentityLinkDetail" parameterType="string" resultMap="historicIdentityLinkDetailResultMap">
+    select * from ${prefix}ACT_HI_IDENTITYLINK where TASK_ID_ = #{taskId}
+  </select>   
+   <delete id="deleteHistoricIdentityLinkDetail">
+    delete from ${prefix}ACT_HI_IDENTITYLINK_DET where TASK_ID_ = #{taskId} and USER_ID_ = #{userId}
+  </delete>
+  
+  
+  <select id="updateIdentityDetailValues" parameterType="org.activiti.engine.impl.RtQueryImpl">
+  	<include refid="updateIdentityDetailValuesSql"/> 
+  </select>
+  
+ <sql  id="updateIdentityDetailValuesSql" >
+    update
+    	${prefix}ACT_HI_IDENTITYLINK_DET
+    set 
+		IS_READ_ = ${parameter.read}
+     where PROC_INST_ID_ = ${parameter.proInsId} and USER_ID_ = ${parameter.userId} 
+  </sql> 
+  
+ 
+  
+</mapper>

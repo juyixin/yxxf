@@ -1,0 +1,179 @@
+FILE=File
+NEW=New
+OPEN=Open...
+SAVE=Save
+SAVE_AS=Save As...
+PRINT=Print...
+LICENSE=License...
+LOOK_AND_FEEL=Look'n'Feel
+EXIT=Exit
+
+EDIT=Edit
+CUT=Cut
+COPY=Copy
+PASTE=Paste
+IMPORT_GRAPHICS=Import Graphics...
+
+HELP=Help
+ABOUT=About SampleApp...
+
+
+DO_NEW_MSG=A real application would create a new document now...
+DO_OPEN_MSG=A real application would display some 'Open Document' dialog window now...
+DO_SAVE_MSG=A real application would save the current document now...
+DO_SAVE_AS_MSG=A real application would display some 'Save As' dialog window now...
+DO_DEMO_PRINT_MSG=In demo mode, every 3rd character will be X'ed on print-out!
+DO_PRINT_MSG=A real application would print the current document now...
+DO_DEMO_IMPORT_GRAPHICS_MSG=In demo mode, imported graphics will be rendered slightly scrambled!
+DO_IMPORT_GRAPHICS_MSG=A real application would display some 'Import Graphics' dialog window now...
+OK=OK
+CANCEL=Cancel
+
+
+INTRO_TEXT=\
+Welcome to SampleApp\n\
+====================\n\
+\n\
+This application doesn't do anything useful but demonstrate that it's \
+protected by the Java License Kit - a commercial license key / copy protection \
+system for Java applications. For more information about the JLK, \
+visit SSS's site at:\n\
+\n\
+http://members.eunet.at/stefan.schneider/\n\
+\n\
+For any comments, questions, and bug reports, send email to:\n\
+\n\
+stefan.schneider@eunet.at\n\
+\n\
+\n\
+License-related Menu Commands\n\
+=============================\n\
+\n\
+File -> License           displays the JLK's License Dialog\n\
+\n\
+From the JLK's maximum of six separately licensable layers of functionality \
+(called 'modules' throughout the JLK doc), SampleApp uses two. The main module, when \
+licensed, enables 'Saving & Printing'. A secondary module, when licensed, \
+enables 'Import of Graphics'.\n\
+\n\
+These four menu commands always reflect the current license settings:\n\
+\n\
+If licensed as...         Yes             Demo                 No\n\
+these commands...  are...\n\
+File -> Save              fully enabled   grayed-out           grayed-out\n\
+File -> Save As           fully enabled   grayed-out           grayed-out\n\
+File -> Print             fully enabled   enabled/restricted   grayed-out\n\
+Edit -> Import Graphics   fully enabled   enabled/restricted   grayed-out\n\
+\n\
+In other words, saving is completely disabled even in demo mode, while \
+printing as well as import of graphics do work in demo mode, albeit \
+rather crippled...\n\
+\n\
+(Keep in mind that SampleApp only pretends to be, say, a word processor, \
+with no real action taking place when you choose one of the menu commands \
+mentioned above.)\n\
+\n\
+\n\
+License Keys\n\
+============\n\
+\n\
+To change how your copy of SampleApp is licensed, you enter a license key \
+in the Registration Dialog. To do so, select one of the sample license keys \
+listed below, and copy the key to the pasteboard. Choose File -> License to \
+open the License Dialog, then click 'Re-license Application' to open the \
+Registration Dialog. Paste the previously copied license key into the \
+'License String' field, hit <Enter>, add some owner info in the \
+'Name or Organisation' field (this field may not be left blank), and hit \
+<Enter> twice. The License Dialog will then show up again, displaying the \
+new license settings.\n\
+\n\
+Right out-of-the-box, SampleApp comes with its 'official demo key' pre-installed, \
+which sets all modules to demo mode, w/o any expiration date:\n\
+\n\
+2MBG-&ZM9-eb4[-!8&&-tX{^-41wi-nWAJ-V}oL\n\
+\n\
+\n\
+As mentioned above, license keys may have expiration dates burnt-in. \
+This key fully enables SampleApp until Oct 31, 1999:\n\
+\n\
+2mBL-d1M7-eA{[-8$&j-E0nh-wQhH-JWsr-[ooA\n\
+\n\
+\n\
+This key enables 'Saving & Printing' until Jan 1, 2002, but \
+'Import of Graphics' only until Apr 15, 1999:\n\
+\n\
+2|BG-&^M}-eb{T-8$&x-4X8@-y|NJ-JWA$-0|oA\n\
+\n\
+\n\
+And finally, here's an unrestricted license key, which fully enables \
+SampleApp's two modules w/o any limitations:\n\
+\n\
+2SBG-hUp7-eeR[-8$&K-kXf^-w7wi-JYA5-[|eA\n\
+\n\
+\n\
+Each JLK license key has a distinct User ID / Serial Number burnt-in, \
+which is displayed in the License Dialog. All keys encountered so far \
+had 'DD0001' burnt-in (indicating their demo purpose), except for the \
+unrestricted one above. That key sports a serial number of 'SA0927', which \
+perhaps indicates that the key is a 'real' one, probably issued to SampleApp's \
+927th customer...\n\
+\n\
+\n\
+What's in a Key\n\
+===============\n\
+\n\
+The Serial Number is by far not the only info contained in a JLK license key. \
+Further above, we've already mentioned that JLK license keys can contain license \
+state infos for upto six different application modules. Each module can be \
+separately licensed as 'Yes', 'No', 'Demo', or 'Free'.\n\
+\n\
+In addition, each module can be attached to one of three different expiration dates. \
+These - upto - three expiration dates are also contained within a JLK license key.\n\
+\n\
+Furthermore, JLK keys can come in one of the following three types: as a \
+'Single-User License' (like all ones given above), as a 'Network License for X Users' \
+(where X is 1 to 100), or as an 'Unlimited Network License'.\n\
+\n\
+If you're connected to a local network, then try one of the network licenses below! \
+Install SampleApp on your server machine (i.e. copy SampleApp's jar to your \
+server's favorite app folder and register it there), then launch that \
+network-licensed copy of SampleApp on your client machines. Here's the keys:\n\
+\n\
+X^fG-hUp7-eYR[-8$&K-eXfK-y|wi-JYA$-[|eA      1 user\n\
+T$jG-hUp7-eIP[-8h&w-@XGF-wkw|-JYAr-V0em      2 users\n\
+XWfG-hUp7-jl0h-8hbw-kN]P-4nwi-JYAJ-VheK      5 users\n\
+XOfL-tUp7-gX&[-84E&-e27K-y$Ai-JYs$-w}eK     25 users\n\
+\n\
+\n\
+Another feature of JLK license keys is that they have a 'Version Number' burnt-in. \
+(This number is not displayed in the License Dialog.) An example: upon the release \
+of version 2.0 of a JLK-protected app, the app's author might decide that all \
+users who bought v1.6 or beyond can update for free (by re-installing their purchased \
+license keys), while all others (who bought v1.5 keys or earlier) must contact the \
+author for an update key - which of course will cost some marginal update fee.\n\
+JLK's version numbering system automatically provides for such a scenario!\n\
+\n\
+\n\
+Yet another feature of the JLK not visually present in the License Dialog \
+is Automatic Copy Protection. When SampleApp is registered with a license key, the \
+license info is saved to some hidden files/folders alongside SampleApp's jar file. \
+Copying SampleApp's jar plus that hidden license info to another machine - or even \
+to another folder on the same machine - will automatically invalidate the copied \
+license info.\n\
+\n\
+\n\
+And yet another JLK feature: Host IDs. Take a look at the License Dialog's \
+upper-right corner - your computer's Host ID is displayed there. To be exact, it's \
+some string in 'XX####' format, created by the JLK according to some specific \
+characteristics of the machine and/or the desktop/workspace you're sitting right in \
+front of...\n\
+\n\
+A JLK license key with such a Host ID burnt-in can be registered only on a \
+computer which displays that very Host ID in the License Dialog. Here's a key \
+with a Host ID of 'PR2315' burnt-in:\n\
+\n\
+1A@z-WUp7-!6N[-8h@w-@anF-4#wi-JYaJ-V{eM\n\
+\n\
+As mentioned, you won't be able to register this key unless your License Dialog \
+happens to display 'PR2315' in its upper-right corner.\n\
+\n\

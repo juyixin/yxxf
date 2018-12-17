@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schema.omg.org/spec/BPMN/2.0" xmlns:bpmndi="http://bpmndi.org" targetNamespace="http://www.omg.org/bpmn20" expressionLanguage="http://www.w3.org/1999/XPath" typeLanguage="http://www.w3.org/2001/XMLSchema" id="oryx_783fdeb7-117b-422a-94ef-3d97cef692ee">
+  <process xmlns="" id="News" isExecutable="true" name="News">
+    <laneSet id="oryx_3ef0fd60-3e36-4766-8813-014b0c2ded6c">
+      <lane xmlns="http://schema.omg.org/spec/BPMN/2.0" name="DefaultLane" id="oryx_41dc946e-51e3-45fa-b968-ef7798ceb76d">
+        <flowElementRef>oryx_C6CF6EE8-2B65-4A9E-8F16-B520C824FB31</flowElementRef>
+        <flowElementRef>oryx_AD82E1AB-CF66-440B-85D1-B4A7C6DF165E</flowElementRef>
+        <flowElementRef>oryx_D01D0C1A-FBF1-416D-BEED-093188FA085B</flowElementRef>
+      </lane>
+    </laneSet>
+    <startEvent form="402836585995bd0d015995cd90240008" endscript="" name="" id="oryx_C6CF6EE8-2B65-4A9E-8F16-B520C824FB31" xmlns:activiti="http://activiti.org/bpmn" activiti:initiator="employeeName" formName="News">
+      <urgeMessage>There is a workflow you need to sign off, workflow name is &lt;workFolwName&gt;, created by &lt;createdBy&gt; at &lt;createdAt&gt;, plz click this link &lt;url&gt; to operate, thank you.</urgeMessage>
+      <notificationMessage>There is a workflow need to sign off by organizer : &lt;organizerName&gt;  Workflow name is &lt;workFolwName&gt;</notificationMessage>
+      <humanPerformer xmlns="http://schema.omg.org/spec/BPMN/2.0" resourceRef="ROLE_ADMIN" role="workflowadministrator">
+        <resourceAssignmentExpression xmlns="">
+          <formalExpression evaluatesToTypeRef="0" superior="false" subordinate="false">admin</formalExpression>
+        </resourceAssignmentExpression>
+      </humanPerformer>
+      <extensionElements><activiti:formProperty xmlns:activiti="http://activiti.org/bpmn" type= 'text' id='News_title' name='title' isSubForm='false'  fieldClass='mandatory'  table='8a10d459410ca9f401410d80592a0008' column='8a10d459410ca9f401410d805a20000e' optionType='null'/><activiti:formProperty xmlns:activiti="http://activiti.org/bpmn" type= 'file' id='News_attachment' name='attachment' isSubForm='false'  fieldClass='file-upload-control'  table='8a10d459410ca9f401410d80592a0008' column='8a10d459410ca9f401410d805a21000f' optionType='null'/><activiti:formProperty xmlns:activiti="http://activiti.org/bpmn" type= 'select' id='News_type' name='type' isSubForm='false'  table='8a10d459410ca9f401410d80592a0008' column='8a10d459410ca9f401410d805a20000d' optionType='dynamic' fieldClass='data_dictionary mandatory'  dataDictionary='ff808181458e254f01458e2d6dcf0005'/><activiti:formProperty xmlns:activiti="http://activiti.org/bpmn" type= 'select' id='News_draft' name='draft' isSubForm='false'  value='0'  table='8a10d459410ca9f401410d80592a0008' column='ff8081814c129831014c12dd2e1b0027' optionType='static' dataDictionary=''><activiti:formProperty xmlns:activiti="http://activiti.org/bpmn" type= 'option' value='1' label='是'/><activiti:formProperty xmlns:activiti="http://activiti.org/bpmn" type= 'option' value='0' label='否'/></formProperty>
+
+      </extensionElements>
+    </startEvent>
+   
+    <endEvent startscript="" isarchive="" readeroption="" name="" id="oryx_D01D0C1A-FBF1-416D-BEED-093188FA085B" />
+    <sequenceFlow transactorsrelationship="" sourceRef="oryx_C6CF6EE8-2B65-4A9E-8F16-B520C824FB31" targetRef="oryx_AD82E1AB-CF66-440B-85D1-B4A7C6DF165E" name="" id="oryx_73008D9B-C23F-4326-9642-49B623B5FBE4" />
+    <sequenceFlow transactorsrelationship="" sourceRef="oryx_AD82E1AB-CF66-440B-85D1-B4A7C6DF165E" targetRef="oryx_D01D0C1A-FBF1-416D-BEED-093188FA085B" name="" id="oryx_892CF115-F4E8-4B4C-BD76-F7A70CA8598E" />
+  </process>
+</definitions>
+

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="org.activiti.engine.impl.persistence.entity.HistoricIdentityLinkEntity">
+
+  <!-- INSERT IDENTITY LINK -->
+  
+  <insert id="insertHistoricIdentityLink" parameterType="org.activiti.engine.impl.persistence.entity.HistoricIdentityLinkEntity">
+    insert into ${prefix}ACT_HI_IDENTITYLINK (ID_, REV_, TYPE_, USER_ID_, GROUP_ID_, TASK_ID_, PROC_DEF_ID_, ORDER_,GROUP_TYPE_,IDENTITY_ID,EXECUTION_ID,IS_ENDEVENT)
+    values (#{id, jdbcType=VARCHAR},
+            1,
+            #{type, jdbcType=VARCHAR},
+            #{userId, jdbcType=VARCHAR},
+            #{groupId, jdbcType=VARCHAR},
+            #{taskId, jdbcType=VARCHAR},
+            #{processDefId, jdbcType=VARCHAR},
+            #{order, jdbcType=INTEGER},
+            #{groupType, jdbcType=VARCHAR},
+            #{identityLinkEntityId, jdbcType=VARCHAR},
+            #{executionId, jdbcType=VARCHAR},
+            #{isEndEvent, jdbcType=VARCHAR})
+            
+  </insert>
+  
+  <!--  UPDATE -->
+   <update id="updateHistoricIdentityLink" parameterType="org.activiti.engine.impl.persistence.entity.HistoricIdentityLinkEntity">
+    update  ${prefix}ACT_HI_IDENTITYLINK
+    <set>
+           TYPE_ =  #{type, jdbcType=VARCHAR},
+           USER_ID_ = #{userId, jdbcType=VARCHAR},
+           GROUP_ID_ = #{groupId, jdbcType=VARCHAR},
+           TASK_ID_ = #{taskId, jdbcType=VARCHAR},
+           PROC_DEF_ID_ = #{processDefId, jdbcType=VARCHAR},
+           ORDER_ = #{order, jdbcType=INTEGER},
+           GROUP_TYPE_ = #{groupType, jdbcType=VARCHAR},
+           IDENTITY_ID = #{identityLinkEntityId, jdbcType=VARCHAR},
+           EXECUTION_ID = #{executionId, jdbcType=VARCHAR},
+           IS_ENDEVENT = #{isEndEvent, jdbcType=VARCHAR}
+    </set>
+    where ID_= #{id, jdbcType=VARCHAR}
+  </update>
+  <!--  UPDATE -->
+  
+  <!-- IDENTITY LINK DELETE -->
+  
+  <delete id="deleteHistoricIdentityLink" parameterType="string">
+    delete from ${prefix}ACT_HI_IDENTITYLINK where ID_ = #{id}
+  </delete>
+  
+  <delete id="deleteHistoricIdentityLinkByProcDef" parameterType="string">
+    delete from ${prefix}ACT_HI_IDENTITYLINK where PROC_DEF_ID_ = #{id}
+  </delete>
+  
+
+  <!-- IDENTITY LINK RESULTMAP -->
+
+  <resultMap id="historicIdentityLinkResultMap" type="org.activiti.engine.impl.persistence.entity.HistoricIdentityLinkEntity">
+    <id property="id" column="ID_" jdbcType="VARCHAR" />
+    <result property="type" column="TYPE_" jdbcType="VARCHAR" />
+    <result property="userId" column="USER_ID_" jdbcType="VARCHAR" />
+    <result property="groupId" column="GROUP_ID_" jdbcType="VARCHAR" />
+    <result property="taskId" column="TASK_ID_" jdbcType="VARCHAR" />
+    <result property="processDefId" column="PROCESS_DEF_ID_" jdbcType="VARCHAR" />
+    <result property="order" column="ORDER_" jdbcType="INTEGER" />
+    <result property="groupType" column="GROUP_TYPE_" jdbcType="VARCHAR" />   
+    <result property="identityLinkEntityId" column="IDENTITY_ID" jdbcType="VARCHAR" />   
+    <result property="executionId" column="EXECUTION_ID" jdbcType="VARCHAR" />  
+    <result property="isEndEvent" column="IS_ENDEVENT" jdbcType="VARCHAR" />  
+  </resultMap>
+
+  <!-- IDENTITY LINK SELECT -->
+
+  <select id="selectHistoricIdentityLink" parameterType="string" resultMap="historicIdentityLinkResultMap">
+    select * from ${prefix}ACT_HI_IDENTITYLINK where ID_ = #{id}
+  </select>
+  
+   <select id="selectHistoricIdentityLinksByTaskId" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="historicIdentityLinkResultMap">
+    select * from ${prefix}ACT_HI_IDENTITYLINK where TASK_ID_ = #{parameter}
+  </select>
+   
+  <select id="selectHistoricIdentityLinksByProcessInstanceId" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="historicIdentityLinkResultMap">
+	    select 
+	    	HILINK.* 
+	    from
+	    	${prefix}ACT_HI_TASKINST RES 
+			INNER JOIN  
+			${prefix}ACT_HI_IDENTITYLINK HILINK
+			ON  HILINK.TASK_ID_ = RES.ID_   
+		where 
+			RES.PROC_INST_ID_ = #{parameter}
+	UNION ALL
+	    select 
+    		LINK.* 
+	    from
+	    	${prefix}ACT_RU_TASK TASKRES 
+			INNER JOIN  
+			${prefix}ACT_RU_IDENTITYLINK LINK
+			ON  LINK.TASK_ID_ = TASKRES.ID_   
+		where 
+			TASKRES.PROC_INST_ID_ = #{parameter}
+	  </select>
+  
+</mapper>

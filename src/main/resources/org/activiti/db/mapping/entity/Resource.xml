@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="org.activiti.engine.impl.persistence.entity.ResourceEntity">
+  
+  <!-- RESOURCE INSERT -->
+
+  <insert id="insertResource" parameterType="org.activiti.engine.impl.persistence.entity.ResourceEntity">
+    insert into ${prefix}ACT_GE_BYTEARRAY(ID_, REV_, NAME_,DEPLOYMENT_ID_, GENERATED_,SVG_STRING_,BYTES_,JSON_STRING_)
+    values (#{id, jdbcType=VARCHAR}, 1, #{name, jdbcType=VARCHAR}, #{deploymentId, jdbcType=VARCHAR}, #{generated, jdbcType=BOOLEAN},#{svgString},#{bytes},#{jsonString})  
+  </insert>
+  
+  <update id="updateResource" parameterType="org.activiti.engine.impl.persistence.entity.ResourceEntity">
+    update ${prefix}ACT_GE_BYTEARRAY set      
+      NAME_ = #{name, jdbcType=VARCHAR},
+      BYTES_ = #{bytes, jdbcType=LONGVARBINARY},
+      JSON_STRING_ = #{jsonString, jdbcType=LONGVARBINARY},
+      SVG_STRING_ = #{svgString, jdbcType=LONGVARCHAR},
+      DEPLOYMENT_ID_ = #{deploymentId, jdbcType=VARCHAR}
+    where ID_ = #{id}
+      and REV_ = #{revision, jdbcType=INTEGER}
+  </update>
+  
+  <!-- RESOURCE UPDATE -->
+
+  <!-- RESOURCE DELETE -->
+
+  <delete id="deleteResourcesByDeploymentId" parameterType="string">
+    delete from ${prefix}ACT_GE_BYTEARRAY where DEPLOYMENT_ID_ = #{id}
+  </delete>
+  
+  <!-- RESOURCE RESULTMAP -->
+
+  <resultMap id="resourceResultMap" type="org.activiti.engine.impl.persistence.entity.ResourceEntity">
+    <id property="id" column="ID_" jdbcType="VARCHAR" />
+    <result property="name" column="NAME_" jdbcType="VARCHAR"/>
+    <result property="bytes" column="BYTES_" jdbcType="LONGVARBINARY"/>
+    <result property="jsonString" column="JSON_STRING_" jdbcType="LONGVARBINARY"/>
+    <result property="svgString" column="SVG_STRING_" jdbcType="LONGVARCHAR"/>
+    <result property="generated" column="GENERATED_" jdbcType="BOOLEAN"/>
+    <result property="deploymentId" column="DEPLOYMENT_ID_" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <!-- RESOURCE SELECT -->
+
+  <select id="selectResourceNamesByDeploymentId" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultType="string">
+    select NAME_ from ${prefix}ACT_GE_BYTEARRAY where DEPLOYMENT_ID_ = #{parameter} order by NAME_ asc
+  </select>
+  
+  <select id="selectResourceByDeploymentIdAndResourceName" parameterType="map" resultMap="resourceResultMap">
+    select * from ${prefix}ACT_GE_BYTEARRAY 
+    where DEPLOYMENT_ID_ = #{deploymentId}
+          AND NAME_ = #{resourceName}
+  </select>
+
+  <select id="selectResourcesByDeploymentId" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="resourceResultMap">
+    select * from ${prefix}ACT_GE_BYTEARRAY where DEPLOYMENT_ID_ = #{parameter} order by NAME_ asc
+  </select>  
+
+  <!-- postgresql specific -->
+  <resultMap id="resourceResultMap_postgres" type="org.activiti.engine.impl.persistence.entity.ResourceEntity">
+    <id property="id" column="ID_" jdbcType="VARCHAR" />
+    <result property="name" column="NAME_" jdbcType="VARCHAR"/>
+    <result property="bytes" column="BYTES_" jdbcType="BINARY"/>
+    <result property="jsonString" column="JSON_STRING_" jdbcType="BINARY"/>
+    <result property="svgString" column="SVG_STRING_" jdbcType="BINARY"/>
+    <result property="generated" column="GENERATED_" jdbcType="BOOLEAN"/>
+  </resultMap>
+    
+  <!-- postgresql specific -->
+  <select id="selectResourceByDeploymentIdAndResourceName_postgres" parameterType="map" resultMap="resourceResultMap_postgres">
+    select * from ${prefix}ACT_GE_BYTEARRAY 
+    where DEPLOYMENT_ID_ = #{deploymentId}
+          AND NAME_ = #{resourceName}
+  </select>
+  
+  <!-- postgresql specific -->
+  <select id="selectResourcesByDeploymentId_postgres" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="resourceResultMap_postgres">
+    select * from ${prefix}ACT_GE_BYTEARRAY where DEPLOYMENT_ID_ = #{parameter} order by NAME_ asc
+  </select>  
+  
+  <!-- RESOURCE SELECT FOR LIST OF DEPLOYMENT_ID  -->
+  <select id="selectResourcesByDeploymentIds" parameterType="list" resultMap="resourceResultMap">
+    select * from ${prefix}ACT_GE_BYTEARRAY where DEPLOYMENT_ID_ IN 
+       <foreach item="item" index="index" collection="parameter" open="(" separator="," close=")"> 
+          #{item} 
+       </foreach> 
+ </select>
+  
+</mapper>

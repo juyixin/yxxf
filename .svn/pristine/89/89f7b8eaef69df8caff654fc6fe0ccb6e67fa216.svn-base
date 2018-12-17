@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="com.eazytec.bpm.engine.task.impl.TransactorIdentityLinkEntity">
+
+  <!-- INSERT IDENTITY LINK -->
+  
+  <insert id="insertTransactorIdentityLink" parameterType="com.eazytec.bpm.engine.task.impl.TransactorIdentityLinkEntity">
+    insert into ${prefix}ACT_RU_TRANSACTOR_IDENTITYLINK (ID_, REV_, TYPE_, USER_ID_, GROUP_ID_, TASK_ID_, PROC_DEF_ID_, ORDER_, IS_SIGNED_OFF_)
+    values (#{id, jdbcType=VARCHAR},
+            1,
+            #{type, jdbcType=INTEGER},
+            #{userId, jdbcType=VARCHAR},
+            #{groupId, jdbcType=VARCHAR},
+            #{taskId, jdbcType=VARCHAR},
+            #{processDefId, jdbcType=VARCHAR},
+            #{order, jdbcType=INTEGER},
+            false)
+            
+  </insert>
+  
+  <!-- IDENTITY LINK DELETE -->
+  
+  <delete id="deleteTransactorIdentityLink" parameterType="string">
+    delete from ${prefix}ACT_RU_TRANSACTOR_IDENTITYLINK where ID_ = #{id}
+  </delete>
+  
+  <delete id="deleteTransactorIdentityLinkByProcDef" parameterType="string">
+    delete from ${prefix}ACT_RU_TRANSACTOR_IDENTITYLINK where PROC_DEF_ID_ = #{id}
+  </delete>
+  
+
+  <!-- IDENTITY LINK RESULTMAP -->
+
+  <resultMap id="transactorIdentityLinkResultMap" type="com.eazytec.bpm.engine.task.impl.TransactorIdentityLinkEntity">
+    <id property="id" column="ID_" jdbcType="VARCHAR" />
+    <result property="type" column="TYPE_" jdbcType="INTEGER" />
+    <result property="userId" column="USER_ID_" jdbcType="VARCHAR" />
+    <result property="groupId" column="GROUP_ID_" jdbcType="VARCHAR" />
+    <result property="taskId" column="TASK_ID_" jdbcType="VARCHAR" />
+    <result property="processDefId" column="PROCESS_DEF_ID_" jdbcType="VARCHAR" /> 
+    <result property="order" column="ORDER_" jdbcType="INTEGER" /> 
+    <result property="isSigedOff" column="IS_SIGNED_OFF_" jdbcType="boolean" />   
+  </resultMap>
+
+  <!-- IDENTITY LINK SELECT -->
+
+  <select id="selectTransactorIdentityLink" parameterType="string" resultMap="transactorIdentityLinkResultMap">
+    select * from ${prefix}ACT_RU_TRANSACTOR_IDENTITYLINK where ID_ = #{id} order by ORDER_ ASC
+  </select>
+  
+  <select id="selectTransactorIdentityLinksByTask" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="transactorIdentityLinkResultMap">
+    select * from ${prefix}ACT_RU_TRANSACTOR_IDENTITYLINK where TASK_ID_ = #{parameter} AND IS_SIGNED_OFF_=false order by ORDER_ ASC
+  </select>
+  
+  <update id="updateTransactorIdentityLink" parameterType="com.eazytec.bpm.engine.task.impl.TransactorIdentityLinkEntity">
+    update ${prefix}ACT_RU_TRANSACTOR_IDENTITYLINK set
+	    TYPE_ = #{type, jdbcType=INTEGER},
+	    USER_ID_ = #{userId, jdbcType=VARCHAR},
+	    GROUP_ID_ = #{groupId, jdbcType=VARCHAR},
+	    TASK_ID_ = #{taskId, jdbcType=VARCHAR},
+	    PROCESS_DEF_ID_ = #{processDefId, jdbcType=VARCHAR},
+	    ORDER_ = #{order, jdbcType=INTEGER},
+	    IS_SIGNED_OFF_ = #{isSignedOff, jdbcType=BOOLEAN}
+    	where ID_ = #{id, jdbcType=VARCHAR}
+      and REV_ = #{revision, jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectTransactorIdentityLinksByProcessDefinition" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="transactorIdentityLinkResultMap">
+    select * from ${prefix}ACT_RU_TRANSACTOR_IDENTITYLINK where PROC_DEF_ID_ = #{parameter} AND IS_SIGNED_OFF_=false order by ORDER_ ASC
+  </select>
+  
+  <select id="selectTransactorIdentityLinkByTaskUserGroupAndType" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="transactorIdentityLinkResultMap">
+    select * 
+    from ${prefix}ACT_RU_TRANSACTOR_IDENTITYLINK 
+    where TASK_ID_ = #{parameter.taskId}
+      <if test="parameter.userId != null">
+        and USER_ID_ = #{parameter.userId}
+      </if>
+      <if test="parameter.groupId != null">
+        and GROUP_ID_ = #{parameter.groupId}
+      </if>
+      <if test="parameter.type != null">
+        and TYPE_ = #{parameter.type}
+      </if>
+      AND IS_SIGNED_OFF_=false
+      order by ORDER_ ASC
+  </select>
+  
+  <select id="selectTransactorIdentityLinkByProcessDefinitionUserAndGroup" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="transactorIdentityLinkResultMap">
+    select * 
+    from ${prefix}ACT_RU_TRANSACTOR_IDENTITYLINK 
+    where PROC_DEF_ID_ = #{parameter.processDefinitionId}
+      <if test="parameter.userId != null">
+        and USER_ID_ = #{parameter.userId}
+      </if>
+      <if test="parameter.groupId != null">
+        and GROUP_ID_ = #{parameter.groupId}
+      </if>
+      AND IS_SIGNED_OFF_=false
+      order by ORDER_ ASC
+  </select>
+  
+</mapper>

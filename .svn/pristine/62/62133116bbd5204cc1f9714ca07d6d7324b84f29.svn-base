@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+    
+<hibernate-configuration>
+     <session-factory>
+    	<property name="show_sql">true</property>
+    	<property name="format_sql">false</property>
+    	<property name="hibernate.ejb.naming_strategy">com.eazytec.dao.hibernate.config.CustomNamingStrategy</property>
+        <mapping class="com.eazytec.model.User"/>
+        <mapping class="com.eazytec.model.Role"/>
+        <mapping class="com.eazytec.model.Group"/>
+        <mapping class="com.eazytec.model.Department"/>
+        <mapping class="com.eazytec.model.Form"/>
+        <mapping class="com.eazytec.model.Menu"/>
+        <mapping class="com.eazytec.model.TaskRole"/>
+        <mapping class="com.eazytec.model.Classification"/>
+        <mapping class="com.eazytec.model.Schedule"/>
+        <mapping class="com.eazytec.model.MetaTable"/>
+        <mapping class="com.eazytec.model.MetaTableColumns"/>
+        <mapping class="com.eazytec.model.FormButton"/>
+        <mapping class="com.eazytec.model.MetaFormField"/>
+        <mapping class="com.eazytec.model.MetaForm"/>
+        <mapping class="com.eazytec.model.Forms"/>
+        <mapping class="com.eazytec.model.Module"/>
+        <mapping class="com.eazytec.model.Notification"/>
+        <mapping class="com.eazytec.model.Process"/>
+        <mapping class="com.eazytec.model.MetaTableRelation"/>
+        <mapping class="com.eazytec.model.Document"/>
+        <mapping class="com.eazytec.model.DocumentForm"/>
+        <mapping class="com.eazytec.model.FileImportForm"/>
+        <mapping class="com.eazytec.model.Folder"/>
+        <mapping class="com.eazytec.model.FolderPermission"/>
+		<mapping class="com.eazytec.model.DataDictionary"/>
+        <mapping class="com.eazytec.model.DocumentFormPermission"/>
+        <mapping class="com.eazytec.model.DocumentPermission"/>
+        <mapping class="com.eazytec.model.DMSUserPermission"/>
+        <mapping class="com.eazytec.model.DMSRolePermission"/>
+        <mapping class="com.eazytec.model.DMSGroupPermission"/>
+        <mapping class="com.eazytec.model.ListView"/>
+		<mapping class="com.eazytec.model.ListViewColumns"/>
+		<mapping class="com.eazytec.model.Layout"/>
+		<mapping class="com.eazytec.model.QuickNavigation"/>
+		<mapping class="com.eazytec.model.ListViewButtons"/>
+		<mapping class="com.eazytec.model.ListViewGroupSetting"/>
+		<mapping class="com.eazytec.model.SysConfig"/>
+		<mapping class="com.eazytec.model.SystemLog"/>
+		<mapping class="com.eazytec.model.SystemLogs"/>
+		<mapping class="com.eazytec.model.AdminLogs"/>
+		<mapping class="com.eazytec.model.ProcessLogs"/>
+		<mapping class="com.eazytec.model.ModuleLogs"/>
+		<mapping class="com.eazytec.model.QuartzJobAudit"/>
+		<mapping class="com.eazytec.model.FormNameMappings"/>
+		<mapping class="com.eazytec.model.EmailContact"/>
+		<mapping class="com.eazytec.model.EmailConfiguration"/>
+		<mapping class="com.eazytec.model.OperatingFunctionAudit"/>
+		<mapping class="com.eazytec.model.Widget"/>
+		<mapping class="com.eazytec.model.UserWidget"/>
+		<mapping class="com.eazytec.model.UserOpinion"/>
+		<mapping class="com.eazytec.model.ModuleRolePrivilege"/>
+		<mapping class="com.eazytec.model.Opinion"/>
+		<mapping class="com.eazytec.model.ProcessFormName"/>
+		<mapping class="com.eazytec.model.AgencySetting"/>
+		<mapping class="com.eazytec.model.WidgetDepartment"/>
+ 		<mapping class="com.eazytec.model.Holiday"/>
+  		<mapping class="com.eazytec.model.Message"/>
+  		<mapping class="com.eazytec.model.MessageFile"/>
+  		<mapping class="com.eazytec.model.LoginLogs"/>
+		<mapping class="com.eazytec.model.LogAudit"/>
+		<mapping class="com.eazytec.model.Report"/>
+		<mapping class="com.eazytec.model.License"/>
+		<mapping class="com.eazytec.model.ProcessPermission"/>
+		
+		<mapping class="com.eazytec.crm.model.Record"/>
+		<mapping class="com.eazytec.crm.model.Telreg"/>
+		<mapping class="com.eazytec.crm.model.Custom"/>
+		<mapping class="com.eazytec.crm.model.Contract"/>
+		<mapping class="com.eazytec.crm.model.Chance"/>
+		<mapping class="com.eazytec.alxxgl.model.Allx"/>
+		<mapping class="com.eazytec.alxxgl.model.Alxxb"/>
+		<mapping class="com.eazytec.alxxgl.model.AlxxbDocument"/>
+		
+		<mapping class="com.eazytec.link.model.Link"/>
+	    <mapping class="com.eazytec.fileManage.model.FileManage"/>
+		<mapping class="com.eazytec.evidence.model.Evidence"/> 
+		<mapping class="com.eazytec.petitionLetter.model.PetitionLetterEvent"/>
+		<mapping class="com.eazytec.petitionLetter.model.PetitionLetterPerson"/> 
+
+		
+		<mapping class="com.eazytec.model.NoticeDocument"/>
+		<mapping class="com.eazytec.model.NoticePlat"/>
+		<mapping class="com.eazytec.model.Txlry"/>
+		<mapping class="com.eazytec.model.Txl"/>
+		<mapping class="com.eazytec.model.NoticeUserPlat"/>
+		<mapping class="com.eazytec.model.Zcfg"/>
+		
+		<mapping class="com.eazytec.sendDocuments.model.SendDocuments"/>
+		<mapping class="com.eazytec.vacate.model.Vacate"/>
+		<mapping class="com.eazytec.generalProcess.model.GeneralProcess"/>
+    </session-factory>
+</hibernate-configuration>

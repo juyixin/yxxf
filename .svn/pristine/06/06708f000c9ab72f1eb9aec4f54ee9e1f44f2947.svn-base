@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity">
+  
+  <!-- PROCESSDEFINITION INSERT -->
+
+  <insert id="insertProcessDefinition" parameterType="org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity">
+    insert into ${prefix}ACT_RE_PROCDEF(ID_, REV_, CATEGORY_, NAME_, KEY_, VERSION_, DEPLOYMENT_ID_, RESOURCE_NAME_, DGRM_RESOURCE_NAME_, DESCRIPTION_, HAS_START_FORM_KEY_, SUSPENSION_STATE_, IS_ACTIVE_VERSION_,CLASSIFICATION_ID_,MODIFIED_USER,IS_SYSTEM_DEFINED_,ORDER_NO_)
+    values (#{id, jdbcType=VARCHAR},
+    		1,
+            #{category, jdbcType=VARCHAR},
+            #{name, jdbcType=VARCHAR},
+            #{key, jdbcType=VARCHAR}, 
+            #{version, jdbcType=INTEGER},
+            #{deploymentId, jdbcType=VARCHAR},
+            #{resourceName, jdbcType=VARCHAR},
+            #{diagramResourceName, jdbcType=VARCHAR},
+            #{description, jdbcType=VARCHAR},
+            #{hasStartFormKey, jdbcType=BOOLEAN},
+            #{suspensionState, jdbcType=INTEGER},
+            #{isActiveVersion, jdbcType=BOOLEAN},
+            #{classificationId,jdbcType=VARCHAR},
+            #{modifiedUser,jdbcType=VARCHAR},
+            #{isSystemDefined, jdbcType=BOOLEAN},
+            #{orderNo, jdbcType=INTEGER})
+  </insert>
+  
+  <!-- PROCESSDEFINITION UPDATE -->
+
+  <update id="updateProcessDefinition" parameterType="org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity">
+    update ${prefix}ACT_RE_PROCDEF set
+      REV_ = #{revisionNext, jdbcType=INTEGER},    
+      SUSPENSION_STATE_ = #{suspensionState, jdbcType=INTEGER},
+      IS_ACTIVE_VERSION_ = #{isActiveVersion, jdbcType=BOOLEAN},
+      IS_SYSTEM_DEFINED_ = #{isSystemDefined, jdbcType=BOOLEAN}
+    where ID_ = #{id, jdbcType=VARCHAR}
+      and REV_ = #{revision, jdbcType=INTEGER}
+  </update>
+
+  <!-- PROCESSDEFINITION DELETE -->
+
+  <delete id="deleteProcessDefinitionsByDeploymentId" parameterType="string">
+    delete from ${prefix}ACT_RE_PROCDEF where DEPLOYMENT_ID_ = #{deploymenId} 
+  </delete>
+  
+  <delete id="deleteProcessDefinitionsById" parameterType="string">
+    delete from ${prefix}ACT_RE_PROCDEF where ID_ = #{processDefinitionId}
+  </delete>
+ <!--  <delete id="deleteProcessModuleById" parameterType="string">
+    delete from ${prefix}PROCESS_MODULE where process_id = #{processDefinitionId}  
+  </delete> -->
+  <delete id="deleteProcessDefinitionsByKey" parameterType="string">
+    delete from ${prefix}ACT_RE_PROCDEF where KEY_ = #{key} 
+  </delete>
+  
+  <!-- PROCESSDEFINITION RESULTMAP -->
+
+  <resultMap id="processDefinitionResultMap" type="org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity">
+    <id property="id" column="ID_" jdbcType="VARCHAR" />
+    <result property="revision" column="REV_" />
+    <result property="category" column="CATEGORY_" />
+    <result property="name" column="NAME_" />
+    <result property="key" column="KEY_" jdbcType="VARCHAR" />
+    <result property="version" column="VERSION_" jdbcType="INTEGER"/>
+    <result property="deploymentId" column="DEPLOYMENT_ID_" jdbcType="VARCHAR"/>
+    <result property="resourceName" column="RESOURCE_NAME_" jdbcType="VARCHAR"/>
+    <result property="diagramResourceName" column="DGRM_RESOURCE_NAME_" jdbcType="VARCHAR"/>
+    <result property="description" column="DESCRIPTION_" jdbcType="VARCHAR" />
+    <result property="hasStartFormKey" column="HAS_START_FORM_KEY_" jdbcType="BOOLEAN"/>
+    <result property="suspensionState" column="SUSPENSION_STATE_" jdbcType="INTEGER"/>
+    <result property="isActiveVersion" column="IS_ACTIVE_VERSION_" jdbcType="BOOLEAN"/>
+    <result property="classificationId" column="CLASSIFICATION_ID_" jdbcType="VARCHAR"/>
+    <result property="isSystemDefined" column="IS_SYSTEM_DEFINED_" jdbcType="BOOLEAN"/>
+    <result property="modifiedUser" column="MODIFIED_USER" jdbcType="VARCHAR"/>
+  </resultMap>
+
+  <!-- PROCESSDEFINITION SELECT -->
+  
+  <select id="selectProcessDefinitionById" parameterType="string" resultMap="processDefinitionResultMap">
+    select * from ${prefix}ACT_RE_PROCDEF where ID_ = #{processDefinitionId}
+  </select>
+
+  <select id="selectProcessDefinitionsByQueryCriteria" parameterType="org.activiti.engine.impl.ProcessDefinitionQueryImpl" resultMap="processDefinitionResultMap">
+  	${limitBefore}
+    select RES.* ${limitBetween}
+    <include refid="selectProcessDefinitionsByQueryCriteriaSql"/>
+    ${orderBy}
+    ${limitAfter}
+  </select>
+
+  <select id="selectProcessDefinitionCountByQueryCriteria" parameterType="org.activiti.engine.impl.ProcessDefinitionQueryImpl" resultType="long">
+    select count(RES.ID_)
+    <include refid="selectProcessDefinitionsByQueryCriteriaSql"/>
+  </select>
+  
+  <sql id="selectProcessDefinitionsByQueryCriteriaSql">  
+    from ${prefix}ACT_RE_PROCDEF RES
+    <if test="eventSubscriptionType != null">
+    	inner join ${prefix}ACT_RU_EVENT_SUBSCR EVT on RES.ID_ = EVT.CONFIGURATION_
+    </if>
+   <!--  <if test="modules != null">
+        inner join ${prefix}PROCESS_MODULE mods on RES.ID_ = mods.PROCESS_ID
+    </if> -->
+    <where>
+      <if test="id != null">
+        RES.ID_ = #{id}
+      </if>
+      <if test="category != null">
+        and RES.CATEGORY_ = #{category}
+      </if>
+      <if test="categoryLike != null">
+        and RES.CATEGORY_ like #{categoryLike}
+      </if>
+      <if test="categoryNotEquals != null">
+        and ( RES.CATEGORY_ &lt;&gt; #{categoryNotEquals} OR RES.CATEGORY_ is null )
+      </if>
+      <if test="name != null">
+        and RES.NAME_ = #{name}
+      </if>
+      <if test="nameLike != null">
+        and RES.NAME_ like #{nameLike}
+      </if>
+      <if test="key != null">
+        and RES.KEY_ = #{key}
+      </if>
+      <if test="keyLike != null">
+        and RES.KEY_ like #{keyLike}
+      </if>
+      <if test="resourceName != null">
+        and RES.RESOURCE_NAME_ = #{resourceName}
+      </if>
+      <if test="resourceNameLike != null">
+        and RES.RESOURCE_NAME_ like #{resourceNameLike}
+      </if>
+      <if test="version != null">
+        and RES.VERSION_ = #{version}
+      </if>
+      <if test="deploymentId != null">
+        and RES.DEPLOYMENT_ID_ = #{deploymentId}
+      </if>
+      <if test="latest">
+        and RES.VERSION_ = (select max(VERSION_) from ${prefix}ACT_RE_PROCDEF where KEY_ = RES.KEY_)
+      </if>
+      <if test="suspensionState != null">
+        and (RES.SUSPENSION_STATE_ = #{suspensionState.stateCode})
+      </if>
+      <if test="isActiveVersion">
+        and RES.IS_ACTIVE_VERSION_ = #{isActiveVersion}
+      </if>
+       <if test="isSystemDefined">
+        and RES.IS_SYSTEM_DEFINED_ = #{isSystemDefined}
+      </if>
+      <if test="eventSubscriptionType != null">
+      	and (EVT.EVENT_TYPE_ = #{eventSubscriptionType} and EVT.EVENT_NAME_ = #{eventSubscriptionName}) 
+      </if>
+      <if test="authorizationUserId != null">
+        AND (exists (select ID_  from ${prefix} ACT_RU_IDENTITYLINK  IDN where IDN.PROC_DEF_ID_ = RES.ID_ and IDN.USER_ID_ = #{authorizationUserId})
+        <if test="authorizationGroups != null &amp;&amp; authorizationGroups.size() &gt; 0">
+         OR exists (select ID_ from ${prefix} ACT_RU_IDENTITYLINK  IDN where IDN.PROC_DEF_ID_ = RES.ID_ and IDN.GROUP_ID_ IN
+            <foreach item="group" index="index" collection="authorizationGroups" 
+                     open="(" separator="," close=")">
+              #{group}
+            </foreach>
+         )
+         </if>
+        )
+      </if>  
+<!--       <if test="modules != null"> -->
+<!--         and mods.MODULE_ID IN  -->
+<!--         <foreach item="module" index="index" collection="modules"  -->
+<!--                      open="(" separator="," close=")"> -->
+<!--               #{module.id} -->
+<!--             </foreach> -->
+<!--     </if>      -->
+    </where>
+  </sql>
+    
+  <select id="selectProcessDefinitionByDeploymentAndKey" parameterType="map" resultMap="processDefinitionResultMap">
+    select * 
+    from ${prefix}ACT_RE_PROCDEF 
+    where DEPLOYMENT_ID_ = #{deploymentId}
+      and KEY_ = #{processDefinitionKey}
+  </select>
+    
+  <select id="selectLatestProcessDefinitionByKey" parameterType="string" resultMap="processDefinitionResultMap">
+    select *
+    from ${prefix}ACT_RE_PROCDEF 
+    where KEY_ = #{key} and
+          VERSION_ = (select max(VERSION_) from ${prefix}ACT_RE_PROCDEF where KEY_ = #{processDefinitionKey})
+  </select>
+
+  <!-- mysql specific sql -->
+  <select id="selectProcessDefinitionsByQueryCriteria_mysql" parameterType="org.activiti.engine.impl.ProcessDefinitionQueryImpl" resultMap="processDefinitionResultMap">
+  	${limitBefore}
+    select distinct RES.* ${limitBetween}
+    <include refid="selectProcessDefinitionsByQueryCriteriaSql"/>
+    ${orderBy}
+    ${limitAfter}
+  </select>
+
+  <!-- mysql specific sql -->
+  <select id="selectProcessDefinitionCountByQueryCriteria_mysql" parameterType="org.activiti.engine.impl.ProcessDefinitionQueryImpl" resultType="long">
+    select distinct count(RES.ID_)
+    <include refid="selectProcessDefinitionsByQueryCriteriaSql"/>
+  </select>
+  
+   <select id="selectProcessDefinitionByUser" parameterType="string" resultMap="processDefinitionResultMap">
+    select * from ${prefix}ACT_RE_PROCDEF procDef left join ${prefix}ACT_HI_PROCINST procInst on procInst.PROC_DEF_ID_ = procDef.ID_ where procInst.START_USER_ID_ like #{parameter}
+  </select>
+  
+  <select id="selectProcessDefinitionsByKey" parameterType="string" resultMap="processDefinitionResultMap">
+    select * from ${prefix}ACT_RE_PROCDEF procDef  where procDef.KEY_ = #{parameter}
+  </select>
+  
+   <select id="selectActiveProcessDefinitionsByKey" parameterType="string" resultMap="processDefinitionResultMap">
+    select * from ${prefix}ACT_RE_PROCDEF procDef  where procDef.KEY_ = #{parameter} and procDef.SUSPENSION_STATE_ = 1 and procDef.IS_ACTIVE_VERSION_ = 1
+  </select>
+  
+  <select id="selectProcessDefinitionListByIds" parameterType="list" resultMap="processDefinitionResultMap">
+    select * from ${prefix}ACT_RE_PROCDEF where ID_ IN 
+       <foreach item="item" index="index" collection="parameter" open="(" separator="," close=")"> 
+          #{item} 
+       </foreach> 
+  </select>
+  
+  <select id="selectProcessDefinitionListByKeys" parameterType="list" resultMap="processDefinitionResultMap">
+    select * from ${prefix}ACT_RE_PROCDEF where KEY_ IN 
+       <foreach item="item" index="index" collection="parameter" open="(" separator="," close=")"> 
+          #{item} 
+       </foreach> 
+  </select>
+  
+</mapper>

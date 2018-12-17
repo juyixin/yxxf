@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%p] %c{1}.%M(%L) | %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="RollingFileAppender" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="logs/bpm.log" />  
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%p] %c{1}.%M(%L) | %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="jdbcAppenderProcess" class="org.apache.log4j.jdbcplus.JDBCAppender">
+		<!--<param name="url" value='jdbc:mysql://${jdbc.host}:${jdbc.port}/${db.name}?autoReconnect=true' />-->
+		<param name="url" value='${jdbc.url}' />
+		<param name="username" value='${jdbc.username}' />
+		<param name="password" value='${jdbc.password}' />
+		<param name="quoteReplace" value="true" />
+		<param name="sql" value="INSERT INTO ETEC_PROCESSLOGS (USER_ID,LOG_DATE,LOG_TYPE,LOGGER,ERROR_LEVEL,MESSAGE,ip,process_name) VALUES ('@MDC:userName@','@TIMESTAMP@' ,'process', '@CAT@', '@PRIO@', '@MSG@','@MDC:ip@','@MDC:processName@')" />
+	</appender>
+
+	<appender name="jdbcAppender" class="org.apache.log4j.jdbcplus.JDBCAppender">
+		<param name="url" value='${jdbc.url}' />
+		<param name="username" value='${jdbc.username}' />
+		<param name="password" value='${jdbc.password}' />
+		<param name="quoteReplace" value="true" />
+		<param name="sql" value="INSERT INTO ETEC_SYSTEMLOGS (USER_ID,LOG_DATE,log_type,LOGGER,ERROR_LEVEL,MESSAGE,ip) VALUES ('@MDC:userName@','@TIMESTAMP@' ,'System Log', '@CAT@', '@PRIO@', '@MSG@','@MDC:ip@')" />
+ 	</appender>
+
+	<appender name="jdbcAppenderAdminLogs" class="org.apache.log4j.jdbcplus.JDBCAppender">
+		<param name="url" value='${jdbc.url}' />
+		<param name="username" value='${jdbc.username}' />
+		<param name="password" value='${jdbc.password}' />
+		<param name="quoteReplace" value="true" />
+		<param name="sql" value="INSERT INTO ETEC_ADMINLOGS (USER_ID,LOG_DATE,LOG_TYPE,LOGGER,LEVELS,MESSAGE,ip) VALUES ('@MDC:userName@','@TIMESTAMP@' ,'admin', '@CAT@', '@PRIO@', '@MSG@','@MDC:ip@')" />
+	</appender>
+
+	<appender name="logInAppender" class="org.apache.log4j.jdbcplus.JDBCAppender">
+		<param name="url" value='${jdbc.url}' />
+		<param name="username" value='${jdbc.username}' />
+		<param name="password" value='${jdbc.password}' />
+		<param name="quoteReplace" value="true" />
+		<param name="sql" value="INSERT INTO ETEC_LOGINLOGS (USER_ID,LOG_DATE,LOG_TYPE,LOGGER,ERROR_LEVEL,MESSAGE,ip) VALUES ('@MDC:userName@','@TIMESTAMP@' ,'@MDC:type@', '@CAT@', '@PRIO@', '@MSG@','@MDC:ip@')" />
+	</appender> 
+	
+	<appender name="moduleAppender" class="org.apache.log4j.jdbcplus.JDBCAppender">
+		<param name="url" value='${jdbc.url}' />
+		<param name="username" value='${jdbc.username}' />
+		<param name="password" value='${jdbc.password}' />
+		<param name="quoteReplace" value="true" />
+		<param name="sql" value="INSERT INTO ETEC_MODULELOGS (USER_ID,LOG_DATE,LOG_TYPE,LOGGER,ERROR_LEVEL,MESSAGE,ip) VALUES ('@MDC:userName@','@TIMESTAMP@' ,'module', '@CAT@', '@PRIO@', '@MSG@','@MDC:ip@')" />
+	</appender>
+	
+
+	<!-- process logs -->
+	
+	<logger name="com.eazytec.webapp.controller.FormController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="jdbcAppenderProcess" />
+	</logger>	
+	
+	<logger name="com.eazytec.webapp.controller.ProcessController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="jdbcAppenderProcess" />
+	</logger>
+	
+	<logger name="com.eazytec.webapp.controller.TaskController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="jdbcAppenderProcess" />
+	</logger>	
+
+	<logger name="com.eazytec.webapp.controller.OperatingFunctionController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="jdbcAppenderProcess" />
+	</logger>
+	
+			
+	
+	<!-- admin logs -->
+	
+	 <logger name="com.eazytec.bpm.admin" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="jdbcAppenderAdminLogs" />
+	</logger>	
+	
+	<logger name="com.eazytec.webapp.controller.SysConfigController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="jdbcAppenderAdminLogs" />
+	</logger>
+
+	<logger name="com.eazytec.webapp.controller.ConfigController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="jdbcAppenderAdminLogs" />
+	</logger>
+
+	<logger name="com.eazytec.webapp.controller.DepartmentController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="jdbcAppenderAdminLogs" />
+	</logger>
+	
+	<logger name="com.eazytec.webapp.controller.UserFormController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="jdbcAppenderAdminLogs" />
+	</logger>
+	
+	<logger name="com.eazytec.webapp.controller.RoleController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="jdbcAppenderAdminLogs" />
+	</logger>		
+
+	<logger name="com.eazytec.webapp.controller.CustomOperatingController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="jdbcAppenderAdminLogs" />
+	</logger>	
+	
+	<logger name="com.eazytec.webapp.controller.HolidayController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="jdbcAppenderAdminLogs" />
+	</logger>	
+	
+	<logger name="com.eazytec.webapp.controller.MenuController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="jdbcAppenderAdminLogs" />
+	</logger>	
+	
+	<logger name="com.eazytec.webapp.controller.DMSController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="jdbcAppenderAdminLogs" />
+	</logger>
+
+	<logger name="com.eazytec.webapp.controller.GroupController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="jdbcAppenderAdminLogs" />
+	</logger>
+
+	<logger name="com.eazytec.webapp.controller.UserController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="jdbcAppenderAdminLogs" />
+	</logger>
+
+	<logger name="com.eazytec.webapp.controller.DataDictionaryController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="jdbcAppenderAdminLogs" />
+	</logger>
+	
+	<logger name="com.eazytec.webapp.controller.NewsController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="jdbcAppenderAdminLogs" />
+	</logger>
+	
+	<logger name="com.eazytec.webapp.controller.NoticeController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="jdbcAppenderAdminLogs" />
+	</logger>
+	
+	
+	
+	
+	<!-- module logs -->
+
+	<logger name="com.eazytec.webapp.controller.ModuleController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="moduleAppender" />
+	</logger>	
+	
+	<logger name="com.eazytec.webapp.controller.TableController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="moduleAppender" />
+	</logger>
+	
+	<logger name="com.eazytec.webapp.controller.MetaFormController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="moduleAppender" />
+	</logger>	
+	
+	<logger name="com.eazytec.webapp.controller.ListViewController" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="moduleAppender" />
+	</logger>
+	
+	
+			
+	<!-- login logs -->
+	
+	<logger name="com.eazytec.webapp.listener.UserCounterListener" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="logInAppender" />
+	</logger>
+
+	<logger name="com.eazytec.webapp.filter.LoginFilter" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="logInAppender" />
+	</logger>
+	
+	
+	
+	<!-- system logs -->
+	
+	<logger name="log4j.rootLogger" additivity="false">
+		<level value="ERROR" />
+		<appender-ref ref="jdbcAppender" />
+	</logger>
+
+	<logger name="org.springframework" additivity="false">
+		<level value="WARN" />
+		<appender-ref ref="jdbcAppender" />
+		<appender-ref ref="CONSOLE" />
+	</logger>
+
+	<logger name="com.eazytec" additivity="false">
+		<level value="ERROR" />
+		<appender-ref ref="jdbcAppender" />
+		<appender-ref ref="CONSOLE" />
+	</logger>
+
+	<logger name="com.eazytec.tool" additivity="false">
+		<level value="ERROR" />
+		<appender-ref ref="jdbcAppender" />
+	</logger>
+	
+	<logger name="net.sf.ehcache">
+		<level value="ERROR" />
+	</logger>
+
+	<!-- Suppress success logging from InteractiveAuthenticationSuccessEvent -->
+	<logger name="org.springframework.security">
+		<level value="ERROR" />
+		<appender-ref ref="jdbcAppender" />
+	</logger>
+
+	<logger name="org.apache.velocity">
+		<level value="FATAL" />
+		<appender-ref ref="jdbcAppender" />
+	</logger>
+	
+	<!-- activiti sql 调试 -->
+	<logger name="org.activiti.engine.impl.persistence.entity" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="RollingFileAppender" />
+	</root>
+	
+</log4j:configuration>

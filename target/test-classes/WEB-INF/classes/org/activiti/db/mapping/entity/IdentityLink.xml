@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="org.activiti.engine.impl.persistence.entity.IdentityLinkEntity">
+
+  <!-- INSERT IDENTITY LINK -->
+  
+  <insert id="insertIdentityLink" parameterType="org.activiti.engine.impl.persistence.entity.IdentityLinkEntity">
+    insert into ${prefix}ACT_RU_IDENTITYLINK (ID_, REV_, TYPE_, USER_ID_, GROUP_ID_, TASK_ID_, PROC_DEF_ID_, ORDER_,GROUP_TYPE_,PARENT_ID_,OPERATION_TYPE_,PROC_INS_ID_)
+    values (#{id, jdbcType=VARCHAR},
+            1,
+            #{type, jdbcType=VARCHAR},
+            #{userId, jdbcType=VARCHAR},
+            #{groupId, jdbcType=VARCHAR},
+            #{taskId, jdbcType=VARCHAR},
+            #{processDefId, jdbcType=VARCHAR},
+            #{order, jdbcType=INTEGER},
+            #{groupType, jdbcType=VARCHAR},
+            #{parentId,jdbcType=VARCHAR},
+            #{operationType,jdbcType=VARCHAR},
+            #{processInstanceId,jdbcType=VARCHAR})
+  </insert>
+  
+  <!--  UPDATE -->
+   <update id="updateIdentityLink" parameterType="org.activiti.engine.impl.persistence.entity.IdentityLinkEntity">
+    update  ${prefix}ACT_RU_IDENTITYLINK
+    <set>
+           TYPE_ =  #{type, jdbcType=VARCHAR},
+           USER_ID_ = #{userId, jdbcType=VARCHAR},
+           GROUP_ID_ = #{groupId, jdbcType=VARCHAR},
+           TASK_ID_ = #{taskId, jdbcType=VARCHAR},
+           PROC_DEF_ID_ = #{processDefId, jdbcType=VARCHAR},
+           ORDER_ = #{order, jdbcType=INTEGER},
+           GROUP_TYPE_ = #{groupType, jdbcType=VARCHAR},
+           PARENT_ID_ = #{parentId,jdbcType=VARCHAR},
+           OPERATION_TYPE_ = #{operationType,jdbcType=VARCHAR,
+           PROC_INS_ID_ = #{processInstanceId,jdbcType=VARCHAR           }
+    </set>
+    where ID_= #{id, jdbcType=VARCHAR}
+  </update>
+  <!--  UPDATE -->
+  
+  <!-- IDENTITY LINK DELETE -->
+  
+  <delete id="deleteIdentityLink" parameterType="string">
+    delete from ${prefix}ACT_RU_IDENTITYLINK where ID_ = #{id}
+  </delete>
+  
+  <delete id="deleteIdentityLinkByProcDef" parameterType="string">
+    delete from ${prefix}ACT_RU_IDENTITYLINK where PROC_DEF_ID_ = #{id}
+  </delete>
+  
+
+  <!-- IDENTITY LINK RESULTMAP -->
+
+  <resultMap id="identityLinkResultMap" type="org.activiti.engine.impl.persistence.entity.IdentityLinkEntity">
+    <id property="id" column="ID_" jdbcType="VARCHAR" />
+    <result property="type" column="TYPE_" jdbcType="VARCHAR" />
+    <result property="userId" column="USER_ID_" jdbcType="VARCHAR" />
+    <result property="groupId" column="GROUP_ID_" jdbcType="VARCHAR" />
+    <result property="taskId" column="TASK_ID_" jdbcType="VARCHAR" />
+    <result property="processDefId" column="PROCESS_DEF_ID_" jdbcType="VARCHAR" />
+    <result property="order" column="ORDER_" jdbcType="INTEGER" />
+    <result property="groupType" column="GROUP_TYPE_" jdbcType="VARCHAR" />   
+    <result property="parentId" column="PARENT_ID_" jdbcType="VARCHAR" />
+    <result property="operationType" column="OPERATION_TYPE_" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <!-- IDENTITY LINK SELECT -->
+
+  <select id="selectIdentityLink" parameterType="string" resultMap="identityLinkResultMap">
+    select * from ${prefix}ACT_RU_IDENTITYLINK where ID_ = #{id}
+  </select>
+  
+   <select id="selectNextIdentityLinks" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+     select * from ${prefix}ACT_RU_IDENTITYLINK where TASK_ID_ IN 		
+    <foreach item="taskId" index="index" collection="parameter.taskIds"
+	      open="(" separator="," close=")">
+	        #{taskId}
+	  </foreach>
+	  AND ORDER_ = (SELECT MIN(IDNTY_ORDER.ORDER_) from ${prefix}ACT_RU_IDENTITYLINK AS IDNTY_ORDER WHERE IDNTY_ORDER.TASK_ID_ = TASK_ID_)   
+  </select>
+  
+  <select id="selectIdentityLinksByTask" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+    select * from ${prefix}ACT_RU_IDENTITYLINK where TASK_ID_ = #{parameter} order by ORDER_ ASC
+  </select>
+  
+  <select id="selectIdentityLinksByProcessDefinition" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+    select * from ${prefix}ACT_RU_IDENTITYLINK where PROC_DEF_ID_ = #{parameter} order by ORDER_ ASC
+  </select>
+  
+  <select id="selectIdentityLinkByTaskUserGroupAndType" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+    select * 
+    from ${prefix}ACT_RU_IDENTITYLINK 
+    where TASK_ID_ = #{parameter.taskId}
+      <if test="parameter.userId != null">
+        and USER_ID_ = #{parameter.userId}
+      </if>
+      <if test="parameter.groupId != null">
+        and GROUP_ID_ = #{parameter.groupId}
+      </if>
+      <if test="parameter.type != null">
+        and TYPE_ = #{parameter.type}
+      </if>
+      order by ORDER_ ASC
+  </select>
+  
+  <select id="selectIdentityLinkByTaskAndType" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+    select * 
+    from ${prefix}ACT_RU_IDENTITYLINK 
+    where TASK_ID_ = #{parameter.taskId}      
+      <if test="parameter.type != null">
+        and TYPE_ = #{parameter.type}
+      </if>
+     <!--  and PARENT_ID_ is null -->
+      order by ORDER_ ASC
+  </select>
+  
+    <select id="selectHistoricIdentityLinkByTaskAndType" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+    select * 
+    from ${prefix}ACT_HI_IDENTITYLINK 
+    where TASK_ID_ = #{parameter.taskId}      
+      <if test="parameter.type != null">
+        and TYPE_ = #{parameter.type}
+      </if>
+      order by ORDER_ ASC
+  </select>
+  
+  <select id="selectIdentityLinksByUsersAndType" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+    select * 
+    from ${prefix}ACT_RU_IDENTITYLINK 
+    where TASK_ID_ = #{parameter.taskId}
+      <if test="parameter.userIds != null">
+        and USER_ID_ IN
+        <foreach item="user" index="index" collection="parameter.userIds" 
+                     open="(" separator="," close=")">
+              #{user}
+        </foreach>
+      </if>     
+      <if test="parameter.type != null">
+        and TYPE_ = #{parameter.type}
+      </if>
+      order by ORDER_ ASC
+  </select>
+  
+  <select id="selectIdentityLinksByTaskAndUserOrGroups" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+	  select *  from ${prefix}ACT_RU_IDENTITYLINK where (USER_ID_ = #{parameter.userId})      
+      <if test="parameter.taskId != null">
+        and TASK_ID_ = #{parameter.taskId}
+      </if>
+     
+      <if test="parameter.groupIds != null">
+        OR (GROUP_ID_ IN
+        <foreach item="group" index="index" collection="parameter.groupIds" open="(" separator="," close=")">
+        	#{group}
+        </foreach>
+        AND GROUP_TYPE_='groups')
+      </if>
+      <if test="parameter.roleIds != null">
+        OR (GROUP_ID_ IN
+        <foreach item="role" index="index" collection="parameter.roleIds" open="(" separator="," close=")">
+        	#{role}
+        </foreach>
+        AND GROUP_TYPE_='roles')
+      </if>
+      
+      <if test="parameter.departmentId != null">
+        OR (GROUP_ID_ = #{parameter.departmentId} AND GROUP_TYPE_='departments')
+      </if>
+      <if test="parameter.type != null">
+        and TYPE_ = #{parameter.type}
+      </if>     
+      
+      order by ORDER_ ASC
+  </select>
+  
+  <select id="selectIdentityLinksByTaskAndUserOrGroupsExcType" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+    select * 
+    from ${prefix}ACT_RU_IDENTITYLINK 
+    where (USER_ID_ = #{parameter.userId})      
+      <if test="parameter.taskId != null">
+        and TASK_ID_ = #{parameter.taskId}
+      </if>
+     
+        and TYPE_ NOT IN 
+        <foreach item="exclude" index="index" collection="parameter.excludeTypes" 
+                     open="(" separator="," close=")">
+              #{exclude}
+        </foreach>
+     
+      <if test="parameter.groupIds != null">
+        OR (GROUP_ID_ IN
+        <foreach item="group" index="index" collection="parameter.groupIds" 
+                     open="(" separator="," close=")">
+              #{group}
+        </foreach>
+        AND GROUP_TYPE_='groups')
+      </if>
+      <if test="parameter.roleIds != null">
+        OR (GROUP_ID_ IN
+        <foreach item="role" index="index" collection="parameter.roleIds" 
+                     open="(" separator="," close=")">
+              #{role}
+        </foreach>
+        AND GROUP_TYPE_='roles')
+      </if>
+      <if test="parameter.departmentId != null">
+        OR (GROUP_ID_ = #{parameter.departmentId}
+      
+      AND GROUP_TYPE_='departments')
+      </if>
+      <if test="parameter.type != null">
+        and TYPE_ = #{parameter.type}
+      </if>     
+      
+      order by ORDER_ ASC
+  </select>
+  
+  <select id="selectIdentityLinkByUserGroupAndType" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+    select * 
+    from ${prefix}ACT_RU_IDENTITYLINK 
+    where USER_ID_ = #{parameter.userId}
+      <if test="parameter.groupId != null">
+        and GROUP_ID_ = #{parameter.groupId}
+      </if>
+      <if test="parameter.type != null">
+        and TYPE_ = #{parameter.type}
+      </if>
+      order by ORDER_ ASC
+  </select>
+  
+  <select id="selectIdentityLinkByProcessDefinitionUserAndGroup" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+    select * 
+    from ${prefix}ACT_RU_IDENTITYLINK 
+    where PROC_DEF_ID_ = #{parameter.processDefinitionId}
+      <if test="parameter.userId != null">
+        and USER_ID_ = #{parameter.userId}
+      </if>
+      <if test="parameter.groupId != null">
+        and GROUP_ID_ = #{parameter.groupId}
+      </if>
+      order by ORDER_ ASC
+  </select>
+  
+ <select id="selectNextIdentityLink" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+       select * 
+    from ${prefix}ACT_RU_IDENTITYLINK 
+    where TASK_ID_ = #{parameter.taskId} 
+    <if test="parameter.userId != null || parameter.groupIds != null || parameter.roleIds != null || parameter.departmentId != null">
+     AND
+     (   
+      <if test="parameter.userId != null">
+         USER_ID_ = #{parameter.userId}
+      </if>
+      <if test="parameter.groupIds != null">
+        OR (GROUP_ID_ IN
+        <foreach item="group" index="index" collection="parameter.groupIds" 
+                     open="(" separator="," close=")">
+              #{group}
+        </foreach>
+        AND GROUP_TYPE_='groups')
+      </if>
+      <if test="parameter.roleIds != null">
+        OR (GROUP_ID_ IN
+        <foreach item="role" index="index" collection="parameter.roleIds" 
+                     open="(" separator="," close=")">
+              #{role}
+        </foreach>
+        AND GROUP_TYPE_='roles')
+      </if>
+      <if test="parameter.departmentId != null">
+        OR (GROUP_ID_ = #{parameter.departmentId}
+      
+      AND GROUP_TYPE_='departments')
+      </if>
+      )
+     </if>
+      <if test="parameter.type != null">
+        and TYPE_ = #{parameter.type}
+      </if> 
+      order by ORDER_ ASC LIMIT 1
+  </select>
+  
+  <select id="selectNextIdentityLink_oracle" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+       select * 
+    from ${prefix}ACT_RU_IDENTITYLINK 
+    where TASK_ID_ = #{parameter.taskId} 
+    AND ROWNUM = 1
+    
+    <if test="parameter.userId != null || parameter.groupIds != null || parameter.roleIds != null || parameter.departmentId != null">
+     AND
+     (   
+      <if test="parameter.userId != null">
+         USER_ID_ = #{parameter.userId}
+      </if>
+      <if test="parameter.groupIds != null">
+        OR (GROUP_ID_ IN
+        <foreach item="group" index="index" collection="parameter.groupIds" 
+                     open="(" separator="," close=")">
+              #{group}
+        </foreach>
+        AND GROUP_TYPE_='groups')
+      </if>
+      <if test="parameter.roleIds != null">
+        OR (GROUP_ID_ IN
+        <foreach item="role" index="index" collection="parameter.roleIds" 
+                     open="(" separator="," close=")">
+              #{role}
+        </foreach>
+        AND GROUP_TYPE_='roles')
+      </if>
+      <if test="parameter.departmentId != null">
+        OR (GROUP_ID_ = #{parameter.departmentId}
+      
+      AND GROUP_TYPE_='departments')
+      </if>
+      )
+     </if>
+      <if test="parameter.type != null">
+        and TYPE_ = #{parameter.type}
+      </if> 
+      order by ORDER_ ASC
+  </select>
+  
+ <select id="selectNextIdentityLink_mssql" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+   select TOP 1 * 
+    from ${prefix}ACT_RU_IDENTITYLINK 
+    where TASK_ID_ = #{parameter.taskId} 
+    <if test="parameter.userId != null || parameter.groupIds != null || parameter.roleIds != null || parameter.departmentId != null">
+     AND
+     (   
+      <if test="parameter.userId != null">
+         USER_ID_ = #{parameter.userId}
+      </if>
+      <if test="parameter.groupIds != null">
+        OR (GROUP_ID_ IN
+        <foreach item="group" index="index" collection="parameter.groupIds" 
+                     open="(" separator="," close=")">
+              #{group}
+        </foreach>
+        AND GROUP_TYPE_='groups')
+      </if>
+      <if test="parameter.roleIds != null">
+        OR (GROUP_ID_ IN
+        <foreach item="role" index="index" collection="parameter.roleIds" 
+                     open="(" separator="," close=")">
+              #{role}
+        </foreach>
+        AND GROUP_TYPE_='roles')
+      </if>
+      <if test="parameter.departmentId != null">
+        OR (GROUP_ID_ = #{parameter.departmentId}
+      
+      AND GROUP_TYPE_='departments')
+      </if>
+      )
+     </if>
+      <if test="parameter.type != null">
+        and TYPE_ = #{parameter.type}
+      </if> 
+      order by ORDER_ ASC 
+ </select> 
+  
+	<select id="selectNextIdentityLinkByOrder" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+	   select * 
+    from ${prefix}ACT_RU_IDENTITYLINK 
+    where TASK_ID_ = #{parameter.taskId}
+    and ID_ !=  #{parameter.id}
+    and TYPE_ = #{parameter.type}
+    and PARENT_ID_ is null
+    <if test="parameter.parentId != null">
+    	and ID_ != #{parameter.parentId}
+    </if>
+      order by ORDER_ ASC LIMIT 1  
+	</select>
+	
+		<select id="selectNextIdentityLinkByOrder_mssql" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+	   select TOP 1 * 
+    from ${prefix}ACT_RU_IDENTITYLINK 
+    where TASK_ID_ = #{parameter.taskId}
+    and ID_ !=  #{parameter.id}
+    and TYPE_ = #{parameter.type}
+    and PARENT_ID_ is null
+    <if test="parameter.parentId != null">
+    	and ID_ != #{parameter.parentId}
+    </if>
+      order by ORDER_ ASC 
+	</select>
+	
+		<select id="selectNextIdentityLinkByOrder_oracle" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+	   select * 
+    from ${prefix}ACT_RU_IDENTITYLINK 
+    where TASK_ID_ = #{parameter.taskId}
+    and ID_ !=  #{parameter.id}
+    and TYPE_ = #{parameter.type}
+    and PARENT_ID_ is null
+    <if test="parameter.parentId != null">
+    	and ID_ != #{parameter.parentId}
+    </if>
+    and ROWNUM = 1
+	</select>
+   
+   <!-- <select id="selectNextIdentityLink" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+    select * 
+    from ${prefix}ACT_RU_IDENTITYLINK 
+    where TASK_ID_ = #{parameter.taskId} AND
+    USER_ID_ IS NOT NULL
+      <if test="parameter.userId != null">
+        and USER_ID_ != #{parameter.userId}       
+      </if>  
+      <if test="parameter.type != null">
+        and TYPE_ = #{parameter.type}       
+      </if>      
+        and GROUP_ID_ IS NULL     
+      order by ORDER_ ASC LIMIT 1
+  </select> -->
+  
+  
+  <select id="selectIdentityLinksByParentId" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+    select * from ${prefix}ACT_RU_IDENTITYLINK where PARENT_ID_ = #{parameter} order by ORDER_ ASC
+  </select> 
+  
+  <select id="selectIdentityLinksOfSubstitute" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+    select * from ${prefix}ACT_RU_IDENTITYLINK where (PARENT_ID_ = #{parameter} or ID_ = #{parameter}) order by ORDER_ ASC
+  </select>  
+
+   <delete id="deleteIdentityLinkByProcessInstanceId" parameterType="string">
+    delete from ${prefix}ACT_RU_IDENTITYLINK where PROC_INS_ID_ = #{parameter}
+  </delete>
+  
+   <select id="selectCreatorIdentityLink" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+    select * from ${prefix}ACT_RU_IDENTITYLINK where TASK_ID_ = #{parameter.taskId} 
+  </select>
+
+  	<select id="selectIdentityLinksByInstanceId" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="identityLinkResultMap">
+   	 select * from ${prefix}ACT_RU_IDENTITYLINK where PROC_INS_ID_ = #{parameter} order by ORDER_ ASC
+  </select>  
+  
+</mapper>

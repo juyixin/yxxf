@@ -1,0 +1,384 @@
+ #if($fieldNameList)
+ 	 <script type="text/javascript">
+ 	 #foreach($fieldName in $fieldNameList)
+ 		 #if($fieldName.onRenderEvent != '')
+				$fieldName.onRenderEvent
+			#end  
+	  #end
+	 </script>
+  #end
+  
+<script type="text/javascript">
+ var header="";
+ var _current_listview_id = "$listViewId";
+ var noOfRecords="10";
+ var gridHeaderLinkContent = '#if($isExportNeed)<a style="padding:3px;" id="export" href="javascript:void(0);" data-role="button" data-theme="b"  onClick="exportGridDataToCSV(\'$gridId\');"  data-icon=""><button class="btn">导出 CSV</button></a>#end';
+ var headTagDiv ='<div id="headerTag" class="page-header"><div class="pull-left"><img src="/images/listcode.png " style="float:left; margin:9px 6px 5px 5px" /><h2>$title</h2></div><div id="grid_header_links" align="right">'; 
+ var headTag=headTagDiv+gridHeaderLinkContent;
+ var createLink="";
+ var length=$link.isEmpty();
+ var needMultiSelect=false;
+  #if(!$link.isEmpty())
+  		#if(!$params.isEmpty())
+			createLink='<a id="createNew" style="padding:3px;" href="#$link" data-role="button" data-theme="b"  onClick="callLink(\'${params}\');"  data-icon="" title="Create New"><button class="btn">Create New</button></a>';
+	  	#else
+	  		createLink='<a id="createNew" style="padding:3px;" href="#$link" data-role="button" data-theme="b"  onClick="callLink();"  data-icon="" title="Create New"><button class="btn">Create New</button></a>';
+	  	#end
+  #end
+ 
+  #if($isNeedCheckbox==true)
+  	needMultiSelect=true
+  #end
+  
+  #if($isFormGrid)
+  	$("#header_links").hide();
+  #end
+  var endTag="</div></div></div>";
+  
+  header=headTag.concat(createLink,endTag); 
+  
+  #if(!$noOfRecords.isEmpty())
+  	 noOfRecords = $noOfRecords;
+  #end
+   var gridObj = $("#_$gridId");
+   var gridId = "$gridId";
+   var widgetContainer = "_$widgetContainer";
+ $(function(){
+	
+  $("#_$gridId").jqGrid({
+  	#if($jsonFieldValues != "")
+		data: $jsonFieldValues,
+	#else
+		data: [],
+	#end
+		datatype: "local",
+		#if($isDynamicFromGridHeight==true)
+			width: $dynamicFromGridWidth,
+			height: $dynamicFromGridHeight, 
+		#else
+			#if($dynamicGridWidth != '')
+				width: $dynamicGridWidth(), 
+			#else
+				width: getGridWidth(), 
+			#end
+			#if($dynamicGridHeight != '')
+				height: $dynamicGridHeight(),
+			#else
+				height: getGridHeight(), 
+			#end
+		#end
+		
+		
+		multiselect: $isNeedCheckbox,		
+	    colNames:$columnNames,
+	    autoencode:true,
+	    colModel :[   
+	    
+			   #foreach($fieldName in $fieldNameList)
+				   {
+					    name: '$fieldName.index'
+					 	,index: '$fieldName.index'
+					 	,width: $fieldName.width
+					 	,align: '$fieldName.textAlign'
+					 	,hidden: $fieldName.isHidden
+					 	#if($fieldName.isSort != '')
+				 			,sortable:$fieldName.isSort
+				 		#end 
+				 		#if($fieldName.columnType != '')
+				 			,sorttype:'$fieldName.columnType'
+				 		#end
+				 		#if($fieldName.title != '')
+				 			,title:'$fieldName.title'
+				 		#end  
+						#if($fieldName.onRenderEventName != '')
+					 		,formatter: $fieldName.onRenderEventName
+					 	#end  				 	 
+				   },   
+			   #end
+	    ],
+	    #if($fieldNameList.size() > 9 && ($title.indexOf('Table Data') != -1))
+ 	    	shrinkToFit: false,
+	    #end
+	    
+	    pager: '#_${gridId}_PAGER',
+	    rowNum: noOfRecords,
+	    viewrecords: true,
+	    gridview: true,
+        #if(${container} && ${container.contains("_SubContainer")})
+              scroll: 1,
+        #end
+	    #if($title != '')
+			/*caption: header,*/
+		#end
+	    hidegrid: false,
+	    /*beforeSelectRow: function(rowid, e)
+		{
+		    jQuery("#_$gridId").jqGrid('resetSelection');
+		    return(true);
+		},*/
+		loadComplete: function() {
+    		$("#_${gridId} tr.jqgrow:odd").css("background", "#F5F5F5");
+    	},
+    	onSortCol: function (index, columnIndex, sortOrder) {
+		       sortListViewResults(index,sortOrder);
+		}
+  });
+});
+
+$(window).bind('resize', function() {
+	#if($needTreeStructure==true)
+		 setTimeout(function() {
+		 	 var winWidth = parseInt($("#user-grid").width());
+		 	 $("#_${gridId}").jqGrid('setGridWidth', winWidth-3);
+   		 },1);
+   #elseif(${container.contains("_SubContainer")})	
+		 setTimeout(function() {
+		 	var winWidth = parseInt($("#_${widgetContainer}").width());
+		 	$("#_${gridId}").jqGrid('setGridWidth', winWidth-3);
+   		 },1);
+   	#elseif($isDynamicFromGridHeight==true)
+   		setTimeout(function() {
+		 	var winWidth = parseInt($dynamicFromGridWidth);
+		 	 $("#_${gridId}").jqGrid('setGridWidth', winWidth);
+   		 },1);
+   #else	
+		 setTimeout(function() {
+		 	var winWidth = parseInt($("#target").width());
+		 	 $("#_${gridId}").jqGrid('setGridWidth', winWidth-3);
+   		 },1);
+   #end
+   #if(${container}=='rightPanel')	
+		 setTimeout(function() {
+		 	var winWidth = parseInt($("#rightPanel").width());
+		 	var winHieght = parseInt($("#rightPanel").height());
+		 	$("#_${gridId}").jqGrid('setGridWidth', winWidth-18);
+		 	$("#_${gridId}").jqGrid('setGridHeight', winHieght-60);
+   		 },1);
+   #end
+ }).trigger('resize');
+
+$(document).ready(function() {
+	setTimeout(function() {
+		$("#_${gridId}_PAGER_center table.ui-pg-table tr").append ('<td><div><select class="grid-refresh" onChange="refreshListViewGridData(\'$gridId\',\'$listViewId\', this.value);"><option value=""></option><option value="100000">1</option><option value="300000">3</option><option value="500000">5</option></select> Mins</div></td>');
+	},300);
+});
+
+#if($headerLink)
+	 	var  htmlContent="";
+	 	var searchFields = "";
+	 	  #foreach($header in $headerLink)
+	 	  		#if($header.iconPath != '' && $header.iconPath != 'null' )
+		 			htmlContent=htmlContent+"<a style='padding:3px;' id='$header.linkId' href='javascript:void(0);' data-role='button' data-theme='b'  data-icon=''><button class='btn'><img src='$header.iconPath' width='12px' height='12px' style='margin-right:3px'/>$header.linkName</button></a>";
+		 		#else
+		 			htmlContent=htmlContent+"<a style='padding:3px;' id='$header.linkId' href='javascript:void(0);' data-role='button' data-theme='b'  data-icon=''><button class='btn'>$header.linkName</button></a>";
+		 		#end
+		  #end
+		  #if($isShowSearchBox)
+			  #if($isAdvanceSearchNeeded)
+			  	searchFields = searchFields + '<a href="javascript:void(0);" style="padding:3px;" onClick="listViewAdvanceSearch(\'$listViewId\');"><button class="btn">高级搜索</button></a>';
+			  #end
+			  searchFields = searchFields + '<span class="simple-search pad-L10 pad-R10">搜索</span><span style="padding-right:8px;line-height:2px;"><input type="text" name="searchBox" style="width:8%" id="searchBox" onkeyup="_simpleSearch(\'$gridId\', \'$listViewId\', this);"/></span>';
+		  #end
+		  var previousHtmlLinks=$("#grid_header_links").html();
+		  var headerLinkExists = $("#header_links").length;
+		  if(headerLinkExists > 0){
+		  	$("#grid_header_links").html(htmlContent+gridHeaderLinkContent+searchFields);
+		  	$("#header_links").html(htmlContent+gridHeaderLinkContent+searchFields);
+		  }else{
+		  	if(previousHtmlLinks != undefined){
+				$("#grid_header_links").html(htmlContent+previousHtmlLinks+searchFields);
+			} else {
+				var headDiv = headTagDiv+htmlContent+gridHeaderLinkContent+searchFields;
+				header=headDiv.concat(createLink,endTag); 
+			}
+		  }	
+#end
+
+#if($needHeader)
+	$('#pageHeader').html(header);
+#end
+</script>
+
+#if($headerLink)
+	<script type="text/javascript">
+		#foreach($header in $headerLink)
+			#if($header.linkName == "Delete")
+				$("#$header.linkId").click(function(){
+				 	deleteOrRestoreGridData("$listViewId", "$gridId", true, "${header.tableName}", "${header.columnName}");
+				});
+			#elseif($header.linkName == "Restore")
+			 	$("#$header.linkId").click(function(){
+			 		deleteOrRestoreGridData("$listViewId", "$gridId", false, "${header.tableName}", "${header.columnName}");
+			 	});
+			#elseif($header.linkName == "Create New")
+			 	$("#$header.linkId").click(function(){
+			 		createNewBtnRedirect( "${header.redirectValue}" );
+			 	});
+			#else
+				#if($header.linkEvent)
+					$("#$header.linkId").click($header.linkEvent);
+				 #end	
+			 #end
+				 #if($header.linkName == "Recycle")
+				var recycleId = $("<input id='recycleId' type='hidden' value='$header.linkId'>");
+				recycleId.insertBefore('#header_links');
+				 #end
+				 #if($header.linkName == "Delete")
+				var deleteId = $("<input id='deleteId' type='hidden' value='$header.linkId'>");
+				deleteId.insertBefore('#header_links');
+				 #end			 
+	 	  #end
+	 	  
+	 	  var recyleID = $('#recycleId').val();
+	 	  var deleteID = $('#deleteId').val();
+	 	 	$("#"+recyleID).click(function(e) {
+   				 $('#'+deleteID).hide()
+			});
+	</script>
+#end
+
+#if($isGroupSetting == true)
+
+#if($needHeader)
+	<div class="row-fluid">
+		<div class="page-header">
+			<div class="pull-left">
+				<img src="/images/listcode.png " style="float:left; margin:9px 6px 5px 5px" /><h2>$title</h2>
+			</div>
+			<div id="header_links" align="right"></div>
+		</div>
+	</div>
+#end	
+        <div class="row-fluid">
+            <div class="span12">
+            #if($isFormGrid != true)
+                <div class="span3">
+					<div class="widget">
+						<div class="widget-header">
+							<div class="title">
+								<span class="fs1" aria-hidden="true"></span> 分类
+							</div>
+						</div>
+						<div class="widget-body">
+							#* ----------------------------------------------------------------------------------------------
+		                    <table width="100%" id="group_filter">
+		                    	<tr>
+								    <td  class="pad-L20 fontSize14" colspan="2">
+								        Group Search
+								    </td>
+								</tr>
+		                    	#foreach($groupFilter in $groupFilters)
+									<tr>
+									    <td>
+									        <label style="padding-left:10%">$groupFilter.searchLabel</label>
+									    </td>
+									</tr>
+									<tr>
+									    <td style="padding-left:10%">
+									    	#set ($dataFieldName = $groupFilter.dataFields)
+									    	#set ($groupFilterDatas = $groupFilter.get("$dataFieldName"))
+									        <select class="large" name="$groupFilter.dataFields" id="$groupFilter.dataFields">
+									        	<option value="" selected="selected"></option>
+									        	#foreach($groupFilterData in $groupFilterDatas)
+									        		<option value="$groupFilterData"> $groupFilterData </option>
+									        	#end
+									        </select>
+									    </td>
+									</tr>
+						 	  	#end
+						 	  		<tr>
+									    <td colspan="2" align="right" class="pad-R20">
+									        <button type="button" onClick="_groupFilter('$gridId', '$listViewId', 'group_filter');" class="btn btn-primary normalButton padding0 line-height0">
+								         		<fmt:message key="button.search"/>
+								         	</button>
+									    </td>
+									</tr>
+		                    </table>
+							---------------------------------------------------------------------------------------------- *#
+							<div id="groupSettingTree" class="floatLeft department-list-departments overflow-all" ></div>
+							<div class="clearfix"></div>
+						</div>
+					</div>
+					
+                    <script type="text/javascript">
+						var nodes = eval($nodes);
+						$(function () {						
+						   $("#groupSettingTree").jstree({
+						        "json_data": {
+							        "data" : nodes, 
+							    },
+						        "plugins" : [ "themes", "json_data", "ui", "dnd", "crrm"]
+							}).bind("select_node.jstree", function (e, data) {
+								renderGroupSettingChildNodes(e,data, "$listViewId", "$gridId"); 
+							});
+						});
+					</script>
+                </div>
+                <div class="span9">
+					<div class="widget">
+						<div class="widget-header">
+							<div class="title">
+								<span class="fs1" aria-hidden="true"></span>$title
+							</div>
+						</div>
+						<div class="widget-body">
+			#end
+							<div id="data-details" class="floatLeft overflow-all">
+	                           	<div id="user-grid" class="floatLeft overflow-all" >
+	                               <table id="_$gridId"><tr><td/></tr></table>
+									<div id="_${gridId}_PAGER"></div>
+								<div id="gridRecordDetails"></div>	
+	                           	</div>
+	                       	</div>
+							<div class="clearfix"></div>
+						</div>
+					</div>
+				</div>
+			#if($isFormGrid != true)
+            </div>
+        </div>
+			#end
+<script type="text/javascript">
+	 var targetWidth = $('#target').width();
+	 var targetHeight = $('#target').height();
+	 var _width = parseInt(targetWidth) / 5;
+	 $('#groupSettingTree').width("100%");
+	 $('#data-details').width('100%');
+	 $('#user-grid').width('100%');
+	
+	 #if($needHeader)
+		$('#groupSettingTree').height(parseInt(targetHeight)-128);
+	 	$('#user-grid').height(parseInt(targetHeight)-127);
+	 #else
+	 	$('#groupSettingTree').height(parseInt($("#_${widgetContainer}").height()) - 68);
+	 	$('#user-grid').height(parseInt($("#_${widgetContainer}").height()) - 68);
+	 #end	
+</script> 
+#else
+	#if(${container} != 'rightPanel')
+		<div class="row-fluid">
+			<div id="pageHeader"></div>
+		</div>
+	#end
+	<div class="row-fluid">
+		<table id="_$gridId"><tr><td/></tr></table>
+		<div id="_${gridId}_PAGER"></div>
+	</div>
+#end
+
+#if($onRenderScript != '')
+<script type="text/javascript">
+${onRenderScript}
+$(function(){
+       ${onRenderScriptName}();
+});
+</script>
+#end
+<form method="post" action="bpm/listView/gridDataCSVExport" id="exportListViewCsvForm" style="display:none;"> 
+	<input type="hidden" id="listViewParamsList" name="listViewParamsList" value="${listViewParamsList}"/>
+	<input type="hidden" id="gridHeader_form" name="gridHeader"/>
+	<input type="hidden" id="gridDatas_form" name="gridDatas"/>
+	<input type="hidden" id="gridName_form" name="gridName"/>
+	<input type="hidden" id="grid_hiddenColumn" name="hiddenColumn"/>
+	<input type="button" class="btn-csv" value="Save Form" id="export_csv_submit" />
+</form>

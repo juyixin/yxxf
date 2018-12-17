@@ -1,0 +1,316 @@
+<left>
+#if(${subForm} == true)
+	<form action="#" id="${formId}" method="post" name="${formId}">
+	<div id="form_div">
+		${htmlSubForm}
+		</div>
+	</form>
+#else
+	${html}
+#end
+</left>
+<div id="attachmentDetail"></div>
+
+<div style="display:none;">
+<table id="formSubmitSection">
+ #if(${isEndScriptExist} == "true")
+        ${endScript}
+ #end
+	<tr>							
+		<td width="130"></td>							
+		<td>
+		    #if($operatingFunctionForTask.isSubmit()==true || ($isStartNodeTask == true && $isCreator == true) )
+		    	#set($isOperationFnSubmit = true) 	
+		    	#if($lastOperationPerformed == "return" || $lastOperationPerformed == "return submit")
+		    	<!-- back off functionality. when submitting the returned process, user can select organizers for any one of the previously operated tasks -->
+			    	#if($isFinalTransactor==true) 
+			    		<button type="button" name="Submit" class="btn btn-info" onClick="addAttachments();
+			    		backOffJump('${deploymentId}','${resourceName}','${processName}','${processDefinitionId}','${taskId}',
+			    		'${activityId}','forward','${processInstanceId}','true','${formId}');">提交</button>
+			    	#else
+			    		<button type="button" name="Submit" class="btn btn-info" onClick="addAttachments();ofSubmitForm('${formId}');">提交</button>
+			    	#end
+		      	#elseif($isFinalTransactor==true) 
+		    		<button type="button" name="Submit" class="btn btn-info" onClick="addAttachments();ofJointConductSubmitForm('${formId}',''); ">提交</button>
+		    	#else
+		    		<button type="button" name="Submit" class="btn btn-info" onClick="addAttachments();ofSubmitForm('${formId}');">提交</button>
+		    	#end
+		    	<span class="empty_space"></span> 
+		     #elseif($operatingFunction.isSubmit()==true && $operatingFunctionForTask.isSubmit()==false)
+		    	<button type="button" name="Submit" class="btn btn-info" onClick="operatingFunctionPermission('Submit')">提交</button>
+		    #else
+		    #set($isOperationFnSubmit = false)
+		    #end
+		    #if($operatingFunctionForTask.isSave()==true || ($isStartNodeTask == true && $isCreator == true))
+		    	<button type="button" name="Save" class="btn btn-info" onClick="ofSaveForm('${formId}', '${taskId}');">保存</button>
+		    	<span class="empty_space"></span>
+		     #elseif($operatingFunction.isSubmit()==true && $operatingFunctionForTask.isSubmit()==false)
+		   		 <button type="button" name="Save" class="btn btn-info" onClick="operatingFunctionPermission('Save')">保存</button>
+		    	<span class="empty_space"></span>
+		    #end			
+			#if(${showReadButton}==false)	
+				<button type="button" name="Read" class="btn btn-info" onClick="submitRead(${taskId});"> Read </button>
+				<span class="empty_space"></span>
+				<button type="button" name="Cancel" class="btn btn-info" onClick="cancelTaskToReadView(${taskId});">关闭</button>
+			#elseif(${showReadButton}==true)
+				<button type="button" name="Read" class="btn btn-info" onClick="submitUnRead(${taskId});"> UnRead </button>
+			  	<span class="empty_space"></span>
+				<button type="button" name="Cancel" class="btn btn-info" onClick="cancelTaskReadedView(${taskId});">关闭</button>
+		  	#else
+				<button type="button" name="Cancel" class="btn btn-info" onClick="cancelTaskView(${taskId});">关闭</button>
+			#end
+			<span class="empty_space"></span>
+			<button type="button" name="Print" class="btn btn-info" onClick="showPrintTemplate('${taskId}','${formUniqueId}', '${formId}')">打印</button>
+			<span class="empty_space"></span>
+			#include( "../pages/task/operatingfunction/showOperatingFunctions.jsp" )
+			
+#if($operatingFunction.getCustomOperations()=='null')	
+
+#else 
+<span class="fontBold fontSize13">
+
+</span>
+#end
+
+<ul class="noStyleList" style="margin-top:20px;">
+#foreach($customOperatingFunction in $operatingFunction.getCustomOperations())	
+	<script>
+   	${customOperatingFunction.getJsFunction()}
+	</script>
+	<li>
+		<table>
+		<tr>
+			<td>
+			<img src="${customOperatingFunction.getPictureByteArrayId()}" class="thumbnail"/>
+			</td>
+			   				
+			<td valign="middle" class="padding5">
+			<a href="#" onClick="${customOperatingFunction.getCallFunction()}()" style="${customOperatingFunction.getHtmlProperty()}">
+				${customOperatingFunction.getName()}
+			</a>
+			</td>
+		</tr>
+		</table>   			 
+  	</li>
+#end    
+</ul>
+		</td>
+	</tr>						
+</table>
+</div>
+
+<!-- 在提交流程时，此处29个隐藏域会被prepareSubmitTaskFormForSubmit方法加入到表单中一并提交 -->
+<!-- 比提交页面少了isStartForm隐藏域，多了instanceId、isSignOff隐藏域-->
+<div style="display:none;" id="hiddenDetails">
+	<input type="hidden" id= "taskId" name="taskId" value="${taskId}" />
+	<input type="hidden" name="resourceName" value="${resourceName}" />
+	<input type="hidden" name="id" value="${businessKey}" />
+	<input type="hidden" name="instanceId" value="${instanceId}" />
+	<input type="hidden" name="isSignOff" id="isSignOff" value="false" />
+	<input type="hidden" id="nextTaskOrganizers" name="nextTaskOrganizers"/>
+	<input type="hidden" id="nextTaskCoordinators" name="nextTaskCoordinators" />
+	<input type="hidden" id="organizerOrders" name="organizerOrders"/> 
+	<input type="hidden" id="organizerSuperior" name="organizerSuperior" /> 
+	<input type="hidden" id="organizerSubordinate" name="organizerSubordinate" /> 
+	<input type="hidden" name="isSameForm" id="isSameForm" />
+	<input type="hidden" name="nodeType" id="nodeType" value="${nodeType}" />
+	<input type="hidden" id="isStartNodeTask" name="isStartNodeTask" value="${isStartNodeTask}"/>
+	<input type="hidden" id="endScriptName" name="endScriptName" value="${endScriptName}" />
+	<input type="hidden" name="addAttachmentIds" id="addAttachmentIds" value="" />
+	<input type="hidden" name="removeAttachmentIds" id="removeAttachmentIds" value="" />
+	<input type="hidden" id="formId" name="formId" value="${formId}" />
+	<input type="hidden" id="lastOperationPerformed" name="lastOperationPerformed" value="${lastOperationPerformed}" />
+	<input type="hidden" id="pastValuesJson" name="pastValuesJson" value="" />
+	<input type="hidden" id="executionId" name="executionId" value="${executionId}" />
+	<input type="hidden" id="taskName" name="taskName" value="${taskName}" />
+	<input type="hidden" id="sendMail" name="sendMail"  />
+	<input type="hidden" id="sendInternalMail" name="sendInternalMail"/>
+	<input type="hidden" id="subFormCount" name="subFormCount" value="${subFormCount}">
+	<input type="hidden" id="htmlSourceForSubForm" name="htmlSourceForSubForm">
+	<input type="hidden" id="processDefinitionId" name="processDefinitionId" value="${processDefinitionId}" />
+	<input type="hidden" id="rowNumbers" name="rowNumbers" value=""/>
+	<input type="hidden" id="isSave" name="isSave" value="false"/>
+	<input type="hidden" id="isLastTask" name="isLastTask" value="0"/>
+</div>
+
+<script>
+loadCKEditor(function() {
+  setTimeout(function(){	
+		for(key in richTextBoxMap){
+			$("#"+key).attr("style",richTextBoxMap[key]);
+		}
+	},1000);
+});
+ var table = document.getElementById( 'subFormTable' );
+  	var count = $("#subFormTable tr").length;
+	$('#subFormCount').val(count-1);
+ if(table != null ) {
+  var trId = table.getElementsByTagName("tr");
+    for (var row = 0; row < trId.length;row++) {
+	    var rowId = trId[row].id;
+        if(rowId != "") {
+               	var arrayValue = parseInt(rowId.substring(rowId.length-1));
+        		rowNumbers.push(arrayValue);
+				$('#rowNumbers').val(rowNumbers);
+				$('#htmlSourceForSubForm').val(document.getElementById("form_div").innerHTML);
+        }
+    }
+ }
+	$( ".data_dictionary_radio" ).each(function( index ) {
+		var element_id = this.getAttribute("id");
+		var parent_dictId = this.getAttribute("datadictionary");
+		var columnId = this.getAttribute("name");
+		radioButtonForDataDictionary(element_id,parent_dictId,columnId,$pastValuesJson,'${isFormReadOnly}');
+	});
+	
+	$( ".data_dictionary_checkbox" ).each(function( index ) {	
+		var element_id = this.getAttribute("id");
+		var parent_dictId = this.getAttribute("datadictionary");
+		var columnId = this.getAttribute("name");		
+		checkboxForDataDictionary(element_id,parent_dictId,columnId,$pastValuesJson,'${isFormReadOnly}');
+	});
+	
+			
+	
+</script>
+#foreach($property in $properties.keySet())	
+	#set($propertyValue = $properties.get($property))	
+	#set($propertyValueReplace = $propertyValue.replaceAll("(\r\n|\n)", ""))	
+	
+	<script>
+		loadValues('${formId}', '${property}', '${propertyValueReplace}','${isFormReadOnly}');
+	</script>
+#end
+
+<!--根据流程设计时的表单域权限初始化表单域 -->	
+#if($nodeLevelFieldPermissions)	
+	#foreach($nodeLevelFieldPermission in $nodeLevelFieldPermissions.keySet())	
+	#set($fieldPermission = $nodeLevelFieldPermissions.get($nodeLevelFieldPermission))
+		<script>
+			loadPermissionsOnEdit("${formId}", "${nodeLevelFieldPermission}", "$fieldPermission.isEditable()", "$fieldPermission.isRequired()", "$fieldPermission.isReadOnly()", "$fieldPermission.isHidden()", "$fieldPermission.isNoOutput()");
+		</script>
+	#end
+#end
+<script type="text/javascript">
+
+prepareSubmitTaskFormForSubmit("${formId}", "${formAction}","$isOperationFnSubmit","$isFinalTransactor",'$showReadButton');
+
+$(document).ready(function() {
+	count = 0;
+	showAttachments(false,false,"");
+	
+	$(".file-upload-control").each(function( index ) {
+		var element_id = this.getAttribute("id");
+		var element_name = this.getAttribute("name");
+		var tableId = element_name+"Table";
+		var tableTd = tableId+"Td";
+		var before_html ="";
+		
+		var topPosition =  $(this).css("top");
+	  	var leftPosition =  $(this).css("left");
+	  	var top = topPosition.split("px");
+	  	var left = leftPosition.split("px");
+	  	var styleAddBtn = "position:absolute;top:"+(parseInt(top[0])+8)+"px;left:"+(parseInt(left[0])+300)+"px";	
+	  	var styleRemoveBtn = "position:absolute;top:"+(parseInt(top[0])+8)+"px;left:"+(parseInt(left[0])+340)+"px";		 
+		if('$isFormReadOnly'!='true'){
+			 before_html = "<div id='"+tableId+"'><div id='"+tableTd+"'><a style='"+styleAddBtn+"' href='javascript:;' onclick=cloneDiv('"+tableId+"')>Add</a><a style='"+styleRemoveBtn+"' class='deleteDiv' id='deleteDiv' href='javascript:;'>Remove</a>";
+		}
+		$("#"+element_id).before(before_html);
+		var element = $('#'+element_id).detach();
+		$('#'+tableTd).append(element);
+		if(index == 0) {
+			$('#${formId}').attr('enctype', 'multipart/form-data');
+		}
+	});
+
+    $(".datetimepicker").datetimepicker({
+        showOn: 'both',
+        buttonImage: '/images/easybpm/form/rbl/_cal.gif',
+        dateFormat: 'yy-mm-dd',
+        timeFormat: 'hh:mm:ss',
+        constrainInput: true
+    });
+
+    $(".ui-datepicker-trigger").mouseover(function() {
+        $(this).css('cursor', 'pointer');
+    });
+
+
+	$(".datepicker").datepicker({
+	    showOn: 'both',
+	    buttonImage: '/images/easybpm/form/rbl/_cal.gif',
+	    dateFormat: 'yy-mm-dd',   
+	    constrainInput: true
+	});
+	
+	$('.number-validation').keyup(function () { 
+	    this.value = this.value.replace(/[^0-9]/g,'');
+	});
+	
+	var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	
+	$('.email-validation').blur(function () { 
+		if(!regex.test(this.value)){
+			this.value="";
+		}
+	});
+	
+	$('.decimal-validation').keyup(function () { 
+	    var regexExp = /^[-+]?([0-9]*\\.[0-9]{0,5})|([0-9]+)$/;
+		if(!regexExp.test(this.value)){
+			this.value="";
+		}
+	});
+	
+	
+	$( ".data_dictionary" ).each(function( index ) {
+		var element_id = this.getAttribute("id");
+		var parent_dictId = this.getAttribute("datadictionary");
+		var columnId = this.getAttribute("name");
+		addOptionValToDictionary(element_id,parent_dictId,columnId,$pastValuesJson,'${isFormReadOnly}');
+	});
+	
+	$( ".autocomplete" ).each(function( index ) {
+		var element_id = this.getAttribute("id");
+		var parent_dictId = this.getAttribute("datadictionary");
+		autoCompleteForDataDictionary(element_id,parent_dictId);
+	});
+	
+	$( ".user-control" ).each(function( index ) {
+		var element_id=this.getAttribute("id");
+		if(element_id!=null && element_id!=""){
+			if(element_id.indexOf("_username") !== -1){
+				this.innerHTML ='${username}';
+			}
+		}
+	});
+	
+	
+	#if(!(${subForm} == true))
+		$(".mandatory").each(function() {
+			if($( this ).hasClass( "datetimepicker" ) || $( this ).hasClass( "datetimepicker" )){
+				$(this).next().after("&nbsp;<span class='requiredImg'>*</span>");
+			}else{
+				$(this).after("&nbsp;<span class='requiredImg'>*</span>");
+			}
+		});
+	#end
+	
+	
+});
+
+if('$isFormReadOnly'=='true'){
+	
+	setTimeout(function() { replaceAllValueAsReadOnly('${formId}');}, 500);
+	
+	$('#subFormAdd').hide();
+	$('#subFormDelete').hide();
+}
+
+$('#pastValuesJson').val(JSON.stringify($pastValuesJson));
+executeJavaEvent('${formId}','javaEventOnLoad');
+</script>
+
+#if(${isStartScriptExist} == "true")
+	${startScript}
+#end

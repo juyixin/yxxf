@@ -1,0 +1,43 @@
+<ul class="hidden-phone">
+	#foreach ($parentMenu in $menus)
+	 	#if ($parentMenu.isParent==true && $parentMenu.menuType=='header' && $parentMenu.active == true)
+	 		<li class="dropdown">
+		 		#if($parentMenu.urlType == 'newTab')
+	 				<a id="header_menu_$parentMenu.id" name="newTab" title="$parentMenu.helpText" href="$parentMenu.menuUrl" onClick=checkMenu('$parentMenu.name.replace(' ','').toLowerCase()','$parentMenu.urlType','$parentMenu.menuUrl','$parentMenu.indexPage','','','','header'); data-toggle="dropdown" class="dropdown-toggle" > <img src="$parentMenu.iconPath1" height="12px" width="12px"/><span class="pad-L5 text-capitalize">$parentMenu.name.toLowerCase()</span> <span class="caret icon-white"></span></a>
+			   	#elseif($parentMenu.urlType == 'listview' || $parentMenu.urlType == 'process')
+		   			<a id="header_menu_$parentMenu.id" title="$parentMenu.helpText" href="javascript:void(0);" onClick=checkMenu($parentMenu.name.replace(' ','').toLowerCase()','$parentMenu.urlType','$parentMenu.menuUrl','$parentMenu.indexPage','$parentMenu.listViewName','$parentMenu.listViewParam','$parentMenu.processName','header'); data-toggle="dropdown" class="dropdown-toggle" > <img src="$parentMenu.iconPath1" height="12px" width="12px"/><span class="pad-L5 text-capitalize">$parentMenu.name.toLowerCase()</span> <span class="caret icon-white"></span></a>
+				#else	
+					<a id="header_menu_$parentMenu.id" title="$parentMenu.helpText" href="#bpm$parentMenu.menuUrl" onClick=checkMenu('$($parentMenu.name.replace(' ', '')).toLowerCase()','$parentMenu.urlType','$parentMenu.menuUrl','$parentMenu.indexPage','','','','header'); data-toggle="dropdown" class="dropdown-toggle" > <img src="$parentMenu.iconPath1" height="12px" width="12px"/><span class="pad-L5 text-capitalize">$parentMenu.name.toLowerCase()</span> <span class="caret icon-white"></span></a>
+				#end
+				<ul class="dropdown-menu pull-right">
+					#foreach ($menu in $menus)
+						#if($menu.parentMenu.id == $parentMenu.id && $menu.active == true)
+							#if($menu.urlType == 'script')
+								<li><a id="$menu.id" href="javascript:void(0);" onClick=checkMenu('','$menu.urlType','$menu.menuUrl','$menu.id','','','','side',''); title="$menu.helpText" ><img src="$menu.iconPath1" height="12px" width="12px"/><span class="pad-L5 text-capitalize">$menu.name.toLowerCase()</span></a></li>
+							#elseif($menu.urlType == 'newTab')
+								<li id="sideMenuNewTab"><a id="$menu.id" href="$menu.menuUrl" name="newTab" onClick=checkMenu('','$menu.urlType','$menu.menuUrl','$menu.id','','','','side'); title="$menu.helpText" ><img src="$menu.iconPath1" height="12px" width="12px"/><span class="pad-L5 text-capitalize">$menu.name.toLowerCase()</span></a></li>
+							#elseif($menu.urlType == 'listview' || $menu.urlType == 'process')
+								<li><a id="$menu.id" href="javascript:void(0);" onClick=checkMenu('','$menu.urlType','$menu.menuUrl','$menu.id','$menu.listViewName','$menu.listViewParam','$menu.processName','side'); title="$menu.helpText" ><img src="$menu.iconPath1" height="12px" width="12px"/><span class="pad-L5 text-capitalize">$menu.name.toLowerCase()</span></a></li>
+							#else
+								<li><a id="$menu.id" href="#bpm$menu.menuUrl" onClick=checkMenu('','$menu.urlType','$menu.menuUrl','$menu.id','','','','side'); title="$menu.helpText"><img src="$menu.iconPath1" height="12px" width="12px"/><span class="pad-L5 text-capitalize">$menu.name.toLowerCase()</span></a></li>
+							#end
+						#end
+					#end
+				</ul>
+			</li>
+		#end
+	#end
+	<li>
+		<a href="#bpm/help/help"><span class="fs1" aria-hidden="true" data-icon="&#xe03b;"></span></a>
+	</li>
+	<li class="dropdown">
+		<a data-toggle="dropdown" class="dropdown-toggle" href=""> <span class="fs1" aria-hidden="true" data-icon="&#xe090;"></span> </a>
+		<ul class="dropdown-menu pull-right">
+			<li><a href="#bpm/admin/userform" onClick="_execute('target', 'from=profile');" id="profile">Profile</a></li>
+			<li><a href="#bpm/admin/getChangePassword" onClick="_execute('target', '');" id="changePassword">Change Password</a></li>
+		</ul>
+	</li>
+	<li>
+		<a href="logout"><span class="fs1" aria-hidden="true" data-icon="&#xe0b1;"></span></a>
+	</li>
+</ul>

@@ -1,0 +1,91 @@
+.chatInput{
+	border:1px solid #52A8EC;
+	background-color: #FFFFFF;
+	color: #000000;
+	font-weight: normal;
+	padding-left: 2px;
+/* 	height: 30px !important; */
+	width: 95%;
+	resize:none;
+/* 	overflow-Y: hidden; */
+}
+.fromUserName {
+	color: #000000;
+    /* font-family: Segoe UI; */
+/*     font-size: 14px; */
+/*     font-weight: bold;	 */
+    padding : 2px;
+    font: bold 14px "Open Sans", arial, sans-serif !important;
+}
+.fromMessage {
+    color: #000000;
+    /* font-family: Segoe UI; */
+/*     font-size: 14px; */
+    padding : 2px;
+    word-wrap: break-word;
+    font: normal 14px "Open Sans", arial, sans-serif !important;
+}
+
+.toUserName {
+	color: #595959;
+	/* font-family: Segoe UI; */
+/* 	font-size: 14px; */
+	padding : 2px; 
+/* 	font-weight: bold; */
+	font: bold 14px "Open Sans", arial, sans-serif !important;
+}
+
+.toMessage {
+    color: #000000;
+    /* font-family: Segoe UI; */
+/*     font-size: 14px; */
+    padding : 2px;
+    word-wrap: break-word;
+    font: normal 14px "Open Sans", arial, sans-serif !important;
+}
+.windowTitle {
+	color: #FFFFFF;
+	/* font-family: Segoe UI; */
+/* 	font-size: 14px;  */
+/* 	font-weight: bold; */
+	float: left;
+	position: relative;
+	top: 5px;
+	padding-left: 5px;
+	font: bold 14px "Open Sans", arial, sans-serif !important;
+}
+.windowClose {
+	color: #FFFFFF;
+	/* font-family: verdana; */
+	font-size: 14px; 
+	float: right;
+	position: relative;
+	top: 5px;
+	cursor: pointer;
+	padding-right:8px;
+}
+
+.chatBoxHeaderBackground{
+	background-color: #212121;
+    background-image: linear-gradient(#333333, #262626 95%, #0D0D0D);
+    background-repeat: no-repeat;
+    vertical-align: middle;
+}
+
+.online_users_window {
+		background: #F9F9F9;
+	    border: 1px solid #5B5B5B;
+	    cursor: default;
+	    display: none;
+	    left: 82%;
+	    position: absolute;
+	    text-align: left;
+	    width: 10%;
+	    z-index: 50000000;
+	}
+.fontColor{
+	color: #000000;
+}
+.chat-header-active{
+	background: #FCAA40;
+}

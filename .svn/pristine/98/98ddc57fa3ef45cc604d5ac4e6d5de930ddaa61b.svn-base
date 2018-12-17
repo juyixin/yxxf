@@ -1,0 +1,33 @@
+# jTextProc Properties file
+#
+# Last Modified: 17/07/2001
+
+#ResourcePools
+resourcepools=patternmatchers
+respool.patternmatchers.resource.class=net.wimpi.text.std.PatternMatchingResource
+respool.patternmatchers.size=30
+
+#Processors
+processors=linewrapper,plaintexturl,entityencoder
+processor.linewrapper.class=dtw.webmail.util.LineWrapper
+processor.linewrapper.description.locales=en,de
+processor.linewrapper.description.en=Wrapping lines at 80 characters.
+processor.linewrapper.description.de=Zeilenumbruch bei 80 Zeichen.
+processor.plaintexturl.class=dtw.webmail.util.PlainTextUrl
+processor.plaintexturl.description.locales=en,de
+processor.plaintexturl.description.en=Converting URL's into HTML references.
+processor.plaintexturl.description.de=Umwandlung von URL's in HTML Referenzen.
+processor.entityencoder.class=dtw.webmail.util.EntityEncoder
+processor.entityencoder.description.locales=en,de
+processor.entityencoder.description.en=Converting special characters into HTML entities.
+processor.entityencoder.description.de=Umwandlung von speziellen Zeichen in HTML Entities.
+
+#Pipes
+pipes=cleanmessage
+pipe.cleanmessage.sequence=linewrapper,plaintexturl
+pipe.cleanmessage.description.locales=en,de
+pipe.cleanmessage.description.en=Wrap lines and convert URL's into HTML references.
+pipe.cleanmessage.description.de=Zeilenumbruch und Umwandlung von URL's in HTML links.
+
+
+

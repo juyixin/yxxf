@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="com.eazytec.model.User">
+
+
+  <!-- USER RESULTMAP -->
+
+  <resultMap id="userResultMap" type="com.eazytec.model.User">
+    <id property="id" column="ID" jdbcType="VARCHAR" />
+    <result property="revision" column="REVISION" jdbcType="INTEGER" />
+    <result property="firstName" column="FIRST_NAME" jdbcType="VARCHAR" />
+    <result property="lastName" column="LAST_NAME" jdbcType="VARCHAR" />
+    <result property="email" column="EMAIL" jdbcType="VARCHAR" />
+    <result property="password" column="PASSWORD" jdbcType="VARCHAR" />
+    <result property="accountExpired" column="IS_EXPIRED" jdbcType="BIT" />
+    <result property="accountLocked" column="IS_LOCKED" jdbcType="BIT" />
+    <result property="address" column="ADDRESS" jdbcType="VARCHAR" />
+<!--     <result property="city" column="CITY" jdbcType="VARCHAR" /> -->
+<!--     <result property="country" column="COUNTRY" jdbcType="VARCHAR" /> -->
+<!--     <result property="postal_code" column="POSTAL_CODE" jdbcType="VARCHAR" /> -->
+<!--     <result property="province" column="PROVINCE" jdbcType="VARCHAR" /> -->
+    <result property="credentialsExpired" column="IS_CREDENTIAL_EXPIRED" jdbcType="BIT" />
+    <result property="enabled" column="IS_ENABLED" jdbcType="BIT" />
+    <result property="passwordHint" column="PASSWORD_HINT" jdbcType="VARCHAR" />
+    <result property="phoneNumber" column="PHONE_NO" jdbcType="VARCHAR" />
+    <result property="version" column="VERSION" jdbcType="INTEGER" />
+    <result property="website" column="WEBSITE" jdbcType="VARCHAR" />
+     <result property="username" column="USERNAME" jdbcType="VARCHAR" />	
+    
+  </resultMap>
+  
+  <!-- USER SELECT -->
+
+  <select id="selectUserById" parameterType="string" resultMap="userResultMap">
+    select * from ${prefix}USER where  USERNAME = #{id,jdbcType=VARCHAR}
+  </select>
+    
+   <select id="selectUserByQueryCriteria" parameterType="org.activiti.engine.impl.UserQueryImpl" resultMap="userResultMap">
+  	${limitBefore}
+    select RES.* ${limitBetween}
+    <include refid="selectUserByQueryCriteriaSql" />
+    ${orderBy}
+    ${limitAfter}
+  </select>
+  
+   <select id="selectUserCountByQueryCriteria" parameterType="org.activiti.engine.impl.UserQueryImpl" resultType="long">
+    select count(RES.ID)
+    <include refid="selectUserByQueryCriteriaSql" />
+  </select>
+  
+  <sql id="selectUserByQueryCriteriaSql">
+    from ${prefix}USER RES 
+    <if test="groupId != null">
+      inner join ${prefix}MEMBERSHIP M on RES.id = M.user_id
+      inner join ${prefix}GROUP G on M.group_id = G.id
+    </if>
+    <where>
+      <if test="id != null">
+        RES.id = #{id}
+      </if>
+      <if test="firstName != null">
+        and RES.firstName = #{firstName}
+      </if>
+      <if test="firstNameLike != null">
+        and RES.firstName like #{firstNameLike}
+      </if>
+      <if test="lastName != null">
+        and RES.lastName = #{lastName}
+      </if>
+      <if test="lastNameLike != null">
+        and RES.lastName like #{lastNameLike}
+      </if>
+      <if test="email != null">
+        and RES.email = #{email}
+      </if>
+      <if test="emailLike != null">
+        and RES.email like #{emailLike}
+      </if>
+      <if test="groupId != null">
+        and G.id = #{groupId}
+      </if>
+      <if test="procDefId != null">
+        and exists (select ID_ from ${prefix} ACT_RU_IDENTITYLINK where PROC_DEF_ID_ = #{procDefId} and user_id=RES.id )
+      </if>
+      
+    </where>
+  </sql> 
+  
+   <!-- ROLE RESULTMAP -->
+   
+ 
+  <resultMap id="roleResultMap" type="com.eazytec.model.Role">
+    <id property="id" column="id" jdbcType="VARCHAR" />
+    <result property="name" column="name" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <!-- ROLE SELECT -->
+  
+   <select id="selectRolesByUserId" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="roleResultMap">
+    select role.*
+    from ${prefix}ROLE role, ${prefix}USER_ROLE userRole
+    where role.id = userRole.role_id
+      and userRole.user_id = #{parameter}
+  </select>
+  
+  
+   <!-- DEPARTMENT RESULTMAP -->
+   
+ 
+  <resultMap id="departmentResultMap" type="com.eazytec.model.Department">
+    <id property="id" column="id" jdbcType="VARCHAR" />
+    <result property="name" column="name" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <!-- DEPARTMENT SELECT -->
+  
+   <select id="selectDepartmentsByUserId" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="departmentResultMap">
+    select role.*
+    from ${prefix}DEPARTMENT dept, ${prefix}USER user
+    where dept.id = user.department
+      and user.id = #{parameter}
+  </select>
+   
+</mapper>

@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE form-validation PUBLIC
+        "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.3.0//EN"
+        "http://jakarta.apache.org/commons/dtds/validator_1_3_0.dtd">
+
+<form-validation>
+	<global>
+		<constant>
+			<constant-name>phone</constant-name>
+			<constant-value>^\(?(\d{3})\)?[-| ]?(\d{3})[-| ]?(\d{4})$</constant-value>
+		</constant>
+		<constant>
+			<constant-name>zip</constant-name>
+			<constant-value>^\d{5}\d*$</constant-value>
+		</constant>
+		<constant>
+			<constant-name>currency</constant-name>
+			<constant-value>^\d{1,3}(,?\d{1,3})*\.?(\d{1,2})?$</constant-value>
+		</constant>
+	</global>
+	<formset>
+		<form name="fileUpload">
+			<!-- Client-side Javascript won't catch this in IE, but server-side will -->
+			<field property="file" depends="required">
+				<arg key="uploadForm.file" />
+			</field>
+		</form>
+		<form name="user">
+			<field property="username" depends="required,mask">
+				<arg key="user.username" />
+				<msg name="mask" key="user.username.maskmsg" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[\-a-zA-Z0-9\s\.]{1,50}$</var-value>
+					<!-- <var-value>^[\w\u4e00-\u9eff]{1,20}$</var-value> -->
+				</var>
+			</field>
+			<field property="password" depends="required,twofields,mask">
+				<msg name="twofields" key="errors.twofields" />
+				<msg name="mask" key="user.password.maskmsg" />
+				<arg key="user.password" />
+				<arg key="user.confirmPassword" position="1" />
+				<var>
+					<var-name>secondProperty</var-name>
+					<var-value>confirmPassword</var-value>
+				</var>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^.{6,100}$</var-value>
+				</var>
+			</field>
+			<field property="confirmPassword" depends="required">
+				<arg key="user.confirmPassword" />
+			</field>
+			<!-- <field property="firstName" depends="required,fieldMask">
+				<arg key="user.firstName" />
+				<msg name="fieldMask" key="user.firstName.maskmsg" />
+				<var>
+					<var-name>fieldMask</var-name>
+					<var-value>^[\-a-zA-Z\s\u4e00-\u9eff]{1,50}$</var-value>
+				</var>
+			</field>
+			<field property="lastName" depends="required,fieldMask">
+				<arg key="user.lastName" />
+				<msg name="fieldMask" key="user.lastName.maskmsg" />
+				<var>
+					<var-name>fieldMask</var-name>
+					<var-value>^[\-a-zA-Z\s\u4e00-\u9eff]{1,100}$</var-value>
+				</var>
+			</field> -->
+			<field property="fullName" depends="required,fieldMask">
+				<arg key="user.fullName" />
+				<msg name="fieldMask" key="user.lastName.maskmsg" />
+				<var>
+					<var-name>fieldMask</var-name>
+					<var-value>^[\-a-zA-Z\s\u4e00-\u9eff]{1,100}$</var-value>
+				</var>
+			</field>			
+			<field property="englishName" depends="mask">
+				<arg key="user.englishName" />
+				<msg name="mask" key="user.englishName.maskmsg" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[\-a-zA-Z\s\.]{1,100}$</var-value>
+				</var>
+			</field>
+			<field property="email" depends="mask">
+				<arg key="user.email" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$</var-value>
+				</var>
+			</field>
+			<field property="passwordHint" depends="">
+				<arg key="user.passwordHint" />
+			</field>
+			<field property="mobile" depends="required,mask">
+				<arg key="user.mobile" />
+				<msg name="mask" key="user.mobile.maskmsg" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[+]?(\d{11}(\d{2})?)?$</var-value>
+				</var>
+			</field>
+			<field property="employeeNumber" depends="mask">
+				<arg key="user.employeeNumber" />
+				<msg name="mask" key="user.employeeNumber.maskmsg" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[\-a-zA-Z0-9\s\.\_]{1,20}$</var-value>
+				</var>
+			</field>
+			<field property="idCardNumber" depends="mask">
+				<arg key="user.idCardNumber" />
+				<msg name="mask" key="user.idCardNumber.maskmsg" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^((\d{14}[\d|X|x])|(\d{17}[\d|X|x]))$</var-value>
+				</var>
+			</field>
+
+			<field property="workPhone" depends="mask">
+				<arg key="user.workPhone" />
+				<msg name="mask" key="user.workPhone.maskmsg" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^(0[0-9]{2,3}(\-)?)?([2-9]{1}[0-9]{6,7}){1}(\-[0-9]{1,4})?$</var-value>
+				</var>
+			</field>
+			<field property="homePhone" depends="mask">
+				<arg key="user.homePhone" />
+				<msg name="mask" key="user.homePhone.maskmsg" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^(0[0-9]{2,3}(\-)?)?([2-9]{1}[0-9]{6,7}){1}(\-[0-9]{1,4})?$</var-value>
+				</var>
+			</field>
+			<field property="fax" depends="mask">
+				<arg key="user.fax" />
+				<msg name="mask" key="user.fax.maskmsg" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[\-a-zA-Z0-9\s\.\_]{12,20}$</var-value>
+				</var>
+			</field>
+			<field property="website" depends="mask">
+				<arg key="user.website" />
+				<msg name="mask" key="user.website.maskmsg" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^https?:\/\/w{0,3}\w*?\.(\w*?\.)?\w{2,3}\S*|www\.(\w*?\.)?\w*?\.\w{2,3}\S*|(\w*?\.)?\w*?\.\w{2,3}[\/\?]\S</var-value>
+				</var>
+			</field>
+			<field property="address.postalCode" depends="mask">
+				<arg key="user.address.postalCode" />
+				<msg name="mask" key="user.postalCode.maskmsg" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[\0-9\s]{1,6}$</var-value>
+				</var>
+			</field>
+		</form>
+		<form name="role">
+			<field property="name" depends="required,fieldMask">
+				<arg key="role.name" />
+				<msg name="fieldMask" key="role.name.maskmsg" />
+				<var>
+					<var-name>fieldMask</var-name>
+					<var-value>^[\-a-zA-Z\_\u4e00-\u9eff\s]{1,100}$</var-value>
+				</var>
+			</field>
+			
+			<field property="viewName" depends="required,fieldMask">
+				<arg key="group.viewName" />
+				<msg name="fieldMask" key="group.viewName.maskmsg" />
+				<var>
+					<var-name>fieldMask</var-name>
+					<var-value>^[\-a-zA-Z0-9\_\u4e00-\u9eff\s]{1,100}$</var-value>
+				</var>
+			</field>
+			
+			<field property="roleDepartment" depends="requiredif">
+				<arg key="role.roleDepartment" />
+				<msg name="requiredif" key="role.department.requiredif" />
+				<var>
+					<var-name>field[0]</var-name>
+					<var-value>roleType</var-value>
+				</var>
+				<var>
+					<var-name>fieldTest[0]</var-name>
+					<var-value>EQUAL</var-value>
+				</var>
+				<var>
+					<var-name>fieldValue[0]</var-name>
+					<var-value>Department</var-value>
+				</var>
+			</field>
+		</form>
+		<form name="group">
+			<field property="name" depends="required,fieldMask">
+				<arg key="group.name" />
+				<msg name="fieldMask" key="group.name.maskmsg" />
+				<var>
+					<var-name>fieldMask</var-name>
+					<var-value>^[\-a-zA-Z0-9\_\u4e00-\u9eff\s]{1,100}$</var-value>
+				</var>
+			</field>
+			<field property="viewName" depends="required,fieldMask">
+				<arg key="department.viewName" />
+				<msg name="fieldMask" key="department.viewName.maskmsg" />
+				<var>
+					<var-name>fieldMask</var-name>
+					<var-value>^[\-a-zA-Z0-9\_\u4e00-\u9eff\s]{1,100}$</var-value>
+				</var>
+			</field>
+		</form>
+		<form name="department">
+			<field property="name" depends="required,fieldMask">
+				<arg key="department.name" />
+				<msg name="fieldMask" key="department.name.maskmsg" />
+				<var>
+					<var-name>fieldMask</var-name>
+					<var-value>^[\-a-zA-Z0-9\_\u4e00-\u9eff\s]{1,100}$</var-value>
+				</var>
+			</field>
+			
+			<field property="viewName" depends="required,fieldMask">
+				<arg key="department.viewName" />
+				<msg name="fieldMask" key="department.viewName.maskmsg" />
+				<var>
+					<var-name>fieldMask</var-name>
+					<var-value>^[\-a-zA-Z0-9\_\u4e00-\u9eff\s]{1,100}$</var-value>
+				</var>
+			</field>
+			
+		</form>
+		<form name="menu">
+			<field property="name" depends="required,fieldMask">
+				<arg key="menu.name" />
+				<msg name="fieldMask" key="menu.name.maskmsg" />
+				<var>
+					<var-name>fieldMask</var-name>
+					<var-value>^[\-a-zA-Z\_\u4e00-\u9eff\s]{1,100}$</var-value>
+				</var>
+			</field>
+		</form>
+		<form name="schedule">
+			<field property="eventName" depends="required">
+				<arg key="schedule.eventName" />
+				<msg name="required" key="schedule.eventName.maskmsg" />
+			</field>
+			<field property="startDate" depends="required">
+				<arg key="schedule.startDate" />
+				<msg name="required" key="schedule.startDate.maskmsg" />
+			</field>
+			<field property="endDate" depends="required">
+				<arg key="schedule.endDate" />
+				<msg name="required" key="schedule.endDate.maskmsg" />
+			</field>
+			<field property="startTime" depends="required">
+				<arg key="schedule.startTime" />
+				<msg name="required" key="schedule.startTime.maskmsg" />
+			</field>
+			<field property="endTime" depends="required">
+				<arg key="schedule.endTime" />
+				<msg name="required" key="schedule.endTime.maskmsg" />
+			</field>
+		</form>
+
+		<form name="metaTable">
+			<field property="tableName" depends="required,fieldMask">
+				<arg key="metaTable.tableName" />
+				<msg name="mask" key="metaTable.tableName.maskmsg" />
+				<var>
+					<var-name>fieldMask</var-name>
+					<var-value>^[\-a-zA-Z\_\u4e00-\u9eff\s]{1,100}$</var-value>
+				</var>
+			</field>
+		</form>
+
+		<form name="module">
+			<field property="name" depends="required,fieldMask">
+				<arg key="module.name" />
+				<msg name="fieldMask" key="module.name.maskmsg" />
+				<var>
+					<var-name>fieldMask</var-name>
+					<var-value>^[\-a-zA-Z\_\u4e00-\u9eff\s]{1,100}$</var-value>
+				</var>
+			</field>
+		</form>
+		
+		<form name="dataDictionary">
+			<field property="name" depends="required,mask">
+				<arg key="dataDictionary.name" />
+				<msg name="mask" key="dataDictionary.name.maskmsg" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[\w\s\u4e00-\u9eff\.]{1,200}$</var-value>
+				</var>
+			</field>
+
+			<field property="code" depends="required,mask">
+				<arg key="dataDictionary.code" />
+				<msg name="mask" key="dataDictionary.code.maskmsg" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[\w\u4e00-\u9eff\.]{1,200}$</var-value>
+				</var>
+			</field>
+		</form>
+
+		<form name="folder">
+			<field property="name" depends="required">
+				<arg key="folder.name" />
+			</field>
+		</form>
+
+		<form name="documentForm">
+			<field property="name" depends="required,fieldMask">
+				<arg key="documentForm.name" />
+				<msg name="fieldMask" key="documentForm.name.maskmsg" />
+				<var>
+					<var-name>fieldMask</var-name>
+					<var-value>^[\-a-zA-Z\_\u4e00-\u9eff\s]{1,100}$</var-value>
+				</var>
+			</field>
+		</form>
+		<form name="listView">
+			<field property="viewName" depends="required,fieldMask">
+				<arg key="listView.viewName" />
+				<msg name="fieldMask" key="listView.viewName.maskmsg" />
+				<var>
+					<var-name>fieldMask</var-name>
+					<var-value>^[\-a-zA-Z\_\u4e00-\u9eff\s]{1,100}$</var-value>
+				</var>
+			</field>
+			<field property="selectColumns" depends="required">
+				<arg key="listView.selectColumns" />
+				<msg name="required" key="listView.selectColumns.maskmsg" />
+			</field>			
+			<field property="fromQuery" depends="required">
+				<arg key="listView.fromQuery" />
+				<msg name="required" key="listView.fromQuery.maskmsg" />
+			</field>
+		</form>
+
+		<form name="customOperatingFunction">
+			<field property="name" depends="required,fieldMask">
+				<arg key="customOperatingFunction.name" />
+				<msg name="fieldMask" key="customOperatingFunction.name.maskmsg" />
+				<var>
+					<var-name>fieldMask</var-name>
+					<var-value>^[\-a-zA-Z\_\u4e00-\u9eff\s]{1,100}$</var-value>
+				</var>
+			</field>
+
+			<field property="callFunction" depends="required">
+				<arg key="customOperatingFunction.callFunction" />
+				<msg name="required" key="customOperatingFunction.callFunction.maskmsg" />
+			</field>
+		</form>
+
+		<form name="sysConfig">
+			<field property="selectKey" depends="required,mask">
+				<arg key="sysConfig.selectKey" />
+				<msg name="mask" key="sysConfig.selectKey.sysConfig" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[\w\u4e00-\u9eff\.]{1,50}$</var-value>
+				</var>
+			</field>
+		</form>
+
+		<form name="timingTask">
+			<field property="name" depends="required,fieldMask">
+				<arg key="timingTask.name" />
+				<msg name="fieldMask" key="triggername.name.maskmsg" />
+				<var>
+					<var-name>fieldMask</var-name>
+					<!-- <var-value>^[a-zA-Z0-9.]*$</var-value> -->
+					<var-value>^[\w\u4e00-\u9eff\.]{1,50}$</var-value>
+				</var>
+			</field>
+
+
+
+			<field property="jobClassName" depends="required">
+				<arg key="timingTask.jobClassName" />
+
+			</field>
+			<!-- <field property="jRunAt" depends="mask"> <arg key="timingTask.jRunAt"/> 
+				<msg name="mask" key="runAt.name.maskmsg"/> <var> <var-name>mask</var-name> 
+				<var-value>^\d{1,5}$</var-value> </var> </field> -->
+			<field property="jRunAt" depends="mask">
+				<arg key="timingTask.jRunAt" />
+				<msg name="mask" key="runAt.notZero.maskmsg" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[1-9]$|^\d{1,5}$</var-value>
+				</var>
+			</field>
+
+			<field property="jRunAt" depends="required">
+				<arg key="timingTask.jRunAt" />
+			</field>
+			<field property="jobRunOn" depends="required">
+				<arg key="timingTask.jobRunOn" />
+			</field>
+
+			<field property="jobRunAt" depends="requiredif">
+				<arg key="timingTask.jobRunAt" />
+				<msg name="requiredif" key="runOn.requiredif" />
+				<var>
+					<var-name>field[0]</var-name>
+					<var-value>jobRunOn</var-value>
+				</var>
+				<var>
+					<var-name>fieldTest[0]</var-name>
+					<var-value>EQUAL</var-value>
+				</var>
+				<var>
+					<var-name>fieldValue[0]</var-name>
+					<var-value>On</var-value>
+				</var>
+			</field>
+		</form>
+
+
+		<form name="quartzJob">
+			<field property="triggerName" depends="required,mask">
+				<arg key="quartzJob.triggerName" />
+				<msg name="mask" key="quartzJob.triggerName.quartzJob" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[\-a-zA-Z\_\u4e00-\u9eff\s]{1,100}$</var-value>
+
+				</var>
+			</field>
+		</form>
+
+		<form name="emailContact">
+			<field property="name" depends="required,fieldMask">
+				<arg  resource="false" key="姓名" />
+				<msg name="fieldMask" key="user.firstName.maskmsg" />
+				<var>
+					<var-name>fieldMask</var-name>
+					<var-value>^[\-a-zA-Z\s\u4e00-\u9eff]{1,50}$</var-value>
+				</var>
+			</field>
+	
+			<field property="englishName" depends="required,mask">
+				<arg key="user.englishName" />
+				<msg name="mask" key="user.englishName.maskmsg" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[\-a-zA-Z\s\.]{1,100}$</var-value>
+				</var>
+			</field>
+			<field property="email" depends="required,mask">
+				<arg key="user.email" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$</var-value>
+				</var>
+			</field>
+			<field property="mobile" depends="required,mask">
+				<arg key="user.mobile" />
+				<msg name="mask" key="user.mobile.maskmsg" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[0-9]{11,13}$</var-value>
+				</var>
+			</field>
+			<field property="workPhone" depends="mask">
+				<arg key="user.workPhone" />
+				<msg name="mask" key="user.workPhone.maskmsg" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^(0[0-9]{2,3}(\-)?)?([2-9]{1}[0-9]{6,7}){1}(\-[0-9]{1,4})?$</var-value>
+				</var>
+			</field>
+			<field property="homePhone" depends="mask">
+				<arg key="user.homePhone" />
+				<msg name="mask" key="user.homePhone.maskmsg" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^(0[0-9]{2,3}(\-)?)?([2-9]{1}[0-9]{6,7}){1}(\-[0-9]{1,4})?$</var-value>
+				</var>
+			</field>
+			<field property="fax" depends="mask">
+				<arg key="user.fax" />
+				<msg name="mask" key="user.fax.maskmsg" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[\-a-zA-Z0-9\s\.\_]{12,20}$</var-value>
+				</var>
+			</field>
+			<field property="website" depends="mask">
+				<arg key="user.website" />
+				<msg name="mask" key="user.website.maskmsg" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^https?:\/\/w{0,3}\w*?\.(\w*?\.)?\w{2,3}\S*|www\.(\w*?\.)?\w*?\.\w{2,3}\S*|(\w*?\.)?\w*?\.\w{2,3}[\/\?]\S</var-value>
+				</var>
+			</field>
+		</form>
+		<form name="widget">
+			<field property="name" depends="required">
+				<arg key="widget.name" />
+
+			</field>
+			<field property="classify" depends="required">
+				<arg key="widget.classify" />
+			</field>
+			<field property="linkType" depends="required">
+				<arg key="widget.linkType" />
+			</field>
+
+			<!-- <field property="contentLink" depends="requiredif"> <arg key="widget.contentLink"/> 
+				<var> <var-name>field[0]</var-name> <var-value>linkType</var-value> </var> 
+				<var> <var-name>fieldTest[0]</var-name> <var-value>EQUAL</var-value> </var> 
+				<var> <var-name>fieldValue[0]</var-name> <var-value>URL</var-value> </var> 
+				</field> -->
+
+			<field property="listView" depends="requiredif">
+				<arg key="widget.listView" />
+				<var>
+					<var-name>field[0]</var-name>
+					<var-value>linkType</var-value>
+				</var>
+				<var>
+					<var-name>fieldTest[0]</var-name>
+					<var-value>EQUAL</var-value>
+				</var>
+				<var>
+					<var-name>fieldValue[0]</var-name>
+					<var-value>viewList</var-value>
+				</var>
+			</field>
+			<field property="report" depends="requiredif">
+				<arg key="widget.report" />
+				<var>
+					<var-name>field[0]</var-name>
+					<var-value>linkType</var-value>
+				</var>
+				<var>
+					<var-name>fieldTest[0]</var-name>
+					<var-value>EQUAL</var-value>
+				</var>
+				<var>
+					<var-name>fieldValue[0]</var-name>
+					<var-value>report</var-value>
+				</var>
+			</field>
+		</form>
+
+		<form name="quickNavigation">
+			<field property="name" depends="required">
+				<arg key="quickNavigation.name" />
+			</field>
+			<field property="iconPath" depends="required">
+				<arg key="quickNavigation.iconPath" />
+			</field>
+			<field property="quickNavigationUrl" depends="required">
+				<arg key="quciNav.url" />
+			</field>
+		</form>
+		
+		<!-- // ReportForm validation -->
+		<form name="report">
+			<field property="name" depends="required,fieldMask">
+				<arg key="report.name" />
+				<msg name="fieldMask" key="report.name.maskmsg" />
+				<var>
+					<var-name>fieldMask</var-name>
+					<var-value>^[\-a-zA-Z\s\u4e00-\u9eff]{1,50}$</var-value>
+				</var>
+			</field>
+			<field property="classification" depends="required,fieldMask">
+				<arg key="report.classification" />
+				<msg name="fieldMask" key="report.classification.maskmsg" />
+				<var>
+					<var-name>fieldMask</var-name>
+					<!-- <var-value>^[\-a-zA-Z0-9\s\.]{1,50}$</var-value> -->
+					<var-value>^[\w\u4e00-\u9eff-\s]{1,500}$</var-value>
+				</var>
+			</field>
+			<field property="reportUrl" depends="required">
+				<arg key="report.url" />							
+			</field>
+			
+			
+		</form>
+		
+		<!-- //SystemLog Form validation -->
+		<form name="systemLog">
+			<field property="name" depends="required,fieldMask">
+				<arg key="systemLog.name" />
+				<msg name="fieldMask" key="systemLog.name.maskmsg" />
+				<var>
+					<var-name>fieldMask</var-name>
+					<var-value>^[\-a-zA-Z\s\u4e00-\u9eff]{1,50}$</var-value>
+				</var>
+			</field>
+			<field property="moduleName" depends="required">
+				<arg key="systemLog.moduleName"/>
+		</field>
+		</form>
+		
+		<!-- CommonOpinion Form validation -->
+		<form name="userOpinion">
+			<field property="word" depends="required">
+				<arg key="userOpinion.word" />
+			</field>
+		</form> 
+		
+		
+		<form name="classification">
+			<field property="name" depends="required,fieldMask">
+				<arg key="分类名称" resource="false"/>
+				<msg name="fieldMask" key="分类名称不能包含特殊字符" resource="false"/>
+				<var>
+					<var-name>fieldMask</var-name>
+					<var-value>^[\-a-zA-Z\s\u4e00-\u9eff]{1,50}$</var-value>
+				</var>
+			</field>
+		</form>
+		
+		
+		<form name="record">
+			<field property="num" depends="required">
+				<arg resource="false" key="记录编号" />
+			</field>
+		</form>	
+		<form name="custom">
+			<field property="num" depends="required">
+				<arg resource="false" key="客户编号" />
+			</field>
+			<field property="name" depends="required">
+				<arg resource="false" key="客户名称" />
+			</field>
+		</form>	
+		<form name="chance">
+			<field property="customerName" depends="required">
+				<arg resource="false" key="客户姓名" />
+			</field>
+		</form>
+		
+		<form name="telreg">
+			<field property="num" depends="required">
+				<arg resource="false" key="记录编号" />
+			</field>
+			<field property="conDet" depends="required">
+				<arg resource="false" key="咨询内容" />
+			</field>
+			<field property="telnum" depends="required">
+				<arg resource="false" key="来电号码" />
+			</field>
+		</form>
+		
+		<form name="contract">
+			<field property="title" depends="required">
+				<arg resource="false" key="合同名称" />
+			</field>
+		</form>
+		
+		<form name="order">
+			<field property="docNum" depends="required">
+				<arg resource="false" key="单据号" />
+			</field>
+		</form>
+		
+	</formset>
+</form-validation>

@@ -1,0 +1,69 @@
+<div id="peopleDetailsInnerContainer" style="margin-left:100px;">
+    #set($personCount = 0)
+    #set($involvePeopleCount=0)
+    #foreach($peopleDetail in $peopleDetails)        
+        <div style="height:350px;overflow:auto" class="newline" id="task_people_${personCount}">    
+                        
+            <div class="highlight">
+	            #if($peopleDetail.get("roleMessage") == "organizer")
+	            	主办人员
+	            #elseif($peopleDetail.get("roleMessage") == "coordinator")
+	            	协办人员
+	            #elseif($peopleDetail.get("roleMessage") == "workflowadministrator")
+	            	流程管理员
+	            #elseif($peopleDetail.get("roleMessage") == "creator")
+	            	流程发起人
+	            #else	
+	            	$peopleDetail.get("roleMessage")
+	            #end
+	
+	            #if(($peopleDetail.get("roleMessage") == $taskNoOwner) || ($peopleDetail.get("roleMessage") == $taskOwner))
+	            	<a href="#" class="button_link" onclick = "getUsersToInvolve('$peopleDetail.get("taskId")','$peopleDetail.get("transfer")')">
+	            		$peopleDetail.get("transfer")
+	            	</a>
+	            #end
+	            
+	            #if($peopleDetail.get("roleMessage") == $taskAssignee)
+	            	<a href="#" class="button_link" onclick = "getUsersToInvolve('$peopleDetail.get("taskId")','$peopleDetail.get("reassign")')">
+	            		$peopleDetail.get("reassign")
+	            	</a>
+	            #end
+	           
+	            #if($peopleDetail.get("roleMessage") == $taskNoAssignee)
+	           		<a href="#" class="button_link" onclick = "getUsersToInvolve('$peopleDetail.get("taskId")','$peopleDetail.get("assign")')">
+	           			$peopleDetail.get("assign")
+	           		</a>
+	           	#end
+	           	
+	            #if($peopleDetail.get("involvedMembers") == $taskInvolveMembers) 
+	            	#set($involvePeopleCount = $involvePeopleCount+1) 
+	            	<input name="peopleName" id="peopleName_${involvePeopleCount}" type="hidden" value='$peopleDetail.get("name")' />
+	            	<input name="roleMessage" id="roleMessage_${involvePeopleCount}" type="hidden" value='$peopleDetail.get("roleMessage")' />
+	            	<a href="#" class="button_link" onclick = "removeMemberPage('$peopleDetail.get("name")','$peopleDetail.get("taskId")','$peopleDetail.get("roleMessage")','$peopleDetail.get("removeMembers")')">
+	            		$peopleDetail.get("removeMembers")
+	            	</a>
+	            #end
+            
+            </div>
+            
+            <div style="margin-top:5px;">
+	            #if($peopleDetail.get("name"))
+	            	<span id="user_fullname_${personCount}"></span>
+	            	<script>
+	            		$("#user_fullname_${personCount}").text(showUserFullName('$peopleDetail.get("name")'));
+	            	</script>
+	            #end
+            </div>
+        </div>
+        <script>
+	    	setLeft("task_people_${personCount}", 300, $personCount, 2);
+	        setTop("task_people_${personCount}", 40, $personCount, 2);
+        </script>
+        #set($personCount = $personCount+1)
+    #end
+    <input name="involvePeopleCount" id="involvePeopleCount" type="hidden" value="${involvePeopleCount}" />
+
+    <script>
+        setHeight("peopleDetailsInnerContainer", 40, $personCount, 2);
+    </script>
+</div>

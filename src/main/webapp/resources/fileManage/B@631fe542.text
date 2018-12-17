@@ -1,0 +1,34 @@
+03-31 09:28:27:228 DEBUG/	[[BeanRequestDefaultImplInternal::request]] entry Internet request, current time = 1490923707223ms from 1970
+03-31 09:28:27:261 DEBUG/	
+
+//*****
+| [[request::AppInitRequest{deviceId='60fc0a529edd1221ec4726458f58d1bb10', version='0', miui_version='null', product_version='7.03.07.805001', miui_type='stable', language='zh', country='CN', screenHeight='1280', device='unknown', androidVersion='6.0.1', model='Redmi 4X', screenResolution='720*1280', screenWidth='720', screenDensity='2.0', macAes='PykDxnAWmFxFW+rgNKxjLQ==', imeiAes='yeYtgk9TQ5I/pxczHxOrzQ=='} com.android.providers.downloads.ui.api.init.AppInitRequest@8a73adb]] 
+| RestAPI URL = http://api.tw06.xlmc.sec.miui.com/api/app/init
+| Params is = 
+|    screenHeight : 1280
+|    language : zh
+|    miui_type : stable
+|    product_version : 7.03.07.805001
+|    callId : 1490923707252
+|    screenDensity : 2.0
+|    device : unknown
+|    macAes : PykDxnAWmFxFW+rgNKxjLQ==
+|    screenResolution : 720*1280
+|    screenWidth : 720
+|    v : 1.0
+|    sig : 03836e8b1844f199038b3494a6e39a9e
+|    appId : 6
+|    model : Redmi 4X
+|    version : 0
+|    androidVersion : 6.0.1
+|    country : CN
+|    deviceId : 60fc0a529edd1221ec4726458f58d1bb10
+|    imeiAes : yeYtgk9TQ5I/pxczHxOrzQ==
+| HTTP Method = 
+|    httpMethod : POST
+| header params = 
+|    Content-Type : application/x-www-form-urlencoded; charset=UTF-8
+| CustomHttpParams = 
+ 
+\\*****
+

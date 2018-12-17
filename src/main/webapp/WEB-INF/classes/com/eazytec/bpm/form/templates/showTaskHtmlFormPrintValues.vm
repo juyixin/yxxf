@@ -1,0 +1,43 @@
+	
+<left>
+    ${html}
+</left>
+<button type="button" name="Print" class="btn btn-info" onClick="showPrintTemplate(this, '${formUniqueId}', '${formId}');"> Print 22</button>
+
+
+<script>
+	$( ".data_dictionary_radio" ).each(function( index ) {
+		var element_id = this.getAttribute("id");
+		var parent_dictId = this.getAttribute("datadictionary");
+		radioButtonForDataDictionary(element_id,parent_dictId);
+	});
+	
+	$( ".data_dictionary_checkbox" ).each(function( index ) {	
+		var element_id = this.getAttribute("id");
+		var parent_dictId = this.getAttribute("datadictionary");
+		checkboxForDataDictionary(element_id,parent_dictId);
+	  
+	});
+	checkFormSubmit();
+	loadCKEditor(function() {
+  		setTimeout(function(){	
+		for(key in richTextBoxMap){
+			$("#"+key).attr("style",richTextBoxMap[key]);
+		}
+		},1000);
+	});    
+	loadListViewsOnForm();
+	
+</script>
+#foreach($property in $properties.keySet())	
+	#set($propertyValue = $properties.get($property))	
+	#set($propertyValueReplace = $propertyValue.replaceAll("(\r\n|\n)", ""))	
+	<script>
+		loadValues("${formId}", "${property}", "${propertyValueReplace}");
+	</script>
+#end
+
+<script type="text/javascript">
+document.getElementById("${formId}").setAttribute("style","min-height:100%");
+loadValuesPreview("${formId}");
+</script>

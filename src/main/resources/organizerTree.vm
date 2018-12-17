@@ -1,0 +1,98 @@
+<script type="text/javascript">
+$(function () {
+
+	#if($needTreeCheckbox == true)
+		$("#organizationTreeLeft").jstree({
+		    "json_data": {
+		        "ajax" : {
+		            "url" : function( node ){
+		                      if( node == -1 ){
+									return "$rootNodeURL?currentNode=&rootNode=&nodeLevel=0&isPotentialOrganizer=$isPotentialOrganizer"
+		                      } else {
+			                		var currentNode = node.context.parentNode.getAttribute("id");
+			                		var currentNodeName = node.context.parentNode.getAttribute("name");
+			                		var nodePath = $("#organizationTreeLeft").jstree("get_path", $("#"+currentNode), true); 
+			                		var nodeLevel = nodePath.length;
+			                		var rootNode = nodePath[0];
+			                		var isUser = "false";
+			                		isUser = node.context.parentNode.getAttribute("isuser");
+			                		if(isUser == "false" || isUser == null) {
+			                			return '$childNodeURL?currentNode='+currentNodeName+'&rootNode='+rootNode+'&nodeLevel='+nodeLevel+'&organizersList=$organizersList'
+			                		}
+		                      }
+		                    },
+		            "type" : "get",  
+		            "success" : function(ops) {
+		                  var data = [];
+		                  var dataCheckBox = [];
+		                  for( opnum in ops ){
+		                    var op = ops[opnum]
+		                    node = {
+		               		 	 "data" : op.data,
+			                     "metadata" :  op.metadata ,
+			                     "attr"   :op.attr,
+			                     "state" : "closed"
+		                    }
+		                    if(op.attr.isUser == true){
+		                    	dataCheckBox.push( op.attr.id );
+		                    }
+		                    data.push( node );
+		                  }
+		                  if(dataCheckBox.length > 0){
+		                  	setTimeout(function(){isNeedCheckbox(dataCheckBox);isCheckboxCheckedForLabelValue();},200);
+		                  }
+		                  return data; 
+		            }
+		         }
+		     },
+		    "checkbox": {
+		          real_checkboxes: false,
+		          two_state: true
+		       },
+		    "plugins" : [ "themes", "json_data", "ui", "checkbox", "crrm"]
+		}).bind("loaded.jstree", function(e, data) {
+				addOrganizerSelectedValues('$selectionType', '$selectedValues','$organizerOrders','$isPotentialOrganizer');
+		}).bind("select_node.jstree", function (e, data) { 
+			var isUser = false;
+			var currentNode = data.rslt.obj.attr("id");
+			isUser = data.rslt.obj.attr("isuser"); 
+				if(isUser == undefined || isUser == "false") {
+					$("li[id~='"+currentNode+"'] > ins.jstree-icon").trigger('click');
+				}
+		}).bind('check_node.jstree', function(e, data) {
+		    addOrganizerCheckedOption(data,'$isPotentialOrganizer', '$selectionType'); 
+		}).bind('uncheck_node.jstree', function(e, data) {
+			removeUnCheckedOption(e,data);	
+		});
+		function isNeedCheckbox(dataCheckBox){
+		    for(var index = 0; index < dataCheckBox.length; index++){
+		    	$("#"+dataCheckBox[index]+"  > a > ins.jstree-checkbox").css('display','inline-block');
+		    }
+		}
+	 #else if($needContextMenu == true)
+	 	var nodes = eval($nodes);
+		$("#folderTree").jstree({
+	        "json_data": {
+		        "data" : nodes, 
+		    },
+		    "contextmenu" : {
+      	  		"items" : getMangeDmsMenus
+    		},
+	        "plugins" : [ "themes", "json_data", "ui", "contextmenu", "crrm"]
+		}).bind("loaded.jstree", function(e, data) {
+		}).bind("select_node.jstree", function (e, data) {
+			renderFolderChildNodes(e,data); 
+		}).bind("open_node.jstree", function (e, data) { // this binding will collapse all nodes whenever user expands any single node
+    		var currentNode = data.rslt.obj.attr("id");
+	    	$('#folderTree').jstree('select_node', '#'+currentNode);
+    	});
+	 #end
+});
+
+</script>
+					
+	<style type="text/css">
+	ins.jstree-checkbox {
+	    display:none;
+	}
+	</style>

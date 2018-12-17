@@ -1,0 +1,62 @@
+.newline{
+	height: 36px; 
+	overflow: hidden; 
+	padding-left: 0pt; 
+	padding-top: 0px; 
+	top: 0px; 
+	width: 361px; 
+	left: 0px;
+	position:absolute;
+	margin: 15px;
+}
+
+#taskDetailsDiv{
+	border: solid 1px; 
+	margin: 10px;
+}
+
+#peopleDetailsDiv{
+	border: solid 1px; 
+	margin: 10px;
+}
+
+/* #taskFormDiv{
+	border: solid 1px; 
+	margin: 10px; 
+}
+ */
+#peopleDetailsInnerContainer{
+	position: relative;
+	overflow:hidden;
+	padding: 15px;
+}
+
+.sectionHeading{
+	padding:15px;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.highlight{
+	font-weight: bold;
+	font-size: 12px;
+}
+
+#taskForm{
+	padding: 10px;
+}
+
+.task-detail-section{
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-bottom:20px;
+}
+.members-detail-section{
+	padding-top: 20px;	
+}
+.button_link{
+	color:#FF9900;
+	font-weight: bold;
+	font-size: 12px;
+	padding: 9px;
+}

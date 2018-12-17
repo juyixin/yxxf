@@ -1,0 +1,50 @@
+<ul class="hidden-phone">
+	#foreach ($topMenu in $menus)
+		#if ($topMenu.isParent==true && $topMenu.menuType=='top' && $topMenu.active == true)
+			<li>
+				#if($topMenu.urlType == 'newTab')
+						<a id="headNewTab" name="newTab" title="$topMenu.helpText" href="$topMenu.menuUrl" onClick=checkMenu('$topMenu.name.replace(' ','').toLowerCase()','$topMenu.urlType','$topMenu.menuUrl','$topMenu.indexPage','','','','header','','top_menu_$topMenu.id'); > <img src="$topMenu.iconPath1" height="12px" width="12px"/><span class="pad-L5 text-capitalize">$topMenu.name.toLowerCase()</span></a>
+				#elseif($topMenu.urlType == 'listview' || $topMenu.urlType == 'process')
+						<a id= "top_menu_$topMenu.id" title="$topMenu.helpText" href="javascript:void(0);" onClick=checkMenu('$topMenu.name.replace(' ','').toLowerCase()','$topMenu.urlType','$topMenu.menuUrl','$topMenu.indexPage','$topMenu.listViewName','$topMenu.listViewParam','$topMenu.processName','header','','top_menu_$topMenu.id'); > <img src="$topMenu.iconPath1" height="12px" width="12px"/><span class="pad-L5 text-capitalize">$topMenu.name.toLowerCase()</span> </a>
+				#else
+						<a id="top_menu_$topMenu.id" title="$topMenu.helpText" href="#bpm$topMenu.menuUrl" onClick=checkMenu('$topMenu.name.replace(' ','').toLowerCase()','$topMenu.urlType','$topMenu.menuUrl','$topMenu.indexPage','','','','header', '','top_menu_$topMenu.id'); > <img src="$topMenu.iconPath1" height="12px" width="12px"/><span class="pad-L5 text-capitalize">$topMenu.name.toLowerCase()</span> </a>
+				#end
+				<ul class="dropdown-menu">
+					#foreach ($parentMenu in $menus)
+						#if ($parentMenu.isParent==true && $parentMenu.menuType=='side' && $parentMenu.parentMenu.id == $topMenu.id && $parentMenu.active == true)	
+							<li class="dropdown-submenu">
+								#if($parentMenu.urlType == 'script')
+									<a id="$parentMenu.id" href="javascript:void(0);" onClick=checkMenu('','$parentMenu.urlType','$parentMenu.menuUrl','$parentMenu.id','','','','side','','','top_menu_$topMenu.id'); title="$parentMenu.helpText" ><img src="$parentMenu.iconPath1" height="12px" width="12px"/><span class="pad-L5 text-capitalize">$parentMenu.name.toLowerCase()</span></a>
+								#elseif($parentMenu.urlType == 'newTab')
+									<a id="$parentMenu.id" href="$parentMenu.menuUrl" name="newTab" onClick=checkMenu('','$parentMenu.urlType','$parentMenu.menuUrl','$parentMenu.id','','','','side','','top_menu_$topMenu.id'); title="$parentMenu.helpText" ><img src="$parentMenu.iconPath1" height="12px" width="12px"/><span class="pad-L5 text-capitalize">$parentMenu.name.toLowerCase()</span></a>
+								#elseif($parentMenu.urlType == 'listview' || $parentMenu.urlType == 'process')
+									<a id="$parentMenu.id" href="javascript:void(0);" onClick=checkMenu('','$parentMenu.urlType','$parentMenu.menuUrl','$parentMenu.id','$parentMenu.listViewName','$parentMenu.listViewParam','$parentMenu.processName','side','', 'top_menu_$topMenu.id'); title="$parentMenu.helpText" ><img src="$parentMenu.iconPath1" height="12px" width="12px"/><span class="pad-L5 text-capitalize">$parentMenu.name.toLowerCase()</span></a>
+								#else
+									<a id="$parentMenu.id" href="#bpm$parentMenu.menuUrl" onClick=checkMenu('','$parentMenu.urlType','$parentMenu.menuUrl','$parentMenu.id','','','','side'); title="$parentMenu.helpText",'', 'top_menu_$topMenu.id'><img src="$parentMenu.iconPath1" height="12px" width="12px"/><span class="pad-L5 text-capitalize">$parentMenu.name.toLowerCase()</span></a>		
+								#end	
+								
+								<ul class="subdown">
+									#foreach ($menu in $menus)
+										#if($menu.isParent !=true && $menu.parentMenu.id == $parentMenu.id && $menu.parentMenu.parentMenu.id == $topMenu.id && $menu.active == true)
+											<li>
+												#if($menu.urlType == 'script')
+													<a id="$menu.id" href="javascript:void(0);" onClick=checkMenu('','$menu.urlType','$menu.menuUrl','$menu.id','','','','side','','','top_menu_$topMenu.id'); title="$menu.helpText" ><img src="$menu.iconPath1" height="12px" width="12px"/><span class="pad-L5 text-capitalize">$menu.name.toLowerCase()</span></a>
+												#elseif($menu.urlType == 'newTab')
+													<a id="$menu.id" href="$menu.menuUrl" name="newTab" onClick=checkMenu('','$menu.urlType','$menu.menuUrl','$menu.id','','','','side','','top_menu_$topMenu.id'); title="$menu.helpText" ><img src="$menu.iconPath1" height="12px" width="12px"/><span class="pad-L5 text-capitalize">$menu.name.toLowerCase()</span></a>
+												#elseif($menu.urlType == 'listview' || $menu.urlType == 'process')
+													<a id="menu.id" href="javascript:void(0);" onClick=checkMenu('','$menu.urlType','$menu.menuUrl','$menu.id','$menu.listViewName','$menu.listViewParam','$menu.processName','side','','top_menu_$topMenu.id')" title="$menu.helpText" ><img src="$menu.iconPath1" height="12px" width="12px"/><span class="pad-L5 text-capitalize">$menu.name.toLowerCase()</span></a>
+												#else
+													<a id="menu.id" href="#bpm$menu.menuUrl" onClick=checkMenu('','$menu.urlType','$menu.menuUrl','$menu.id','','','','side','','top_menu_$topMenu.id'); title="$menu.helpText" ><img src="$menu.iconPath1" height="12px" width="12px"/><span class="pad-L5 text-capitalize">$menu.name.toLowerCase()</span></a>
+												#end	
+											</li>								
+										#end
+									#end
+								</ul>
+							</li>		
+						#end
+					#end
+				</ul>
+			</li>
+		#end
+	#end 
+</ul>

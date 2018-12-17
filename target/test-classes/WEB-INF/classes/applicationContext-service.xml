@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd"
+       default-lazy-init="true">
+
+    <!-- =================================================================== -->
+    <!-- AOP: Configuration and Aspects                                      -->
+    <!-- =================================================================== -->
+    <aop:config>
+        <aop:advisor id="userManagerTx" advice-ref="userManagerTxAdvice" pointcut="execution(* *..service.UserManager.*(..))" order="0"/>
+<!--         		======================commented for any user can create user f he is a admin for a deparment ================== -->
+<!--         <aop:advisor id="userManagerSecurity" advice-ref="userSecurityAdvice" pointcut="execution(* *..service.UserManager.saveUser(..))" order="1"/> -->
+        <aop:advisor id="managerTx" advice-ref="txAdvice" pointcut="execution(* *..service.*Manager.*(..))" order="2"/>
+        <aop:advisor id="serviceTx" advice-ref="txAdvice" pointcut="execution(* *..service.*Service.*(..))" order="3"/>
+    </aop:config>
+
+	<aop:config>
+		<aop:advisor id="groupServiceTx" pointcut="execution(* *..service.GroupService.saveGroup(..))" advice-ref="groupServiceTxAdvice" order="0"/>
+	</aop:config>
+	
+	<aop:config>
+		<aop:advisor id="roleServiceTx" pointcut="execution(* *..service.RoleService.saveRole(..))" advice-ref="roleServiceTxAdvice"  order="0"/>
+	</aop:config>
+	
+	<aop:config>
+		<aop:advisor id="departmentServiceTx" pointcut="execution(* *..service.DepartmentService.saveDepartment(..))" advice-ref="departmentServiceTxAdvice" order="0"/>
+		<aop:advisor id="departmentDeleteTx" pointcut="execution(* *..service.DepartmentService.removeDepartments(..))" advice-ref="departmentDeleteTxAdvice" order="0"/>
+	</aop:config>
+	
+	<aop:config>
+		<aop:advisor id="menuServiceTx" pointcut="execution(* *..service.MenuService.saveMenu(..))" advice-ref="menuServiceTxAdvice" />
+	</aop:config>
+	
+	<aop:config>
+		<aop:advisor id="scheduleServiceTx" pointcut="execution(* *..service.ScheduleService.save*(..))" advice-ref="scheduleServiceTxAdvice" />
+	</aop:config>
+	
+	<aop:config>
+		<aop:advisor id="tableServiceTx" pointcut="execution(* *..service.TableService.CreateTable(..))" advice-ref="tableServiceTxAdvice" />
+	</aop:config>
+	 
+	<tx:advice id="roleServiceTxAdvice">
+        <tx:attributes>
+            <tx:method name="save*" rollback-for="RoleExistsException"/>
+        </tx:attributes>
+    </tx:advice>
+	
+	
+	 <tx:advice id="groupServiceTxAdvice">
+        <tx:attributes>
+            <tx:method name="save*" rollback-for="GroupExistsException"/>
+        </tx:attributes>
+    </tx:advice>
+	
+	<tx:advice id="departmentServiceTxAdvice">
+        <tx:attributes>
+            <tx:method name="save*" rollback-for="DepartmentExistsException"/>
+        </tx:attributes>
+    </tx:advice>
+    
+    <tx:advice id="departmentDeleteTxAdvice">
+        <tx:attributes>
+            <tx:method name="remove*" rollback-for="BpmException,Exception"/>
+        </tx:attributes>
+    </tx:advice>
+    
+    <tx:advice id="menuServiceTxAdvice">
+        <tx:attributes>
+            <tx:method name="save*" rollback-for="MenuExistsException"/>
+        </tx:attributes>
+    </tx:advice>
+    
+    <tx:advice id="scheduleServiceTxAdvice">
+        <tx:attributes>
+            <tx:method name="save*" rollback-for="BpmException,Exception"/>
+        </tx:attributes>
+    </tx:advice>
+    
+    <!-- Enable @Transactional support -->
+    <tx:annotation-driven/>
+
+    <!-- Enable @AspectJ support -->
+    <aop:aspectj-autoproxy/>
+
+    <!-- Activates scanning of @Autowired -->
+    <context:annotation-config/>
+
+    <!-- Activates scanning of @Service -->
+    <context:component-scan base-package="com.eazytec.service,com.eazytec.bpm.admin.role.service"/>
+
+    <tx:advice id="txAdvice">
+        <tx:attributes>
+            <!-- Read-only commented out to make things easier for end-users -->
+            <!--tx:method name="get*" read-only="true"/-->
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <tx:advice id="userManagerTxAdvice">
+        <tx:attributes>
+            <tx:method name="save*" rollback-for="UserExistsException"/>
+        </tx:attributes>
+    </tx:advice>
+    
+	<tx:advice id="tableServiceTxAdvice">
+        <tx:attributes>
+            <tx:method name="createTable" rollback-for="Exception,EazyBpmException"/>
+        </tx:attributes>
+    </tx:advice>
+    <bean id="userSecurityAdvice" class="com.eazytec.service.UserSecurityAdvice"/>
+
+    <!-- =================================================================== -->
+    <!-- Mail: Sender and Velocity configuration                             -->
+    <!-- =================================================================== -->
+    <bean id="mailEngine" class="com.eazytec.service.MailEngine">
+        <property name="mailSender" ref="mailSender"/>
+        <property name="velocityEngine" ref="velocityEngine"/>
+        <property name="from" value="${mail.default.from}"/>
+    </bean>
+	
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${mail.host}"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <!-- Uncomment if you need to authenticate with your SMTP Server -->
+        <property name="username" value="${mail.username}"/>
+        <property name="password" value="${mail.password}"/>
+       <!--  <property name="password" value="${mail.password}"/> -->
+        <property name="javaMailProperties">
+        	<props>  
+                <prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+					<!--<prop key="mail.smtp.socketFactory.port">${mail.smtp.socketFactory.port}</prop>
+                    <prop key="mail.smtp.socketFactory.class">${mail.smtp.socketFactory.class}</prop>
+                    <prop key="mail.smtp.socketFactory.fallback">${mail.smtp.socketFactory.fallback}</prop>                  
+ 				<prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</prop>-->
+           </props> 
+            <!-- <value>
+                mail.smtp.auth=true
+            </value> -->
+        </property>
+    </bean>
+
+    <!-- Configure Velocity for sending e-mail -->
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="velocityProperties">
+            <props>
+                <prop key="resource.loader">class,file</prop>
+                <prop key="class.resource.loader.class">
+                    org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+                </prop>
+                <prop key="velocimacro.library"></prop>
+                <prop key="file.resource.loader.path">E:\\Workspaces\\eclipse\\yxxf/target/bpmDev-1.0/WEB-INF/</prop>
+                <prop key="logManagement.file.path">E:\\Workspaces\\eclipse\\yxxf/target/bpmDev-1.0/Log-Management</prop>
+    		  <prop key="file.resource.loader.cache">false</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage" scope="prototype">
+        <property name="from" value="${mail.default.from}"/>
+    </bean>
+
+    <!-- =================================================================== -->
+    <!-- Security class from Spring Security - used to configure Password    -->
+    <!-- Encryption in UserManagerImpl. Can override in security.xml.        -->
+    <!-- =================================================================== -->
+    
+    
+    <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder"/>
+    
+    <bean id="scheduleService" class="com.eazytec.bpm.oa.schedule.service.impl.ScheduleServiceImpl" scope="prototype"/>
+    
+    <bean id="agencyService" class="com.eazytec.bpm.runtime.agency.service.impl.AgencyServiceImpl" scope="prototype"/>
+
+	<bean id="tableService" class="com.eazytec.bpm.runtime.table.service.impl.TableServiceImpl">
+		<property name="mysqlExportCommand">
+			<value>mysqldump -h ${jdbc.host} -uyxxf -pqwe123ASD --no-create-info --complete-insert bpm</value>
+		</property>
+		<property name="mysqlImportCommand">
+			<value>${mysql.import.comman}</value>
+		</property>
+		<property name="dataBaseSchema">
+			<value>oracle</value>
+		</property>
+		<property name="dataBaseSchemaName">
+				<value>bpm</value>
+		</property>
+	</bean>
+
+	<bean id="listViewService" class="com.eazytec.bpm.runtime.listView.service.impl.ListViewServiceImpl">
+		<property name="dataBaseSchema">
+			<value>oracle</value>
+		</property>
+	</bean>
+  
+</beans>

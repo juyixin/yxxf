@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.eazytec.model.MetaTable">
+
+  <!-- ATTACHMENT INSERT -->
+
+  <insert id="insertTable" parameterType="com.eazytec.model.MetaTable">
+    insert into ${prefix}RE_TABLE (ID_, TABLE_NAME, CHINESE_NAME, DESCRIPTION_, CREATED_TIME, CREATED_BY, SQL_SOURCE)
+    values (
+      #{id ,jdbcType=VARCHAR},
+      #{tableName ,jdbcType=VARCHAR},
+      #{chineseName ,jdbcType=VARCHAR},
+      #{description ,jdbcType=VARCHAR},
+      #{createdOn ,jdbcType=DATETIME},
+      #{createdBy ,jdbcType=VARCHAR},
+      #{tableQuery ,jdbcType=LONGVARCHAR}     
+    )
+  </insert>
+
+ 
+  
+  <!-- ATTACHMENT RESULTMAP -->
+
+  <resultMap id="tableResultMap" type="com.eazytec.model.MetaTable">
+    <id property="id" column="ID" jdbcType="VARCHAR" />
+    <result property="tableName" column="TABLE_NAME" jdbcType="VARCHAR" />
+    <result property="chineseName" column="CHINESE_NAME" jdbcType="VARCHAR" />
+    <result property="description" column="DESCRIPTION" jdbcType="VARCHAR" />
+    <result property="createdBy" column="CREATED_BY" jdbcType="VARCHAR" />
+    <result property="createdOn" column="CREATED_TIME" jdbcType="TIMESTAMP" />    
+  </resultMap>
+  
+  <resultMap id="columnsResultMap" type="com.eazytec.model.MetaTableColumns">
+    <id property="id" column="ID" jdbcType="VARCHAR" />
+    <result property="name" column="NAME" jdbcType="VARCHAR" />
+    <result property="chineseName" column="CHINESE_NAME" jdbcType="VARCHAR" />
+    <result property="type" column="column_type" jdbcType="VARCHAR" />
+    <result property="defaultValue" column="DEFAULT_VALUE" jdbcType="VARCHAR" />
+    <result property="length" column="LENGTH" jdbcType="INTEGER" />
+    <result property="autoGenerationId" column="AUTO_GENERATION_ID" jdbcType="VARCHAR" />
+    <result property="idNumber" column="ID_NUMBER" jdbcType="INTEGER" />
+     <result property="table" column="table_id" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <!-- ATTACHMENT SELECT -->
+
+  <select id="selectTableById" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="tableResultMap">
+    select * from ${prefix}RE_TABLE where ID = #{parameter,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectTableByFormId" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="tableResultMap">
+    select * from ${prefix}RE_TABLE t INNER JOIN ${prefix}FORM_HISTORY f ON t.table_name = f.TABLE_NAME where f.ID = #{parameter,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectColumnById" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="columnsResultMap">
+    select * from ${prefix}RE_TABLE_COLUMNS where ID = #{parameter,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectColumnByName" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="columnsResultMap">
+    select * from ${prefix}RE_TABLE_COLUMNS where NAME = #{parameter,jdbcType=VARCHAR}
+  </select>
+  
+   <!-- ATTACHMENT UPDATE -->
+
+  <update id="updateColumnIdNumber" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject">
+    update ${prefix}RE_TABLE_COLUMNS set ID_NUMBER = ID_NUMBER + 1 where ID = #{parameter,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectForeignKeyByTableId" parameterType="java.util.Map" resultType="map">
+	    select FOREIGN_KEY_COLUMN_NAME,CHILD_KEY_COLUMN_NAME
+	    from ${prefix}RE_TABLE_RELATION
+	    where PARENT_TABLE_ID = #{parameter.parentTableId} and TABLE_ID = #{parameter.tableId} and PARENT_TABLE_ID is not null
+  </select>
+
+</mapper>

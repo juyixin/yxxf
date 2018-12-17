@@ -1,0 +1,204 @@
+<div align="right">
+	<a id="backToPreviousPage" href="javascript:void(0);" data-role="button" data-theme="b"
+		onClick="backToPreviousPage();"><button class="btn">后退</button></a>
+</div>
+
+${html}
+<div style="display:none;" id="hiddenDetails">
+	<input type="hidden" name="processDefinitionId" id="processDefinitionId" value="${processDefinition.id}" />
+	<input type="hidden" id="nextTaskOrganizers" name="nextTaskOrganizers"/>
+	<input type="hidden" id="nextTaskCoordinators" name="nextTaskCoordinators" />
+	<input type="hidden" id="organizerOrders" name="organizerOrders"/> 
+	<input type="hidden" id="organizerSuperior" name="organizerSuperior" /> 
+ 	<input type="hidden" id="organizerSubordinate" name="organizerSubordinate" /> 
+ 	<input type="hidden" id="processInstanceId" name="processInstanceId" value="${processInstanceId}" />
+ 	<input type="hidden" name="resourceName" value="${resourceName}" />
+	<input type="hidden" id= "activeTaskId" name="activeTaskId" value="${activeTaskId}" />
+	<input type="hidden" name="addAttachmentIds" id="addAttachmentIds" />
+    <input type="hidden" name="removeAttachmentIds" id="removeAttachmentIds" />
+    <input type="hidden" name="isDraft" id="isDraft" value="false" />
+    <input type="hidden" id="endScriptName" name="endScriptName" value="${endScriptName}" />
+     <input type="hidden" id="formId" name="formId" value="${formId}" />
+ 	#if($properties)
+		#set($id = "id")
+		<input type="hidden" name="id" value="$properties.get($id)" />
+	#end
+</div>
+
+<div id="attachmentDetail" style="padding-left:130px;"></div>
+
+<div>
+<table id="formSubmitSection">
+ #if(${isEndScriptExist} == "true")
+        ${endScript}
+ #end
+		<tr height="5px"></tr>
+		<tr>							
+			<td width="130"></td>							
+			<td>
+					#if(${isSystemDefined} == true && $isEdit !=true) 
+			    		 <button type="button" name="Start" class="btn btn-info" onclick="addAttachments();systemDefinedFormStart('${formId}', '${formAction}')">提交</button><span class="empty_space"></span> 
+			    	#elseif($isEdit==true)
+						<button type="button" id="update" name="submit" class="btn btn-info" onclick="addAttachments();systemDefinedFormStart('${formId}', '${formAction}')">修改</button>
+					#end
+				<button name="Reset" type="button" value="Cancel" class="btn btn-info" onclick="resetDefaultValue('${formId}');">重置</button>
+			</td>
+		</tr>						
+	</table>	
+</div>
+<script>
+loadCKEditor(function() {
+  setTimeout(function(){	
+		for(key in richTextBoxMap){
+			$("#"+key).attr("style",richTextBoxMap[key]);
+		}
+	},1000);
+});
+	// prevent form submit on enter key press
+	function stopEnterKey(evt) { 
+	  var evt = (evt) ? evt : ((event) ? event : null); 
+	  if ((evt.keyCode == 13) )  {
+	  	return false;
+	  } 
+	} 
+	document.onkeypress = stopEnterKey;
+	
+	$( ".data_dictionary_radio" ).each(function( index ) {
+		var element_id = this.getAttribute("id");
+		var parent_dictId = this.getAttribute("datadictionary");
+		var columnId = this.getAttribute("column");
+		var isRequired = this.getAttribute("isrequired");
+		if(isRequired == "mandatory") {
+			$(this).after("<span class='requiredImg'>*</span>");
+		}
+		radioButtonForDataDictionary(element_id,parent_dictId,columnId,$pastValuesJson,'${isFormReadOnly}');
+	});
+	
+	$( ".data_dictionary_checkbox" ).each(function( index ) {	
+		var element_id = this.getAttribute("id");
+		var parent_dictId = this.getAttribute("datadictionary");
+		var columnId = this.getAttribute("name");	
+		var isRequired = this.getAttribute("isrequired");
+		if(isRequired == "mandatory") {
+			$(this).after("<span class='requiredImg'>*</span>");
+		}
+		checkboxForDataDictionary(element_id,parent_dictId,columnId,$pastValuesJson,'${isFormReadOnly}');
+	});
+</script>
+#if($nodeLevelFieldPermissions)
+	#foreach($nodeLevelFieldPermission in $nodeLevelFieldPermissions.keySet())	
+	#set($fieldPermission = $nodeLevelFieldPermissions.get($nodeLevelFieldPermission))
+		<script>
+			loadPermissionsOnCreate("${formId}", "${nodeLevelFieldPermission}", "$fieldPermission.isEditable()", "$fieldPermission.isRequired()", "$fieldPermission.isReadOnly()", "$fieldPermission.isHidden()", "$fieldPermission.isNoOutput()");
+		</script>
+	#end
+#end
+#if($properties)	
+	#foreach($property in $properties.keySet())	
+	#set($propertyValue = ${properties.get($property)})
+	#set($propertyValueReplace = $propertyValue.replaceAll("(\r\n|\n)", ""))	
+	<script>
+		loadValues('${formId}', '${property}', '${propertyValueReplace}','${isFormReadOnly}');
+	</script>	
+	#end
+#end
+<script type="text/javascript">
+ prepareSubmitStartFormForSubmit('${formId}', '${formAction}','${isForRecall}');
+$(document).ready(function() {
+count = 0;
+ showAttachmentsForStartNode(true,true,'${processInstanceId}','${isForRecall}');
+	 $(".file-upload-control").each(function( index ) {
+		var element_id = this.getAttribute("id");
+		var element_name = this.getAttribute("name");
+		var tableId = element_name+"Table";
+		var tableTd = tableId+"Td";
+		var before_html ="";
+		
+		if('$isFormReadOnly'!='true'){
+			 before_html = "<table id='"+tableId+"'><tr><td id='"+tableTd+"'></td><td>&nbsp;&nbsp;<a href='javascript:;' onclick=clonefileUploadAddRow('"+tableId+"','"+element_name+"')>新增</a></td><td>&nbsp;&nbsp;<a class='removeButton' href='javascript:;' onclick=deleteFileUploadRow(this,'"+tableId+"')>删除</a></td></tr></table>";
+		}
+		
+		$("#"+element_id).before(before_html);
+		var element = $('#'+element_id).detach();
+		$('#'+tableTd).append(element);
+		if(index == 0) {
+		$('#${formId}').attr('enctype', 'multipart/form-data');
+		}
+	});
+	
+    $(".datetimepicker").datetimepicker({
+        showOn: 'both',
+        buttonImage: '/images/easybpm/form/rbl/_cal.gif',
+        dateFormat: 'yy-mm-dd',
+        timeFormat: 'H:mm',
+        constrainInput: true
+    });
+
+    $(".ui-datepicker-trigger").mouseover(function() {
+        $(this).css('cursor', 'pointer');
+    });
+
+});	 
+$(".datepicker").datepicker({
+        showOn: 'both',
+        buttonImage: '/images/easybpm/form/rbl/_cal.gif',
+        dateFormat: 'yy-mm-dd',     
+        constrainInput: true
+    });
+$('.number-validation').keyup(function () { 
+		    this.value = this.value.replace(/[^0-9]/g,'');
+		});
+
+var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+$('.email-validation').blur(function () { 
+	if(!regex.test(this.value)){
+		this.value="";
+	}
+	});
+$('.decimal-validation').keyup(function () { 
+    this.value = this.value.replace(/[^0-9\.]/g,'');
+            if(this.value.split(".").length>2){
+                  this.value=this.value.slice(0,-1);
+            }
+});
+
+
+$( ".data_dictionary" ).each(function( index ) {
+	var element_id = this.getAttribute("id");
+	var parent_dictId = this.getAttribute("datadictionary");
+	var columnId = this.getAttribute("name");
+	addOptionValToDictionary(element_id,parent_dictId,columnId,$pastValuesJson,'${isFormReadOnly}');  
+});
+
+$( ".autocomplete" ).each(function( index ) {
+	var element_id = this.getAttribute("id");
+	var parent_dictId = this.getAttribute("datadictionary");
+	autoCompleteForDataDictionary(element_id,parent_dictId);
+});
+
+$( ".user-control" ).each(function( index ) {
+	var element_id=this.getAttribute("id");
+	if(element_id!=null && element_id!=""){
+		if(element_id.indexOf("_username") !== -1){
+			this.innerHTML ='${username}';
+		}
+	}
+  
+});
+
+$(".mandatory").each(function() {
+		if($( this ).hasClass( "datetimepicker" ) || $( this ).hasClass( "datetimepicker" )){
+			$(this).next().after("&nbsp;<span class='requiredImg'>*</span>");
+		}else{
+			$(this).after("&nbsp;<span class='requiredImg'>*</span>");
+		}
+});
+
+if('$isFormReadOnly'=='true'){
+replaceAllValueAsReadOnly('${formId}');
+$('#update').hide();
+$( ".removeButton" ).remove();
+}
+</script>
+

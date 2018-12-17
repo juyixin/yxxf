@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~       http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.activiti.engine.impl.persistence.entity.HistoricTaskInstanceEntity">
+  
+  <!-- HISTORIC TASK INSTANCE INSERT -->
+  
+  <insert id="insertHistoricTaskInstance" parameterType="org.activiti.engine.impl.persistence.entity.HistoricTaskInstanceEntity">
+      insert into ${prefix}ACT_HI_TASKINST (
+        ID_,
+        PROC_DEF_ID_,
+        PROC_INST_ID_,
+        EXECUTION_ID_,
+        NAME_,
+        PARENT_TASK_ID_,
+        DESCRIPTION_,
+        OWNER_,
+        ASSIGNEE_,
+        START_TIME_,
+        END_TIME_,
+        DURATION_,
+        DELETE_REASON_,
+        TASK_DEF_KEY_,
+        PRIORITY_,
+        DUE_DATE_,
+        SIGN_OFF_TYPE_,
+        IS_START_NODE_TASK,
+        IS_DRAFT,
+        TASK_TYPE
+      ) values (
+        #{id ,jdbcType=VARCHAR},
+        #{processDefinitionId, jdbcType=VARCHAR},
+        #{processInstanceId, jdbcType=VARCHAR},
+        #{executionId, jdbcType=VARCHAR},
+        #{name ,jdbcType=VARCHAR},
+        #{parentTaskId ,jdbcType=VARCHAR},
+        #{description ,jdbcType=VARCHAR},
+        #{owner ,jdbcType=VARCHAR},
+        #{assignee ,jdbcType=VARCHAR},
+        #{startTime, jdbcType=TIMESTAMP},
+        #{endTime, jdbcType=TIMESTAMP},
+        #{durationInMillis ,jdbcType=BIGINT},
+        #{deleteReason ,jdbcType=VARCHAR},
+        #{taskDefinitionKey ,jdbcType=VARCHAR},
+        #{priority, jdbcType=INTEGER},
+        #{dueDate, jdbcType=TIMESTAMP},
+        #{signOffType, jdbcType=INTEGER},
+        #{isForStartNodeTask, jdbcType=BOOLEAN},
+        #{isDratf, jdbcType=BOOLEAN},
+        #{taskType ,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <!-- HISTORIC TASK INSTANCE UPDATE -->
+  
+  <update id="updateHistoricTaskInstance" parameterType="org.activiti.engine.impl.persistence.entity.HistoricTaskInstanceEntity">
+    update ${prefix}ACT_HI_TASKINST set
+      EXECUTION_ID_ = #{executionId, jdbcType=VARCHAR},
+      NAME_ = #{name, jdbcType=VARCHAR},
+      PARENT_TASK_ID_ = #{parentTaskId, jdbcType=VARCHAR},
+      DESCRIPTION_ = #{description, jdbcType=VARCHAR},
+      OWNER_ = #{owner, jdbcType=VARCHAR},
+      ASSIGNEE_ = #{assignee, jdbcType=VARCHAR},
+      END_TIME_ = #{endTime, jdbcType=TIMESTAMP},
+      DURATION_ = #{durationInMillis ,jdbcType=BIGINT},
+      DELETE_REASON_ = #{deleteReason ,jdbcType=VARCHAR},
+      TASK_DEF_KEY_ = #{taskDefinitionKey ,jdbcType=VARCHAR},
+      PRIORITY_ = #{priority, jdbcType=INTEGER},
+      DUE_DATE_ = #{dueDate, jdbcType=TIMESTAMP},
+      SIGN_OFF_TYPE_ = #{signOffType, jdbcType=INTEGER},
+      TASK_TYPE = #{taskType ,jdbcType=VARCHAR}
+    where ID_ = #{id}
+  </update>
+
+  <!-- HISTORIC TASK INSTANCE DELETE -->
+  
+  <delete id="deleteHistoricTaskInstance" parameterType="org.activiti.engine.impl.persistence.entity.HistoricTaskInstanceEntity">
+    delete from ${prefix}ACT_HI_TASKINST where ID_ = #{id}
+  </delete>
+
+  <!-- HISTORIC TASK INSTANCE RESULT MAP -->
+
+  <resultMap id="historicTaskInstanceResultMap" type="org.activiti.engine.impl.persistence.entity.HistoricTaskInstanceEntity">
+    <id property="id" column="ID_" jdbcType="VARCHAR" />
+    <result property="processDefinitionId" column="PROC_DEF_ID_" jdbcType="VARCHAR" />
+    <result property="processInstanceId" column="PROC_INST_ID_" jdbcType="VARCHAR" />
+    <result property="executionId" column="EXECUTION_ID_" jdbcType="VARCHAR" />
+    <result property="name" column="NAME_" jdbcType="VARCHAR" />
+    <result property="parentTaskId" column="PARENT_TASK_ID_" jdbcType="VARCHAR" />
+    <result property="description" column="DESCRIPTION_" jdbcType="VARCHAR" />
+    <result property="owner" column="START_USER_ID_" jdbcType="VARCHAR" />
+    <result property="assignee" column="ASSIGNEE_" jdbcType="VARCHAR" />
+    <result property="startTime" column="START_TIME_" jdbcType="TIMESTAMP" />
+    <result property="endTime" column="END_TIME_" jdbcType="TIMESTAMP" />
+    <result property="durationInMillis" column="DURATION_" jdbcType="BIGINT" />
+    <result property="deleteReason" column="DELETE_REASON_" jdbcType="VARCHAR" />
+    <result property="taskDefinitionKey" column="TASK_DEF_KEY_" jdbcType="VARCHAR" />
+    <result property="priority" column="PRIORITY_" jdbcType="INTEGER" />
+    <result property="dueDate" column="DUE_DATE_" jdbcType="TIMESTAMP" />
+    <result property="isForStartNodeTask" column="IS_START_NODE_TASK" jdbcType="BOOLEAN" />
+    <result property="isDratf" column="IS_DRAFT" jdbcType="BOOLEAN" />
+	<result property="organizer" column="USER_ID_" jdbcType="VARCHAR" />
+	<result property="createTime" column="START_TIME_" jdbcType="TIMESTAMP" /> 
+	<result property="taskId" column="ID_" jdbcType="VARCHAR" />
+	<result property="assigneeFullName" column="ASSIGNEE_" jdbcType="VARCHAR" />
+	<result property="taskType" column="TASK_TYPE" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="startNodeDoneResultMap" type="org.activiti.engine.impl.persistence.entity.HistoricTaskInstanceEntity">
+    <id property="id" column="PROC_INST_ID_" jdbcType="VARCHAR"/>
+    <result property="name" column="START_NODE_NAME" jdbcType="VARCHAR"/>
+    <result property="assignee" column="START_USER_ID_" jdbcType="VARCHAR" />
+    <result property="startTime" column="START_TIME_" jdbcType="TIMESTAMP" />
+    <result property="endTime" column="START_TIME_" jdbcType="TIMESTAMP" />
+    <result property="executionId" column="PROC_INST_ID_" jdbcType="VARCHAR" />
+    <result property="processInstanceId" column="PROC_INST_ID_" jdbcType="VARCHAR" />
+    <result property="processDefinitionId" column="PROC_DEF_ID_" jdbcType="VARCHAR"/>
+    <result property="owner" column="START_USER_ID_" jdbcType="VARCHAR"/>		
+    
+    
+  </resultMap>
+  <!-- HISTORIC TASK INSTANCE SELECT -->
+  
+  <select id="selectHistoricTaskInstance" resultMap="historicTaskInstanceResultMap">
+    select * from ${prefix}ACT_HI_TASKINST where ID_ = #{parameter}
+  </select>
+  
+  <select id="selectPreviousHistoricTaskInstance" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="historicTaskInstanceResultMap">
+	SELECT RES.* FROM ${prefix}ACT_HI_TASKINST RES where PROC_INST_ID_ = #{parameter.processInstanceId} LIMIT 1
+	  </select>
+	  
+  <select id="selectPreviousHistoricTaskInstance_mssql" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="historicTaskInstanceResultMap">
+	SELECT TOP 1 RES.* FROM ${prefix}ACT_HI_TASKINST RES where PROC_INST_ID_ = #{parameter.processInstanceId}
+  </select>	  
+  
+    <select id="selectPreviousHistoricTaskInstance_oracle" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="historicTaskInstanceResultMap">
+		select * FROM ${prefix}ACT_HI_TASKINST where PROC_INST_ID_ = #{parameter.processInstanceId} and ROWNUM =1
+  </select>	
+  
+   <select id="selectPreviousTaskIdByTaskId" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="historicTaskInstanceResultMap">
+  SELECT * FROM ${prefix}ACT_HI_TASKINST RES1 WHERE RES1.ID_= #{parameter.id} and RES1.END_TIME_ is not null and RES1.DELETE_REASON_ LIKE 'COMPLETED';
+  </select>
+  
+   <select id="selectPreviousTaskIdByInsId" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="historicTaskInstanceResultMap">
+  SELECT * FROM ${prefix}ACT_HI_TASKINST RES1 WHERE RES1.PROC_INST_ID_= #{parameter.id} and RES1.END_TIME_ is not null and RES1.DELETE_REASON_ LIKE 'COMPLETED' ORDER BY RES1.END_TIME_ DESC;
+  </select>
+  
+  <select id="selectPreviousTaskIdByInsId_oracle" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="historicTaskInstanceResultMap">
+  SELECT * FROM ${prefix}ACT_HI_TASKINST RES1 WHERE RES1.PROC_INST_ID_= #{parameter.id} and RES1.END_TIME_ is not null and RES1.DELETE_REASON_ LIKE 'COMPLETED' ORDER BY RES1.END_TIME_ DESC
+  </select>
+  
+  
+  <select id="selectLastHistoricTaskInstance" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="historicTaskInstanceResultMap">
+    select * from ${prefix}ACT_HI_TASKINST where PROC_INST_ID_ = #{parameter.processInstanceId} and TASK_DEF_KEY_ != #{parameter.taskDefinitionKey} ORDER BY ID_ DESC LIMIT 1;
+  </select>
+  
+   <select id="selectHistoricTaskInstanceByTaskDefinitionKey" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="historicTaskInstanceResultMap">
+    	select * from ${prefix}ACT_HI_TASKINST where PROC_INST_ID_ = #{parameter.processInstanceId} and TASK_DEF_KEY_ = #{parameter.taskDefinitionKey} ORDER BY ID_ DESC LIMIT 1;
+  </select>
+  
+   <select id="selectHistoricTaskInstanceByTaskDefinitionKey_mssql" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="historicTaskInstanceResultMap">
+    	select TOP 1 * from ${prefix}ACT_HI_TASKINST where PROC_INST_ID_ = #{parameter.processInstanceId} and TASK_DEF_KEY_ = #{parameter.taskDefinitionKey} ORDER BY ID_ DESC;
+  </select>  
+  
+   <select id="selectHistoricTaskInstanceByTaskDefinitionKey_oracle" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="historicTaskInstanceResultMap">
+    	select * from ${prefix}ACT_HI_TASKINST where PROC_INST_ID_ = #{parameter.processInstanceId} and TASK_DEF_KEY_ = #{parameter.taskDefinitionKey} and ROWNUM = 1 ORDER BY ID_ DESC
+  </select>    
+  
+  <select id="selectHistoricTaskInstanceIdsByProcessInstanceId" resultType="string" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" >
+    select ID_ 
+    from ${prefix}ACT_HI_TASKINST 
+    where PROC_INST_ID_ = #{parameter}
+  </select>
+
+  <select id="selectHistoricTaskInstancesByQueryCriteria" parameterType="org.activiti.engine.impl.HistoricTaskInstanceQueryImpl" resultMap="historicTaskInstanceResultMap">
+  	${limitBefore}
+    select RES.* ${limitBetween}
+    <include refid="selectHistoricTaskInstancesByQueryCriteriaSql"/>
+    ${orderBy}
+    ${limitAfter}
+  </select>
+  
+  <select id="selectHistoricTaskInstanceCountByQueryCriteria" parameterType="org.activiti.engine.impl.HistoricTaskInstanceQueryImpl" resultType="long">
+    select count(*)
+    <include refid="selectHistoricTaskInstancesByQueryCriteriaSql"/>
+  </select>
+  
+  <sql id="selectHistoricTaskInstancesByQueryCriteriaSql">
+    from ${prefix}ACT_HI_TASKINST RES
+    <if test="processFinished || processUnfinished">
+      inner join ${prefix}ACT_HI_PROCINST HPI ON RES.PROC_INST_ID_ = HPI.ID_
+    </if>
+    <if test="processDefinitionKey != null || processDefinitionName != null">
+      inner join ${prefix}ACT_RE_PROCDEF D on RES.PROC_DEF_ID_ = D.ID_
+    </if>
+    <where>
+      <if test="taskId != null">
+        RES.ID_ = #{taskId}
+      </if>
+      <if test="processDefinitionId != null">
+        and RES.PROC_DEF_ID_ = #{processDefinitionId}
+      </if>
+      <if test="processDefinitionKey != null">
+        and D.KEY_ = #{processDefinitionKey}
+      </if>
+      <if test="processDefinitionName != null">
+        and D.NAME_ = #{processDefinitionName}
+      </if>
+      <if test="processInstanceId != null">
+        and RES.PROC_INST_ID_ = #{processInstanceId}
+      </if>
+      <if test="taskDefinitionKey != null">
+        and RES.TASK_DEF_KEY_ = #{taskDefinitionKey}
+      </if>
+      <if test="executionId != null">
+        and RES.EXECUTION_ID_ = #{executionId}
+      </if>
+      <if test="taskName != null">
+        and RES.NAME_ = #{taskName}
+      </if>
+      <if test="taskNameLike != null">
+        and RES.NAME_ like #{taskNameLike}
+      </if>
+      <if test="taskParentTaskId != null">
+        and RES.PARENT_TASK_ID_ = #{taskParentTaskId}
+      </if>
+      <if test="taskDescription != null">
+        and RES.DESCRIPTION_ = #{taskDescription}
+      </if>
+      <if test="taskDescriptionLike != null">
+        and RES.DESCRIPTION_ like #{taskDescriptionLike}
+      </if>
+      <if test="taskDeleteReason != null">
+        and RES.DELETE_REASON_ = #{taskDeleteReason}
+      </if>
+      <if test="taskDeleteReasonLike != null">
+        and RES.DELETE_REASON_ like #{taskDeleteReasonLike}
+      </if>
+      <if test="taskOwner != null">
+        and RES.OWNER_ = #{taskOwner}
+      </if>
+      <if test="taskOwnerLike != null">
+        and RES.OWNER_ like #{taskOwnerLike}
+      </if>
+      <if test="taskAssignee != null">
+        and RES.ASSIGNEE_ = #{taskAssignee}
+      </if>
+      <if test="taskAssigneeLike != null">
+        and RES.ASSIGNEE_ like #{taskAssigneeLike}
+      </if>
+      <if test="taskPriority != null">
+        and RES.PRIORITY_ = #{taskPriority}
+      </if>
+      <if test="unfinished">
+        and RES.END_TIME_ is null
+      </if>
+      <if test="finished">
+        and RES.END_TIME_ is not null
+      </if>
+      <if test="processFinished">
+        and HPI.END_TIME_ is not null
+      </if>
+      <if test="processUnfinished">
+        and HPI.END_TIME_ is null
+      </if>
+      <if test="dueDate != null">
+        and RES.DUE_DATE_ = #{dueDate}
+      </if>
+      <if test="dueBefore != null">
+        and RES.DUE_DATE_ &lt; #{dueBefore}
+      </if>
+      <if test="dueAfter != null">
+        and RES.DUE_DATE_ &gt; #{dueAfter}
+      </if>
+      <foreach collection="variables" index="index" item="var">
+        and exists (
+          select HD.ID_ 
+          from ${prefix}ACT_HI_DETAIL HD 
+          where
+            HD.TYPE_ = 'VariableUpdate' 
+            and HD.NAME_ =  #{var.name}
+            <choose>
+              <when test="var.local">
+                and HD.TASK_ID_ = RES.ID_
+                and HD.REV_ = (select max(HDM.REV_) from ${prefix}ACT_HI_DETAIL HDM where HDM.TASK_ID_ = RES.ID_ and HDM.VAR_TYPE_ = #{var.type} and HDM.NAME_ = #{var.name} and HDM.TYPE_ = 'VariableUpdate')
+                and HD.TIME_ = (select max(HDM.TIME_) from ${prefix}ACT_HI_DETAIL HDM where HDM.TASK_ID_ = RES.ID_ and HDM.VAR_TYPE_ = #{var.type} and HDM.NAME_ = #{var.name} and HDM.TYPE_ = 'VariableUpdate')
+              </when>
+              <otherwise>
+                and HD.PROC_INST_ID_ = RES.PROC_INST_ID_ and HD.TASK_ID_ is null
+                and HD.REV_ = (select max(HDM.REV_) from ${prefix}ACT_HI_DETAIL HDM where HDM.PROC_INST_ID_ = RES.PROC_INST_ID_ and HDM.TASK_ID_ is null and HDM.VAR_TYPE_ = #{var.type} and HDM.NAME_ = #{var.name} and HDM.TYPE_ = 'VariableUpdate')
+                and HD.TIME_ = (select max(HDM.TIME_) from ${prefix}ACT_HI_DETAIL HDM where HDM.PROC_INST_ID_ = RES.PROC_INST_ID_ and HDM.TASK_ID_ is null and HDM.VAR_TYPE_ = #{var.type} and HDM.NAME_ = #{var.name} and HDM.TYPE_ = 'VariableUpdate')
+              </otherwise>
+            </choose>  
+            <if test="!var.type.equals('null')">
+              and HD.VAR_TYPE_ = #{var.type}
+            </if>
+            <!-- Variable value -->
+            <if test="var.textValue != null &amp;&amp; var.longValue == null &amp;&amp; var.doubleValue == null">
+              and HD.TEXT_ =  #{var.textValue}
+            </if>
+            <if test="var.textValue2 != null">
+              and HD.TEXT2_ = #{var.textValue2}
+            </if>
+            <if test="var.longValue != null">
+              and HD.LONG_ = #{var.longValue}
+            </if>
+            <if test="var.doubleValue != null">
+              and HD.DOUBLE_ = #{var.doubleValue}
+            </if>
+            <!-- Null variable type -->
+            <if test="var.textValue == null &amp;&amp; var.textValue2 == null &amp;&amp; var.longValue == null &amp;&amp; var.doubleValue == null">
+              and HD.TEXT_ is null and HD.TEXT2_ is null and HD.LONG_ is null and HD.DOUBLE_ is null and HD.BYTEARRAY_ID_ is null
+            </if>
+        )
+      </foreach>
+    </where>
+  </sql>
+
+  <select id="selectHistoricTaskInstanceByNativeQuery" parameterType="java.util.Map" resultMap="historicTaskInstanceResultMap">
+    ${sql}
+  </select>
+
+  <select id="selectHistoricTaskInstanceCountByNativeQuery" parameterType="java.util.Map" resultType="long">
+    ${sql}
+  </select>
+  
+<!--       <select id="selectDoneTask" parameterType="org.activiti.engine.impl.TaskQueryImpl" resultMap="historicTaskInstanceResultMap"> -->
+<!--     <if test="readerUser != null"> -->
+<!--       	SELECT RES.*,PRO.START_USER_ID_ -->
+<!--    		FROM ${prefix}ACT_HI_TASKINST RES -->
+<!--       	LEFT JOIN ${prefix}ACT_HI_IDENTITYLINK I ON I.TASK_ID_ = RES.ID_ -->
+<!--       	INNER JOIN ${prefix}ACT_HI_PROCINST PRO ON PRO.ID_ = RES.PROC_INST_ID_ -->
+<!--       	INNER JOIN ${prefix}ACT_RE_PROCDEF D ON RES.PROC_DEF_ID_ = D.ID_ -->
+<!--       	LEFT JOIN ${prefix}RE_OPERATING_FUNCTION_AUDIT OPERATINGFUNCTIONAUDIT ON OPERATINGFUNCTIONAUDIT.taskid = RES.ID_ -->
+<!-- 	    <where>  -->
+<!-- 	  	IF(I.TYPE_ IS NULL, -->
+<!-- 	  		OPERATINGFUNCTIONAUDIT.createdby = #{readerUser}, -->
+<!-- 	  		(I.TYPE_ = 'organizer' OR I.TYPE_ = 'coordinator') AND -->
+<!--    				IF(I.USER_ID_ IS NOT NULL,I.USER_ID_ = #{readerUser},    		   	 -->
+	      					
+<!-- 				 <if test="readerGroups.size() &gt; 0 || readerRoles.size() &gt; 0 != null || readerDepartment != null "> -->
+<!-- 				        	(    -->
+<!-- 					           <if test="readerGroups.size() &gt; 0"> -->
+<!-- 						            ( -->
+<!-- 						            I.GROUP_TYPE_  = 'groups'  -->
+<!-- 						            AND I.GROUP_ID_ IN -->
+<!-- 							            <foreach item="group" index="index" collection="readerGroups"  -->
+<!-- 							                     open="(" separator="," close=")"> -->
+<!-- 							              #{group} -->
+<!-- 							            </foreach> -->
+<!-- 						            ) -->
+<!-- 				          		</if> -->
+<!-- 				          		<if test="readerGroups.size() &gt; 0 &amp;&amp; readerRoles.size() &gt; 0"> -->
+<!-- 				          			OR -->
+<!-- 				          		</if> -->
+<!-- 						        <if test="readerRoles.size() &gt; 0"> -->
+<!-- 						            ( -->
+<!-- 						            I.GROUP_TYPE_  = 'roles'  -->
+<!-- 						            AND  I.GROUP_ID_ IN -->
+<!-- 							            <foreach item="role" index="index" collection="readerRoles"  -->
+<!-- 							                     open="(" separator="," close=")"> -->
+<!-- 							              #{role} -->
+<!-- 							            </foreach> -->
+<!-- 						            ) -->
+<!-- 						        </if> -->
+<!-- 								<if test="(readerGroups.size() &gt; 0 || readerRoles.size() &gt; 0) &amp;&amp; readerDepartment != null "> -->
+<!-- 				          			OR -->
+<!-- 				          		</if> -->
+<!-- 						        <if test="readerDepartment != null"> -->
+<!-- 						            ( -->
+<!-- 						            I.GROUP_TYPE_  = 'departments'  -->
+<!-- 						            AND I.GROUP_ID_ = #{readerDepartment} -->
+<!-- 						            ) -->
+<!-- 						        </if> -->
+<!-- 				        	 ) -->
+<!-- 		         </if> -->
+<!-- 		    ))	 -->
+<!-- 		    AND IF(RES.SIGN_OFF_TYPE_ = 4,RES.ASSIGNEE_= #{readerUser},TRUE)  -->
+<!-- 		     AND IF(OPERATINGFUNCTIONAUDIT.taskid IS NULL ,( RES.delete_reason_ = 'completed' AND RES.end_time_ IS NOT NULL ) , TRUE) -->
+<!--             <if test="classificationId != null"> -->
+<!-- 				AND D.CLASSIFICATION_ID_= #{classificationId} -->
+<!-- 		    </if>  -->
+<!-- 	    </where> -->
+<!-- 	    GROUP BY RES.ID_  -->
+<!--      </if>   -->
+<!--   </select> -->
+  
+    <select id="selectDoneTask" parameterType="org.activiti.engine.impl.TaskQueryImpl" resultMap="historicTaskInstanceResultMap">
+	 <if test="creator != null">
+<!-- 	      	SELECT * FROM (SELECT RES.*,PRO.START_USER_ID_ -->
+<!-- 	   		FROM ${prefix}ACT_HI_TASKINST RES -->
+<!-- 	      	INNER JOIN ${prefix}ACT_HI_PROCINST PRO ON PRO.ID_ = RES.PROC_INST_ID_ -->
+<!-- 	      	INNER JOIN ${prefix}ACT_RE_PROCDEF D ON RES.PROC_DEF_ID_ = D.ID_ -->
+<!-- 	      	LEFT JOIN ${prefix}ACT_RU_IDENTITYLINK I on I.TASK_ID_ = RES.ID_ -->
+<!-- 	      	LEFT JOIN ${prefix}RE_OPERATING_FUNCTION_AUDIT OPERATINGFUNCTIONAUDIT ON OPERATINGFUNCTIONAUDIT.taskid = RES.ID_ -->
+<!-- 	      	LEFT JOIN ${prefix}ACT_HI_IDENTITYLINK HI ON HI.TASK_ID_ = RES.ID_ -->
+<!-- 		    <where>  -->
+<!-- 				IF(OPERATINGFUNCTIONAUDIT.createdby IS NOT NULL,OPERATINGFUNCTIONAUDIT.createdby = #{creator},I.TYPE_ = #{identityType} AND I.USER_ID_ = #{creator}) -->
+<!-- 				OR  -->
+<!-- 				HI.USER_ID_ = #{creator} -->
+<!-- 	            <if test="classificationId != null"> -->
+<!-- 					AND D.CLASSIFICATION_ID_= #{classificationId} -->
+<!-- 			    </if>  -->
+<!-- 		    </where> -->
+<!-- 		    ORDER BY -->
+<!-- 			RES.START_TIME_ DESC) AS RESULT -->
+<!-- 		    GROUP BY RESULT.TASK_DEF_KEY_ -->
+		SELECT * FROM (
+			SELECT 
+				IF(RES.ID_ IS NOT NULL,RES.ID_,PRO.ID_) AS ID_,
+				IF(RES.START_TIME_ IS NOT NULL,RES.START_TIME_,PRO.START_TIME_) AS START_TIME_,
+				IF(RES.END_TIME_ IS NOT NULL,RES.END_TIME_,PRO.START_TIME_) AS END_TIME_,
+				IF(RES.NAME_ IS NOT NULL,RES.NAME_,PRO.START_NODE_NAME) AS NAME_,
+				PRO.PROC_INST_ID_,
+				PRO.PROC_INST_ID_ AS EXECUTION_ID_,
+				PRO.PROC_DEF_ID_,
+				RUNTIMETASK.NAME_ AS DESCRIPTION_,
+				(SELECT CONCAT(users.first_name ,' ', users.last_name )  FROM ETEC_USER AS users  WHERE PRO.START_USER_ID_= users.id ) AS START_USER_ID_, 
+				(SELECT CONCAT(users.first_name ,' ', users.last_name )  FROM ETEC_USER AS users  WHERE RES.ASSIGNEE_ = users.id ) AS assigneeFullName
+				<!-- ,ROW_NUMBER() OVER (ORDER BY OPERATINGFUNCTIONAUDIT.created_time DESC)  AS createTime -->  
+				 
+			FROM 
+				${prefix}RE_INSTANCE_AUDIT OPERATINGFUNCTIONAUDIT
+				INNER JOIN  ${prefix}ACT_HI_TASKINST RES ON OPERATINGFUNCTIONAUDIT.taskid = RES.ID_
+				LEFT JOIN ${prefix}ACT_HI_PROCINST PRO ON IF(OPERATINGFUNCTIONAUDIT.process_id IS NOT NULL,OPERATINGFUNCTIONAUDIT.process_id= PRO.ID_,PRO.ID_ = RES.PROC_INST_ID_)
+				LEFT JOIN ${prefix}ACT_RU_TASK RUNTIMETASK ON PRO.ID_ = RUNTIMETASK.PROC_INST_ID_
+				LEFT JOIN ${prefix}ACT_RE_PROCDEF PROCDEF ON RES.PROC_DEF_ID_ = PROCDEF.ID_
+				
+		    <where> 
+				OPERATINGFUNCTIONAUDIT.createdby = #{creator}
+				<if test="classificationId != null">
+					AND PROCDEF.CLASSIFICATION_ID_= #{classificationId}
+				</if> 
+				<!--to show startnode task in done list if creator withdraws the started instance -->
+				AND IF(RES.ASSIGNEE_ IS NULL,IF(RES.DELETE_REASON_ IS NULL,RES.END_TIME_ IS NOT NULL,RES.END_TIME_ IS NULL), TRUE )
+				
+		    </where>
+		    ORDER BY
+				OPERATINGFUNCTIONAUDIT.created_time DESC) AS RESULT
+			GROUP BY PROC_INST_ID_
+	   </if>  
+  </select>
+  
+<select id="selectDoneTask_mssql" parameterType="org.activiti.engine.impl.TaskQueryImpl" resultMap="historicTaskInstanceResultMap">
+	 <if test="creator != null">
+		SELECT RESULT.PROC_INST_ID_,RESULT.* FROM (
+			SELECT 
+				CASE WHEN RES.ID_ IS NOT NULL THEN RES.ID_ ELSE PRO.ID_ END AS ID_,
+				CASE WHEN RES.START_TIME_ IS NOT NULL THEN RES.START_TIME_ ELSE PRO.START_TIME_ END AS START_TIME_,
+				CASE WHEN RES.END_TIME_ IS NOT NULL THEN RES.END_TIME_ ELSE PRO.START_TIME_ END AS END_TIME_,
+				CASE WHEN RES.NAME_ IS NOT NULL THEN RES.NAME_ ELSE PRO.START_NODE_NAME END AS NAME_,
+				PRO.PROC_INST_ID_,
+				PRO.PROC_INST_ID_ AS EXECUTION_ID_,
+				PRO.PROC_DEF_ID_,
+				RUNTIMETASK.NAME_ AS DESCRIPTION_,
+				(SELECT CONCAT(users.first_name ,' ', users.last_name )  FROM ETEC_USER AS users  WHERE PRO.START_USER_ID_= users.id ) AS START_USER_ID_, 
+				(SELECT CONCAT(users.first_name ,' ', users.last_name )  FROM ETEC_USER AS users  WHERE RES.ASSIGNEE_ = users.id ) AS assigneeFullName 
+			FROM 
+				${prefix}RE_INSTANCE_AUDIT OPERATINGFUNCTIONAUDIT
+				INNER JOIN  ${prefix}ACT_HI_TASKINST RES ON OPERATINGFUNCTIONAUDIT.taskid = RES.ID_
+				LEFT JOIN ${prefix}ACT_HI_PROCINST PRO ON PRO.ID_ = RES.PROC_INST_ID_
+				LEFT JOIN ${prefix}ACT_RU_TASK RUNTIMETASK ON PRO.ID_ = RUNTIMETASK.PROC_INST_ID_
+				LEFT JOIN ${prefix}ACT_RE_PROCDEF PROCDEF ON RES.PROC_DEF_ID_ = PROCDEF.ID_
+				
+		    <where> 
+				OPERATINGFUNCTIONAUDIT.createdby = #{creator}
+				<if test="classificationId != null">
+					AND PROCDEF.CLASSIFICATION_ID_= #{classificationId}
+				</if> 
+		    </where>
+		   <!--  ORDER BY
+				OPERATINGFUNCTIONAUDIT.created_time DESC -->) AS RESULT
+	   </if>  
+  </select>  
+  
+  <select id="selectDoneTask_oracle" parameterType="org.activiti.engine.impl.TaskQueryImpl" resultMap="historicTaskInstanceResultMap">
+	 <if test="creator != null">
+		SELECT RESULT.PROC_INST_ID_,RESULT.* FROM (
+			SELECT 
+				CASE WHEN RES.ID_ IS NOT NULL THEN RES.ID_ ELSE PRO.ID_ END  ID_,
+				CASE WHEN RES.START_TIME_ IS NOT NULL THEN RES.START_TIME_ ELSE PRO.START_TIME_ END  START_TIME_,
+				CASE WHEN RES.END_TIME_ IS NOT NULL THEN RES.END_TIME_ ELSE PRO.START_TIME_ END  END_TIME_,
+				CASE WHEN RES.NAME_ IS NOT NULL THEN RES.NAME_ ELSE PRO.START_NODE_NAME END  NAME_,
+				PRO.PROC_INST_ID_,
+				PRO.PROC_INST_ID_  EXECUTION_ID_,
+				PRO.PROC_DEF_ID_,
+				RUNTIMETASK.NAME_  DESCRIPTION_,
+				(SELECT users.FULL_NAME  FROM ETEC_USER  users  WHERE PRO.START_USER_ID_= users.id )  START_USER_ID_, 
+				(SELECT users.FULL_NAME  FROM ETEC_USER  users  WHERE RES.ASSIGNEE_ = users.id )  assigneeFullName 
+			FROM 
+				ETEC_RE_INSTANCE_AUDIT OPERATINGFUNCTIONAUDIT
+				INNER JOIN  ETEC_ACT_HI_TASKINST RES ON OPERATINGFUNCTIONAUDIT.taskid = RES.ID_
+				LEFT JOIN ETEC_ACT_HI_PROCINST PRO ON PRO.ID_ = RES.PROC_INST_ID_
+				LEFT JOIN ETEC_ACT_RU_TASK RUNTIMETASK ON PRO.ID_ = RUNTIMETASK.PROC_INST_ID_
+				LEFT JOIN ETEC_ACT_RE_PROCDEF PROCDEF ON RES.PROC_DEF_ID_ = PROCDEF.ID_
+		    <where> 
+				OPERATINGFUNCTIONAUDIT.createdby = #{creator}
+				<if test="classificationId != null">
+					AND PROCDEF.CLASSIFICATION_ID_= #{classificationId}
+				</if> 
+		    </where>
+		   <!--  ORDER BY
+				OPERATINGFUNCTIONAUDIT.created_time DESC -->) RESULT
+	   </if>  
+  </select>  
+  <select id="selectTerminatedTasks" parameterType="org.activiti.engine.impl.TaskQueryImpl" resultMap="historicTaskInstanceResultMap">
+		SELECT RES.*,
+		(SELECT CONCAT(users.first_name ,' ', users.last_name )
+   	 	FROM ETEC_USER AS users  WHERE PRO.START_USER_ID_ = users.id ) as START_USER_ID_
+   	 	FROM ${prefix}ACT_HI_TASKINST  RES 
+		INNER JOIN ${prefix}ACT_HI_PROCINST PRO ON PRO.ID_ = RES.PROC_INST_ID_
+		INNER JOIN  ${prefix}RE_OPERATING_FUNCTION_AUDIT AUDIT 
+		ON  AUDIT.taskid = RES.ID_ 
+		<if test="candidateUser != null">
+			INNER JOIN  ${prefix}ACT_HI_IDENTITYLINK IDENTITYLINK
+			ON IDENTITYLINK.TASK_ID_ = RES.ID_	
+			WHERE 
+				AUDIT.operation_type IN ("terminate","withdraw")
+			    and IDENTITYLINK.USER_ID_ = #{candidateUser} 
+			    and IDENTITYLINK.TYPE_ = 'workflowadministrator'
+		</if>
+		<if test="candidateUser == null">
+			WHERE AUDIT.operation_type IN ("terminate")
+		</if>
+  </select>
+ 
+  <select id="selectDoneStartNode" parameterType="org.activiti.engine.impl.TaskQueryImpl" resultMap="startNodeDoneResultMap">
+		SELECT RES.PROC_DEF_ID_,RES.START_TIME_,RES.PROC_INST_ID_,RES.START_NODE_NAME,RES.START_USER_ID_  FROM ${prefix}ACT_HI_PROCINST RES
+		INNER JOIN ${prefix}ACT_RE_PROCDEF  PROCDEF
+		ON  RES.PROC_DEF_ID_ =  PROCDEF.ID_ 
+		WHERE (PROCDEF.has_start_form_key_ = TRUE  OR PROCDEF.is_system_defined_ =TRUE)
+		<if test="creator != null">
+			AND RES.START_USER_ID_ = #{creator}
+		</if>
+	   <if test="classificationId != null">
+		AND PROCDEF.CLASSIFICATION_ID_= #{classificationId}
+	   </if> 
+  </select>
+  
+  <select id="selectLastCompletedTaskByProcessInstanceId" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="historicTaskInstanceResultMap">
+  		SELECT * FROM ${prefix}ACT_HI_TASKINST RES WHERE RES.ID_ &lt;
+  		(SELECT RES1.ID_ FROM ${prefix}ACT_HI_TASKINST RES1 WHERE RES1.EXECUTION_ID_ = #{parameter.processInstanceId} AND RES1.NAME_ = #{parameter.taskName} ORDER BY RES1.ID_ ASC LIMIT 1)
+		ORDER BY RES.ID_ DESC LIMIT 1
+  </select>
+  
+  <select id="selectLastCompletedTaskByProcessInstanceId_mssql" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="historicTaskInstanceResultMap">
+  		SELECT TOP 1 * FROM ${prefix}ACT_HI_TASKINST RES1 WHERE RES1.EXECUTION_ID_ = #{parameter.processInstanceId} and RES1.END_TIME_ is not null and RES1.DELETE_REASON_ LIKE 'completed' and RES1.NAME_ != #{parameter.taskName} ORDER BY ID_ DESC;
+  </select>  
+  
+  <select id="selectLastCompletedTaskByProcessInstanceId_oracle" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject" resultMap="historicTaskInstanceResultMap">
+  		SELECT * FROM ${prefix}ACT_HI_TASKINST RES WHERE ROWNUM = 1 and RES.ID_ &lt;
+		(SELECT ID_ from（SELECT RES1.ID_ ID_ FROM ${prefix}ACT_HI_TASKINST RES1 WHERE RES1.EXECUTION_ID_ = #{parameter.processInstanceId} AND RES1.NAME_ = #{parameter.taskName} ORDER BY ID_ ASC) where ROWNUM = 1)
+   		ORDER BY RES.ID_ DESC
+  </select>   
+
+  <select id="selectHistoricOrganizers" parameterType="org.activiti.engine.impl.db.ListQueryParameterObject"  resultType="string">
+  		SELECT ASSIGNEE_ FROM ${prefix}ACT_HI_TASKINST WHERE TASK_DEF_KEY_ = #{parameter.taskDefinitionKey} and DELETE_REASON_ LIKE 'completed'
+  </select>
+  
+  
+    <select id="selectBackOffTask" parameterType="org.activiti.engine.impl.TaskQueryImpl" resultMap="historicTaskInstanceResultMap">
+	<!-- this query selects previously operated task while submitting the returned task-->
+	SELECT TASK.*,
+	HISTORICIDENTITYLINK.* FROM 
+	ETEC_ACT_HI_TASKINST AS TASK
+	INNER JOIN ETEC_ACT_HI_IDENTITYLINK AS HISTORICIDENTITYLINK
+	WHERE PROC_INST_ID_ = #{processInstanceId}
+	AND TASK_DEF_KEY_ != #{key}
+	AND HISTORICIDENTITYLINK.TASK_ID_ = TASK.ID_
+	AND HISTORICIDENTITYLINK.TYPE_ LIKE 'organizer'
+	AND END_TIME_ > 
+	(SELECT END_TIME_ FROM ETEC_ACT_HI_TASKINST WHERE
+	TASK_DEF_KEY_ = #{key} AND END_TIME_ IS NOT NULL 
+	AND PROC_INST_ID_ = #{processInstanceId}
+	 ORDER BY END_TIME_ DESC LIMIT 1)
+	GROUP BY TASK.NAME_	 
+  </select>  
+  
+      <select id="selectBackOffTask_mssql" parameterType="org.activiti.engine.impl.TaskQueryImpl" resultMap="historicTaskInstanceResultMap">
+	<!-- this query selects previously operated task while submitting the returned task-->
+	SELECT DISTINCT(TASK.NAME_),TASK.*,
+	HISTORICIDENTITYLINK.* FROM 
+	ETEC_ACT_HI_TASKINST TASK, ETEC_ACT_HI_IDENTITYLINK HISTORICIDENTITYLINK
+	WHERE PROC_INST_ID_ = #{processInstanceId}
+	AND TASK_DEF_KEY_ != #{key}
+	AND HISTORICIDENTITYLINK.TASK_ID_ = TASK.ID_
+	AND HISTORICIDENTITYLINK.TYPE_ LIKE 'organizer'
+	AND END_TIME_ > 
+	(SELECT TOP 1 END_TIME_ FROM ETEC_ACT_HI_TASKINST WHERE
+	TASK_DEF_KEY_ = #{key} AND END_TIME_ IS NOT NULL 
+	AND PROC_INST_ID_ = #{processInstanceId}
+	 ORDER BY END_TIME_ DESC)
+  </select> 
+  
+    <select id="selectBackOffTask_oracle" parameterType="org.activiti.engine.impl.TaskQueryImpl" resultMap="historicTaskInstanceResultMap">
+	<!-- this query selects previously operated task while submitting the returned task-->
+	SELECT DISTINCT(TASK.NAME_),TASK.*,
+	HISTORICIDENTITYLINK.* FROM 
+	ETEC_ACT_HI_TASKINST TASK, ETEC_ACT_HI_IDENTITYLINK HISTORICIDENTITYLINK
+	WHERE PROC_INST_ID_ = #{processInstanceId}
+	AND TASK_DEF_KEY_ != #{key}
+	AND HISTORICIDENTITYLINK.TASK_ID_ = TASK.ID_
+	AND HISTORICIDENTITYLINK.TYPE_ LIKE 'organizer'
+	AND END_TIME_ > 
+	(SELECT END_TIME_ FROM ETEC_ACT_HI_TASKINST WHERE
+	TASK_DEF_KEY_ = #{key} AND END_TIME_ IS NOT NULL 
+	AND PROC_INST_ID_ = #{processInstanceId}
+	 and ROWNUM = 1) ORDER BY END_TIME_ DESC 
+  </select> 
+  
+  
+    <select id="selectPreviousCompletedTasks" parameterType="org.activiti.engine.impl.TaskQueryImpl" resultMap="historicTaskInstanceResultMap">
+	SELECT TASK.* FROM 
+	ETEC_ACT_HI_TASKINST AS TASK
+	WHERE
+	TASK.PROC_INST_ID_ = #{processInstanceId} 
+	AND TASK.EXECUTION_ID_ = #{executionId}
+	AND TASK.DELETE_REASON_ = 'completed'
+	AND TASK.TASK_DEF_KEY_ != (SELECT TASK_DEF_KEY_ FROM ETEC_ACT_HI_TASKINST WHERE END_TIME_ IS NULL AND PROC_INST_ID_ = #{processInstanceId})
+	GROUP BY TASK.TASK_DEF_KEY_
+  </select>  
+  
+  <select id="selectPreviousCompletedTasks_mssql" parameterType="org.activiti.engine.impl.TaskQueryImpl" resultMap="historicTaskInstanceResultMap">
+	SELECT DISTINCT(TASK.TASK_DEF_KEY_),TASK.* FROM 
+	ETEC_ACT_HI_TASKINST AS TASK
+	WHERE
+	TASK.PROC_INST_ID_ = #{processInstanceId} 
+	AND TASK.EXECUTION_ID_ = #{executionId}
+	AND TASK.DELETE_REASON_ = 'completed'
+	AND TASK.TASK_DEF_KEY_ != (SELECT TASK_DEF_KEY_ FROM ETEC_ACT_HI_TASKINST WHERE END_TIME_ IS NULL AND PROC_INST_ID_ = #{processInstanceId})
+  </select>   
+  
+  <select id="selectPreviousCompletedTasks_oracle" parameterType="org.activiti.engine.impl.TaskQueryImpl" resultMap="historicTaskInstanceResultMap">
+	SELECT DISTINCT(TASK.TASK_DEF_KEY_),TASK.* FROM 
+	ETEC_ACT_HI_TASKINST TASK
+	WHERE
+	TASK.PROC_INST_ID_ = #{processInstanceId} 
+	AND TASK.EXECUTION_ID_ = #{executionId}
+	AND TASK.DELETE_REASON_ = 'completed'
+	AND TASK.TASK_DEF_KEY_ != (SELECT TASK_DEF_KEY_ FROM ETEC_ACT_HI_TASKINST WHERE END_TIME_ IS NULL AND PROC_INST_ID_ = #{processInstanceId})
+  </select>   
+  
+<select id="checkIsNextTaskCompleted" parameterType="org.activiti.engine.impl.TaskQueryImpl" resultMap="historicTaskInstanceResultMap">
+	SELECT TASK.END_TIME_ FROM 
+	ETEC_ACT_HI_TASKINST TASK
+	WHERE
+	TASK.START_TIME_ >  #{createTime}
+	AND TASK.DELETE_REASON_ IS NOT NULL
+	AND TASK.PROC_INST_ID_ = #{processInstanceId}
+  </select>      
+  
+  <select id="selectHistoricTaskColumns" parameterType="org.activiti.engine.impl.TaskQueryImpl" resultMap="historicTaskInstanceResultMap">
+		SELECT RES.ID_, RES.EXECUTION_ID_, RES.PROC_INST_ID_, RES.PROC_DEF_ID_, RES.NAME_, RES.PARENT_TASK_ID_, RES.DESCRIPTION_, RES.OWNER_,
+		RES.START_TIME_, RES.END_TIME_, RES.SIGN_OFF_TYPE_, RES.IS_START_NODE_TASK, RES.IS_DRAFT,
+      	(SELECT users.full_name FROM ETEC_USER users WHERE RES.ASSIGNEE_ = users.id ) assigneeFullName
+      	FROM ETEC_ACT_HI_TASKINST RES
+      	WHERE RES.PROC_INST_ID_ = #{processInstanceId}
+  </select>   
+
+</mapper>

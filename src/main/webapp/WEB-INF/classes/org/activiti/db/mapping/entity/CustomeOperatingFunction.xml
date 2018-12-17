@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="org.activiti.engine.impl.task.CustomOperatingFunction">
+
+  <!-- USER INSERT -->
+
+  <insert id="insertCustomOperatingFu" parameterType="org.activiti.engine.impl.task.CustomOperatingFunction">
+    insert into ${prefix}RE_CUSTOM_FUNCTION (ID_, NAME_, CALL_FUNCTION_, JS_FUNCTION_, HTML_PROPERTY_, DESCRIPTION_, PICTURE_BYTEARRAY_ID_)
+    values (
+      #{id ,jdbcType=VARCHAR},
+      #{name ,jdbcType=VARCHAR},
+      #{callFunction ,jdbcType=VARCHAR},
+      #{jsFunction ,jdbcType=LONGVARCHAR},
+      #{htmlProperty ,jdbcType=LONGVARCHAR},
+      #{description ,jdbcType=VARCHAR},
+      #{pictureByteArrayId ,jdbcType=VARCHAR}
+    )
+  </insert>
+
+  <!-- USER UPDATE -->
+
+  <update id="updateCustomOperatingFu" parameterType="org.activiti.engine.impl.task.CustomOperatingFunction">
+    update ${prefix}RE_CUSTOM_FUNCTION set
+      NAME_ = #{name ,jdbcType=VARCHAR},
+      CALL_FUNCTION_ = #{callFunction ,jdbcType=VARCHAR},
+      JS_FUNCTION_ = #{jsFunction ,jdbcType=LONGVARCHAR},
+      HTML_PROPERTY_ = #{htmlProperty ,jdbcType=LONGVARCHAR},
+      DESCRIPTION_ = #{description ,jdbcType=VARCHAR},
+      PICTURE_BYTEARRAY_ID_ = #{pictureByteArrayId ,jdbcType=VARCHAR}
+    where ID_ = #{id}
+  </update>
+  
+  <!-- USER DELETE -->
+
+  <delete id="deleteCustomOperatingFu" parameterType="org.activiti.engine.impl.task.CustomOperatingFunction">
+    delete from ${prefix}RE_CUSTOM_FUNCTION where ID_ = #{id}
+  </delete>
+
+  <!-- USER RESULTMAP -->
+
+  <resultMap id="customOperationResultMap" type="org.activiti.engine.impl.task.CustomOperatingFunction">
+    <id property="id" column="ID_" jdbcType="VARCHAR" />
+    <result property="name" column="NAME_" jdbcType="VARCHAR" />
+    <result property="callFunction" column="CALL_FUNCTION_" jdbcType="VARCHAR" />
+    <result property="jsFunction" column="JS_FUNCTION_" jdbcType="LONGVARCHAR" />
+    <result property="htmlProperty" column="HTML_PROPERTY_" jdbcType="LONGVARCHAR" />
+    <result property="description" column="DESCRIPTION_" jdbcType="VARCHAR" />
+    <result property="pictureByteArrayId" column="PICTURE_BYTEARRAY_ID_" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <!-- USER SELECT -->
+
+  <select id="selectCustomOperationById" parameterType="string" resultMap="customOperationResultMap">
+    select * from ${prefix}RE_CUSTOM_FUNCTION where ID_ = #{id,jdbcType=VARCHAR}
+  </select> 
+  
+  <select id="selectCustomOperationsByIds" parameterType="java.util.List" resultMap="customOperationResultMap">
+    select * from ${prefix}RE_CUSTOM_FUNCTION where ID_ IN
+    <foreach item="id" index="index" collection="parameter.ids" 
+                     open="(" separator="," close=")">
+              #{id}
+    </foreach>
+  </select>  
+  
+  <!-- SELECT ALL CUSTOM OPERATIONS-->
+    <select id="selectAllCustomOperations" parameterType="java.util.List" resultMap="customOperationResultMap">
+    select * from ${prefix}RE_CUSTOM_FUNCTION 
+  </select>  
+  
+</mapper>

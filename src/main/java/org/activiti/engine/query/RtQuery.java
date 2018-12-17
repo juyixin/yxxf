@@ -1,0 +1,45 @@
+/* Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.activiti.engine.query;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
+import org.activiti.engine.ActivitiException;
+import org.activiti.engine.impl.persistence.entity.TaskEntityManager;
+import org.activiti.engine.query.Query;
+import org.activiti.engine.task.TaskQuery;
+
+import com.eazytec.model.MetaTable;
+
+/**
+ * Allows programmatic querying of {@link Task}s;
+ * 
+ * @author Joram Barrez
+ * @author Falko Menge
+ * @author madan
+ */
+public interface RtQuery extends Query<RtQuery, MetaTable>{
+
+ 
+	RtQuery tableName(String tableName);
+	
+	RtQuery columns(List<String> columns);
+	
+	RtQuery values(List<String> values);
+  
+ 
+ 
+  
+}

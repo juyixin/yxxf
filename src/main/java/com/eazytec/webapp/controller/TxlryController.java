@@ -1,0 +1,615 @@
+package com.eazytec.webapp.controller;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.activiti.engine.impl.util.json.JSONObject;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.velocity.app.VelocityEngine;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.eazytec.Constants;
+import com.eazytec.bpm.admin.department.service.DepartmentService;
+import com.eazytec.bpm.admin.txl.TxlService;
+import com.eazytec.bpm.admin.txlry.TxlryService;
+import com.eazytec.bpm.common.util.StringUtil;
+import com.eazytec.common.util.CommonUtil;
+import com.eazytec.common.util.GridUtil;
+import com.eazytec.crm.model.Record;
+import com.eazytec.dto.DepartmentDTO;
+import com.eazytec.dto.UserDTO;
+import com.eazytec.external.util.ExternalUtils;
+import com.eazytec.model.Txl;
+import com.eazytec.model.Txlry;
+import com.eazytec.model.User;
+import com.eazytec.util.DateUtil;
+import com.eazytec.util.PageBean;
+
+import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+@Controller
+public class TxlryController extends BaseFormController {
+	
+	public VelocityEngine velocityEngine;
+	
+	private TxlryService txlryService;
+
+	private TxlService txlService;
+	
+	private DepartmentService departmentService;
+	
+	
+	@Autowired
+	public void setDepartmentService(DepartmentService departmentService) {
+		this.departmentService = departmentService;
+	}
+
+	@Autowired
+	public void setVelocityEngine(VelocityEngine velocityEngine) {
+		this.velocityEngine = velocityEngine;
+	}
+	
+	@Autowired
+	public void setTxlService(TxlService txlService) {
+		this.txlService = txlService;
+	}
+	
+	@Autowired
+	public void setTxlryService(TxlryService txlryService) {
+		this.txlryService = txlryService;
+	}
+	
+	@RequestMapping(value = "bpm/admin/txlry", method = RequestMethod.GET)
+	public ModelAndView manageOrganization(HttpServletRequest request, ModelMap model) {
+		String script = null;
+		List<Txl>  unitUnionList= txlService.getAllTxl();
+		List<Txlry> txlry = txlryService.getAllTxlry(null);
+		model.addAttribute(Constants.UNITUNION_LIST, unitUnionList);
+		String[] fieldNames = { "id", "xm", "bm", "dh","tele","bz"};
+		script = GridUtil.generateScriptForSjCode(CommonUtil.getMapListFromObjectListByFieldNames(txlry, fieldNames, ""), velocityEngine);
+		model.addAttribute("script", script);
+		model.addAttribute("unitUnionList", unitUnionList);
+		return new ModelAndView("admin/txlry", model);
+	}
+	
+	
+	@RequestMapping(value = "bpm/admin/getTxlGridry", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+	public @ResponseBody String gettxlry(@RequestParam("id") String id, @RequestParam("parentNode") String parentNode, HttpServletRequest request, ModelMap model) {
+		Locale locale = request.getLocale();
+		String script = null;
+		try {
+			List<Txlry> unitUnionList = new ArrayList<Txlry>();
+			if(id.equals("Organization")){
+				 unitUnionList= txlryService.getAllTxlry1();
+			}else{
+				
+				unitUnionList = txlryService.getAllTxlrybm(id);
+			}
+			
+			String[] fieldNames =  { "id","xm", "bm", "dh","tele","bz"};
+			script = GridUtil.generateScriptForSjCode(CommonUtil.getMapListFromObjectListByFieldNames(unitUnionList, fieldNames, ""), velocityEngine);
+
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			saveError(request, getText("error.unitUnionMessage.delete", e.getMessage(), locale));
+		}	
+		return script;
+	}
+	
+	@RequestMapping(value = "bpm/admin/addTxlry", method = RequestMethod.GET)
+	public ModelAndView createUnitUnion(HttpServletRequest request, ModelMap model,@ModelAttribute("txlryFrom") Txlry txlryFrom) {
+	    String id = request.getParameter("id");
+		String code= "";
+		try {
+			if(id==null||id==""){
+				 saveError(request, "请选择树节点新建");
+				 
+				 return manageOrganization(request,model); 
+			}
+			if(id.equals("Organization")){
+                 saveError(request, "请选择子节点新建");
+				 
+				 return manageOrganization(request,model); 
+			}
+			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			List<Txl> unit= txlService.getBm(id); 
+		
+				model.addAttribute("bm", unit.get(0).getBm());
+				model.addAttribute("bmdm", unit.get(0).getBmdm());
+				model.addAttribute("sjbmdm", unit.get(0).getSjbmdm()); 
+				model.addAttribute("sjbmdm", unit.get(0).getSjbmdm()); 
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			e.printStackTrace();
+		}
+		return new ModelAndView("admin/TxlAddry", model);
+	}
+	
+	@RequestMapping(value = "bpm/admin/saveTxlryForm", method = RequestMethod.POST)
+	public ModelAndView saveUnitUnion(@ModelAttribute("txlryFrom") Txlry txlryFrom, BindingResult errors, ModelMap model, HttpServletRequest request) {
+		User logInuser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String parentCode = request.getParameter("bmdmm");
+		String bmdmm = request.getParameter("bmdmm");
+		String type=bmdmm;
+		try {		
+			txlryFrom.setId(null);
+			txlryFrom.setCreateTime(new Date());
+			txlryFrom.setType("1");
+			txlryFrom.setSjbmdm(bmdmm);
+			txlryFrom.setXm(txlryFrom.getXm());
+			txlryFrom.setBm(txlryFrom.getBm());
+			txlryFrom.setDh(txlryFrom.getDh());
+			txlryFrom.setTele(txlryFrom.getTele());
+			txlryFrom.setBz(txlryFrom.getBz());
+			txlryFrom.setPx(txlryFrom.getPx());
+				
+				String code ="";
+		    	String sum = "";
+		    	String name="";
+				List<Txlry> listCode= txlryService.getTxlryTeam(parentCode);
+				
+				if(parentCode.equals("Organization")){
+					type = "bm";
+                }
+				
+		    	int i = 0;
+		    	if(null == listCode || listCode.size() ==0 ){
+		    		i=0;
+		    	}else{
+		    		i = listCode.size();
+		    	}
+		    	int m= i;
+		    		int count = 0;
+		    		if(i==0){
+		    			sum=String.valueOf(i+1);
+		    			code=type+"00"+sum;
+		    		}else{
+		    			while (i > 0) {
+		    				i = i / 10;
+		    				count++;
+		    			}
+		    			if(count==1){
+		    			   if(i==9){
+		    				  code=type+"010";
+		    				}else{
+		    					int n =1;
+		    					for (int k=0;k<m;k++){
+		    					name=listCode.get(k).getBmdm();			    				
+			    				if(name.substring(name.length()-1).equals(String.valueOf(n))){
+			    					n=n+1;
+			    					sum=String.valueOf(n);
+			    				}else{
+			    					 sum=String.valueOf(n);
+			    					 break;
+			    				}				
+			    			}		    				 
+		    				  code=type+"00"+sum;
+		    				}
+		    			}else if(count==2){
+		    				if(i==99){
+		    				  code=type+"100";
+		    				}else{
+		    				  sum=String.valueOf(m+1);
+			    			  code=type+"0"+sum;
+		    				}
+		    			}else if(count==3){
+		    				 sum=String.valueOf(m+1);
+			    			 code=type+sum;
+		    			}
+		    		}
+		    		
+		    		txlryFrom.setBmdm(code);
+		    		
+		    		txlryFrom = txlryService.saveOrUpdateTxlryFrom(txlryFrom);
+					//Getting permissions for delete while editing document form
+					
+					model.addAttribute("txlryFrom",txlryFrom);
+	
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		
+		}
+		
+		return new ModelAndView("redirect:/bpm/admin/txlry");
+	}
+	
+	
+	@RequestMapping(value = "bpm/admin/txlryeditForm", method = RequestMethod.GET)
+	public ModelAndView unitUnionForm(HttpServletRequest request, ModelMap model,String messageId,String personalUnitCode,String ver) {
+		try{
+			Txlry txlryFrom=new Txlry();
+			if(!StringUtil.isEmptyString(request.getParameter("id"))){
+				txlryFrom=txlryService.getTxlryById(request.getParameter("id"));
+			}
+			 
+	    	model.addAttribute("txlryFrom",txlryFrom);
+	    	
+		} catch (Exception e) {
+			log.error(e.getMessage(),e);
+			e.printStackTrace();
+		}
+			return new ModelAndView("admin/Txlryedit", model);
+
+	}
+	
+	
+	
+	@RequestMapping(value = "bpm/admin/saveTxlryeditForm", method = RequestMethod.POST)
+	public ModelAndView savetxlryedit(@ModelAttribute("txlryFrom") Txlry txlryFrom, BindingResult errors, ModelMap model, HttpServletRequest request) {
+		User logInuser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String Id = request.getParameter("id");
+		try {
+			String xm=txlryFrom.getXm();
+			String dh=txlryFrom.getDh();
+			String bz=txlryFrom.getBz();
+			String tele=txlryFrom.getTele();
+			String px=txlryFrom.getPx();
+			txlryFrom=txlryService.getTxlryById(Id);
+				txlryFrom.setXm(xm);
+				txlryFrom.setDh(dh);
+				txlryFrom.setBz(bz);
+				txlryFrom.setTele(tele);
+				txlryFrom.setPx(px);
+				txlryFrom = txlryService.saveOrUpdateTxlryFrom(txlryFrom);
+					
+			model.addAttribute("txlryFrom",txlryFrom);
+	
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		
+		}
+		
+		return new ModelAndView("redirect:/bpm/admin/txlry");
+	}
+	
+	
+	@RequestMapping(value = "bpm/admin/deleteTxl", method = RequestMethod.GET)
+	public ModelAndView deleteUnitUnion(String hrjInfoIds, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		    Locale locale = request.getLocale();
+		    User logInuser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		    JSONObject jsonResult = new JSONObject();
+		    List<String> hrjInfoIdList = new ArrayList<String>();
+		    if (hrjInfoIds.contains(",")){
+				  String[] ids = hrjInfoIds.split(",");
+				  for(String id :ids){
+					  hrjInfoIdList.add(id);
+				  }
+				} else {
+					hrjInfoIdList.add(hrjInfoIds);	
+		}
+
+		    		txlryService.delryId(hrjInfoIdList);
+		    		return new ModelAndView("redirect:txlry");
+	}
+	
+	
+	/**
+	 * 跳到导入页
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="bpm/admin/uploadMemeberForm",method=RequestMethod.GET)
+	public ModelAndView uploadMemeberForm(HttpServletRequest request,ModelMap model) throws Exception{
+		String id = request.getParameter("id");
+		if(id==null||id==""){
+			saveError(request, "请选择一个节点");
+			return manageOrganization(request,model);
+		}else if(id.equals("Organization")){
+			saveError(request, "请选择子节点");
+			return manageOrganization(request,model);
+		}
+		model.addAttribute("unitId", id);
+		return new ModelAndView("admin/uploadMemberInfor",model);
+	}
+	
+	
+	@RequestMapping(value="bpm/admin/downloadExcel")
+	public void downloadExcel(ModelMap model,HttpServletRequest request,HttpServletResponse response){
+		Locale locale = request.getLocale();
+		try {	
+			Date date = new Date();
+			String currentDate = DateUtil
+					.convertDateToDefalutDateTimeString(date);
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/vnd.ms-excel;charset=UTF-8");
+			String filename="";
+			filename=new String("人员信息".getBytes("gb2312"), "iso8859-1");
+			response.setHeader("Content-Disposition", "attachment; filename="
+					+ filename + "_" + currentDate + ".xls");
+			 response.setCharacterEncoding("utf-8");
+			HSSFWorkbook wb = new HSSFWorkbook();
+			HSSFSheet newSheet = wb.createSheet("test" + "_" + currentDate);
+
+			HSSFRow header = newSheet.createRow(0);
+			
+			header.createCell(0).setCellValue("姓名");
+			header.createCell(1).setCellValue("电话");
+			header.createCell(2).setCellValue("办公电话");
+			header.createCell(3).setCellValue("备注");
+			
+			
+			HSSFCellStyle style = wb.createCellStyle();
+			  HSSFRow curRow = newSheet.getRow(0); //取XSL文件第1行
+			  HSSFCell curCell = curRow.getCell(0); //第1列 
+			  HSSFCell curCell1 = curRow.getCell(1); //第2列 
+			  
+			  //生成一个字体
+	          HSSFFont font=wb.createFont();
+	          font.setColor(HSSFColor.RED.index);//HSSFColor.VIOLET.index //字体颜色
+	          
+			 // style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);  //填充单元格
+			  //style.setFillForegroundColor(HSSFColor.RED.index);
+	          style.setFont(font);
+			  curCell.setCellStyle(style);
+			  curCell1.setCellStyle(style);
+		
+			wb.write(response.getOutputStream());
+			// log.info("List View dataCSV export done Successfully");
+
+		} catch (Exception e) {
+			saveError(
+					request,
+					getText("grid.dataCSV.export.error", e.getMessage(), locale));
+		}
+	}
+	
+	
+	
+	/**
+	 * 导入数据
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="bpm/admin/uploadData",method=RequestMethod.POST)
+	public ModelAndView uploadData(HttpServletRequest request,ModelMap model)throws Exception{
+		String type1 = request.getParameter("JC");
+		String type = "";
+		if(type1.endsWith("?")){
+			type=type1.replace("?","");
+		}
+		Txl u = txlService.getId1(type);
+		String department = u.getBm();
+		String departmentCode = u.getBmdm();
+		String parentCode = u.getBmdm();
+		ModelAndView modelAndView=new ModelAndView();
+		MultipartHttpServletRequest multipartRequest=(MultipartHttpServletRequest)request;
+		CommonsMultipartFile file=(CommonsMultipartFile)multipartRequest.getFile("file");
+		String result="";
+		//上传路径
+		String uploadDir = getServletContext().getRealPath("/resources") + "/" + request.getRemoteUser() + "/";
+		File dirPath=new File(uploadDir);
+		//创建文件路径
+		if(!dirPath.exists()){
+			dirPath.mkdirs();
+		}
+		//从文件获得输入流
+		InputStream stream=file.getInputStream();
+		//根据上传路径创建输出流
+		OutputStream ops=new FileOutputStream(uploadDir+file.getOriginalFilename());
+		//创建缓存
+		byte[] buffer=new byte[8192];
+		int bytesRead;
+		while((bytesRead=stream.read(buffer, 0, 8192)) != -1){
+			ops.write(buffer, 0, bytesRead);
+		}
+		ops.close();
+		stream.close();
+		
+		File excel=new File(uploadDir+file.getOriginalFilename());
+		
+		List<Object> list=null;
+		
+		list=readExcel(excel,department,departmentCode,parentCode);		
+		if(((ArrayList)(list.get(0))).size()==0&&((ArrayList)(list.get(1))).size()==0){
+
+			model.addAttribute("message","Excle is Empty");
+		}else{
+				ArrayList<String> errorList=(ArrayList<String>) list.get(1);
+				if(errorList.size()> 0){
+					model.addAttribute("message","Excle data error");
+					model.addAttribute("list", errorList);
+					model.addAttribute("unitId",type);
+				}else{
+					ArrayList<Txlry>  listCons = (ArrayList<Txlry>)list.get(0);
+					ArrayList<Txlry> listSave = new ArrayList<Txlry>();
+					ArrayList<Txlry> listUpdate = new ArrayList<Txlry>();
+					for(Txlry  co : listCons){
+                     	int count = txlryService.count(co.getBmdm(),co.getDh());
+                     	
+                     	if(count == 0){
+                     		co.setCreateTime(new Date());
+                     		listSave.add(co);
+                     	}else{
+                     		Txlry a = txlryService.getId(co.getBmdm(),co.getDh());
+                     		co.setId(a.getId());
+                     		co.setLastModifyTime(new Date());
+                     		co.setCreateTime(a.getCreateTime());
+                     		listUpdate.add(co);
+                     	}
+					}
+					String saveResult ="";
+					String updateResult ="";
+					if(!listSave.isEmpty()){
+						saveResult=txlryService.saveConsCompanyInfoByList(listSave);			
+					}else{
+						saveResult = "true";
+					}
+						
+					if(!listUpdate.isEmpty()){
+						updateResult=txlryService.saveConsCompanyInfoByList1(listUpdate);
+					}else{
+						updateResult="true";
+					}
+					
+					if(saveResult.equals("true")&&updateResult.equals("true")){
+						result = "true";
+					}else{
+						result = "false";
+					}
+					
+					
+					if(result.equals("true")){
+						model.addAttribute("unitId",type);
+						model.addAttribute("message","upload success");
+					}else if(result.equals("false")){
+						model.addAttribute("unitId",type);
+						model.addAttribute("message","upload fail");
+					}
+				}
+			
+			
+		}
+		modelAndView=new ModelAndView("admin/uploadMemberInfor",model);
+		return modelAndView;
+	}
+	
+	public List<Object> readExcel(File file,String department,String departmentCode,String parentCode) throws IOException,ParseException{
+		List<Object> list=null;
+		String fileName=file.getName();
+		String postFix=fileName.lastIndexOf(".")==-1?"":fileName.substring(fileName.lastIndexOf(".")+1);
+		if(postFix.equals("xlsx")){
+			XSSFWorkbook xwb = new XSSFWorkbook(new FileInputStream(file));
+			XSSFFormulaEvaluator excute = new XSSFFormulaEvaluator((XSSFWorkbook) xwb);
+			XSSFSheet sheetDept = xwb.getSheetAt(0);
+			list = new ArrayList<Object>();
+			list = txlryService.readExcelData(sheetDept, excute,department,departmentCode,parentCode);
+		}else if(postFix.equals("xls")){
+			HSSFWorkbook hwb = new HSSFWorkbook(new FileInputStream(file));
+			HSSFFormulaEvaluator excute =  new HSSFFormulaEvaluator((HSSFWorkbook) hwb);
+			HSSFSheet sheetDept = hwb.getSheetAt(0);
+			list = new ArrayList<Object>();
+			list = txlryService.readExcelDataFor03(sheetDept, excute,department,departmentCode,parentCode);
+		}
+		return list;
+	}
+	
+	
+	
+	
+	@RequestMapping(value="bpm/admin/exportBaseResult",method = RequestMethod.POST)
+	public void exportBaseResult(@RequestParam("gridDatas") String gridDatas,ModelMap model,HttpServletRequest request,
+			HttpServletResponse response){
+		Locale locale = request.getLocale();
+		try {
+
+			List<Map<String, Object>> gridDataMap = CommonUtil
+					.convertJsonToList(gridDatas);
+
+
+			List<String> colmnName = new ArrayList<String>();
+			List<List<String>> rows = new ArrayList<List<String>>();
+			int count = 0;
+			// Create the header name and grid data for CSV Export
+			for (Map<String, Object> rowMap : gridDataMap) {
+				List<String> rowData = new ArrayList<String>();
+				// Getting row values
+				if(!String.valueOf(rowMap.get("xm")).equals("null")){
+					rowData.add(String.valueOf(rowMap.get("xm")));
+				}else{
+					rowData.add(null);
+				}
+				if(!String.valueOf(rowMap.get("dh")).equals("null")){	
+					rowData.add(String.valueOf(rowMap.get("dh")));
+				}else{
+					rowData.add(null);
+				}
+				if(!String.valueOf(rowMap.get("tele")).equals("null")){	
+					rowData.add(String.valueOf(rowMap.get("tele")));
+				}else{
+					rowData.add(null);
+				}
+				if(!String.valueOf(rowMap.get("bm")).equals("null")){	
+					rowData.add(String.valueOf(rowMap.get("bm")));
+				}else{
+					rowData.add(null);
+				}
+				
+				if(!String.valueOf(rowMap.get("bz")).equals("null")){
+					rowData.add(String.valueOf(rowMap.get("bz")));
+				}else{
+					rowData.add(null);
+				}
+				count++;
+				rows.add(rowData);
+			}
+			Date date = new Date();
+			// Get current date string and append with file name
+			String currentDate = DateUtil
+					.convertDateToDefalutDateTimeString(date);
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/vnd.ms-excel;charset=UTF-8");
+			String filename="";
+			filename=new String("通讯录信息导出表".getBytes("gb2312"), "iso8859-1");
+			response.setHeader("Content-Disposition", "attachment; filename="
+					+ filename + "_" + currentDate + ".xls");
+			 response.setCharacterEncoding("utf-8");
+			HSSFWorkbook wb = new HSSFWorkbook();
+			HSSFSheet newSheet = wb.createSheet("test" + "_" + currentDate);
+
+			HSSFRow header = newSheet.createRow(0);
+			int cellCount = 0;
+			header.createCell(0).setCellValue("姓名");
+			header.createCell(1).setCellValue("手机号码");
+			header.createCell(2).setCellValue("办公电话");
+			header.createCell(3).setCellValue("部门");
+			header.createCell(4).setCellValue("备注");
+			int rowcount = 1;
+			for (List<String> row : rows) {
+				cellCount = 0;
+				HSSFRow cellRow = newSheet.createRow(rowcount);
+				for (String cellValue : row) {
+					cellRow.createCell(cellCount).setCellValue(cellValue);
+					cellCount++;
+				}
+				rowcount++;
+			}
+			wb.write(response.getOutputStream());
+			// log.info("List View dataCSV export done Successfully");
+
+		} catch (Exception e) {
+			saveError(
+					request,
+					getText("grid.dataCSV.export.error", e.getMessage(), locale));
+		}
+	}
+	
+}

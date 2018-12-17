@@ -1,0 +1,80 @@
+# default module names
+
+MODULE_0=Saving & Printing
+MODULE_1=Import of Graphics
+MODULE_2=
+MODULE_3=
+MODULE_4=
+MODULE_5=
+
+# start-up demo alert
+
+DEMO_MSG=This application runs in demo mode. \nA few restrictions apply.
+DEMO_REGISTER=Register now
+DEMO_DEMO=Demo
+
+# basic permission error alert
+
+BASIC_ERR=Invalid license does not permit execution of this application.
+BASIC_REGISTER=Re-license
+BASIC_DEMO=Demo
+BASIC_QUIT=Quit
+
+# misc alerts
+
+CHECK_ERR=This application has been copied to another location. \nPlease re-license it with your existing license key.
+WRITE_ERR=Failed to write license information:\n{0}
+HOST_ID_ERR=Your Host ID is {1}. Please get the license with your host id 
+OK=OK
+DEMO=Demo
+QUIT=Quit
+
+# FloatingDialog
+
+NETWORK_TITLE=Checking Network...
+NETWORK_ERR=Network error ({0}).
+NETWORK_MAX_USERS_1=The available license is currently being used on the host listed above. Please try again later.
+NETWORK_MAX_USERS_X=All {0} available licenses are currently being used on the hosts listed above. Please try again later.
+NETWORK_DEMO=Demo
+NETWORK_QUIT=Quit
+
+NETWORK_NM_MSG=Interrupting the 'Checking Network...' phase will terminate this application.
+NETWORK_NM_CONTINUE=Continue
+NETWORK_NM_QUIT=Terminate
+
+# RegisterDialog
+
+REGISTER_TITLE=Registration
+REGISTER_KEY=License String:
+REGISTER_NAME=Name or Organisation:
+REGISTER_REGISTER=Register Application
+REGISTER_CANCEL=Cancel
+REGISTER_KEY_ERR=Invalid license string.
+REGISTER_NAME_ERR=The field 'Name or Organisation' may not be left blank.
+
+# LicenseDialog
+
+LICENSE_TITLE=License
+LICENSE_SERIAL=Serial Number:
+LICENSE_HOST_ID=Host ID:
+LICENSE_OWNER=License Owner:
+LICENSE_TYPE=License Type:
+LICENSE_OK=OK
+LICENSE_RELICENSE=Re-license Application
+
+SERIAL_DEMO=-
+OWNER_DEMO=-
+TYPE_DEMO=Demo
+TYPE_SINGLE=Single-User License
+TYPE_MAX_USERS_1=Network License for 1 User
+TYPE_MAX_USERS_X=Network License for {0} Users
+TYPE_MAX_USERS_NA=Unlimited Network License
+
+COL_MODULE=Module
+COL_MODE=Licensed
+COL_EXPDATE=Expires
+
+MODE_NO=No
+MODE_YES=Yes
+MODE_FREE=Free
+MODE_DEMO=Demo

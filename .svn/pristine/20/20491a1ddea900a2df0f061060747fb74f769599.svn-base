@@ -1,0 +1,6573 @@
+{
+	"title":"Palette Menu",
+	"title_zh_cn":"调板菜单",
+	"namespace":"http://b3mn.org/stencilset/bpmn2.0#",
+	"description":"This is the BPMN 2.0 stencil set specification.",
+ 	"propertyPackages": [
+ 		{
+ 			"name":"baseAttributes",
+ 			"properties": [
+				{
+					"id":"name",
+					"type":"String",
+					"title":"Name",
+					"title_zh_cn":"名字",
+					"value":"",
+					"description":"The descriptive name of the BPMN element.",
+					"description_de":"Bezeichnung des BPMN-Elementes.",
+					"readonly":false,
+					"optional":true,
+					"length":"",
+					"wrapLines" : true,
+					"refToView":"text_name",	
+					"popular":true
+				},
+				{
+					"id":"documentation",
+					"type":"Text",
+					"title":"Documentation",
+					"title_zh_cn":"文档",
+					"title_de":"Dokumentation",
+					"value":"",
+					"description":"This attribute is used to annotate the BPMN element, such as descriptions and other documentation.",
+					"description_de":"Der Modellierer kann weiteren Text zur Dokumentation des BPMN-Elementes einfügen.",
+					"readonly":false,
+					"optional":true,
+					"length":"",
+					"wrapLines":true,
+					"popular" : false
+				},
+				{
+					"id":"auditing",
+					"type":"Text",
+					"title":"Auditing",
+					"title_zh_cn":"审计",
+					"title_de":"Prüfung",
+					"value":"",
+					"description":"A hook for specifying audit related properties. Auditing can only be defined for a Process.",
+					"description_de":"",
+					"readonly":false,
+					"optional":true,
+					"length":"",
+					"wrapLines":true
+				},
+				{
+					"id":"monitoring",
+					"type":"Text",
+					"title":"Monitoring",
+					"title_zh_cn":"监测",
+					"title_de":"Überwachung",
+					"value":"",
+					"description":"A hook for specifying monitoring related properties. Monitoring can only be defined for a Process.",
+					"description_de":"",
+					"readonly":false,
+					"optional":true,
+					"length":"",
+					"wrapLines":true
+				}
+ 			]
+ 		},
+ 		{
+ 			"name":"collapsedSubprocessAttributes",
+ 			"properties": [
+				{
+					"id":"addsubprocess",
+					"type":"addprocess",
+					"title":"Process Name",
+					"title_zh_cn":"进程名称",
+					"title_de":"Process Name",
+					"description":"This defines the date on which the Diagram was created.",
+					"description_de":"Datum an dem das Diagramm erstellt wurde.",
+					"readonly":false,
+					"popular" : true,
+					"optional": true
+				}
+			]
+ 		},
+ 		{
+ 			"name":"baseTaskAttributes",
+ 			"properties": [
+				{
+					"id":"name",
+					"type":"String",
+					"title":"Name",
+					"title_zh_cn":"名字",
+					"value":"",
+					"description":"The descriptive name of the BPMN element.",
+					"description_de":"Bezeichnung des BPMN-Elementes.",
+					"readonly":false,
+					"optional":false,
+					"length":"",
+					"wrapLines" : true,
+					"refToView":"text_name",
+					"popular" : true
+				},
+				{
+					"id":"documentation",
+					"type":"Text",
+					"title":"Documentation",
+					"title_zh_cn":"文档",
+					"title_de":"Dokumentation",
+					"value":"",
+					"description":"This attribute is used to annotate the BPMN element, such as descriptions and other documentation.",
+					"description_de":"Der Modellierer kann weiteren Text zur Dokumentation des BPMN-Elementes einfügen.",
+					"readonly":false,
+					"optional":true,
+					"length":"",
+					"wrapLines":true,
+					"popular" : false
+				},
+				{
+					"id":"auditing",
+					"type":"Text",
+					"title":"Auditing",
+					"title_zh_cn":"审计",
+					"title_de":"Prüfung",
+					"value":"",
+					"description":"A hook for specifying audit related properties. Auditing can only be defined for a Process.",
+					"description_de":"",
+					"readonly":false,
+					"optional":true,
+					"length":"",
+					"wrapLines":true
+				},
+				{
+					"id":"monitoring",
+					"type":"Text",
+					"title":"Monitoring",
+					"title_zh_cn":"监测",
+					"title_de":"Überwachung",
+					"value":"",
+					"description":"A hook for specifying monitoring related properties. Monitoring can only be defined for a Process.",
+					"description_de":"",
+					"readonly":false,
+					"optional":true,
+					"length":"",
+					"wrapLines":true
+				}
+ 			]
+ 		},
+		{
+			"name" : "bgColor",
+			"properties" : [
+				{
+					"id":"bgcolor",
+					"type":"Color",
+					"title":"BackgroundColor",
+					"title_zh_cn":"背景颜色",
+					"title_de":"Hintergrundfarbe",
+					"value":"#ffffff",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView": "fill_el",
+					"fill":true,
+					"stroke":false
+				}
+			]
+		},
+		{
+			"name" : "condition",
+			"properties" : [
+				{
+					"id":"condition",
+					"type":"String",
+					"title":"Condition",
+					"title_zh_cn":"条件",
+					"title_de":"Bedingung",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"popular":true
+				}
+			]
+		},
+		{
+			"name":"boundaryevent",
+			"properties":[
+				{
+					"id":"boundarycancelactivity",
+					"type":"Boolean",
+					"title":"CancelActivity",
+					"title_zh_cn":"取消活动",
+					"title_de":"Aktivität abbrechen",
+					"value":"",
+					"description":"Denotes whether the activity should be cancelled or not, i.e., whether the boundary catch event acts as an error or an escalation. If the activity is not cancelled, multiple instances of that handler can run concurrently.",
+					"description_de":"Kennzeichnet ob eine Aktivität abgebrochen werden soll.",
+					"readonly":false,
+					"optional":true
+				}
+			]
+		},
+ 		{
+ 			"name":"catchEventAttributes",
+ 			"properties":[
+ 				{
+					"id":"eventdefinitionref",
+					"type":"String",
+					"title":"EventDefinitionRef",
+					"title_zh_cn":"事件定义参考",
+					"title_de":"Ereignis-Definitions Referenz",
+					"value":"",
+					"description":"EventDefinitionRefs (EventDefinition) is an attribute that defines the type of reusable triggers expected for a catch Event.",
+					"description_de":"Das Attribut EreignisDefinitionsRef (EreignisDefinition) definiert einen wiederverwendbaren Auslösertyp für ein eintretendes Ereignis.",
+					"readonly":false,
+					"optional":true,
+					"length":"",
+					"wrapLines":true
+				},
+				{
+					"id":"eventdefinitions",
+					"type":"String",
+					"title":"EventDefinitions",
+					"title_zh_cn":"事件定义",
+					"title_de":"EreignisDefinitionen",
+					"value":"",
+					"description":"EventDefinitions (EventDefinition) is an attribute that defines the type of contained triggers expected for a catch Event.",
+					"description_de":"Das Attribut EreignisDefinitions (EreignisDefinition) definiert die beinhaltenten Auslöser für ein eintretendes Ereignis.",
+					"readonly":false,
+					"optional":true,
+					"length":"",
+					"wrapLines":true
+				},
+				{
+					"id":"dataoutputassociations",
+					"type":"String",
+					"title":"DataOutputAssociations",
+					"title_zh_cn":"数据输出协会",
+					"title_de":"Daten Ausgangs-Assoziation",
+					"value":"",
+					"description":"The Data Associations of the catch Event.",
+					"description_de":"Die Daten-Assoziation für ein eintretendes Ereignis.",
+					"readonly":false,
+					"optional":true,
+					"length":"",
+					"wrapLines":true
+				},
+				{
+					"id":"dataoutput",
+					"type":"String",
+					"title":"DataOutput",
+					"title_zh_cn":"数据输出",
+					"title_de":"Daten-Ausgang",
+					"value":"",
+					"description":"The Data Associations of the catch Event.",
+					"description_de":"Die Daten-Assoziation für ein eintretendes Ereignis.",
+					"readonly":false,
+					"optional":true,
+					"length":"",
+					"wrapLines":true
+				},
+				{
+					"id":"outputset",
+					"type":"String",
+					"title":"OutputSet",
+					"title_zh_cn":"输出设置",
+					"title_de":"Ausgabe-Menge",
+					"value":"",
+					"description":"The OutputSet for the catch Event.",
+					"description_de":"Die Ausgabe-Sätze für ein eintretendes Ereignis.",
+					"readonly":false,
+					"optional":true,
+					"length":"",
+					"wrapLines":true
+				}
+ 			]
+ 		},
+ 		{
+ 			"name":"throwEventAttributes",
+ 			"properties":[
+ 				{
+					"id":"eventdefinitionref",
+					"type":"String",
+					"title":"EventDefinitionRef",
+					"title_zh_cn":"事件定义参考",
+					"title_de":"Ereignis Definitions-Referenz",
+					"value":"",
+					"description":"EventDefinitionRefs (EventDefinition) is an attribute that defines the type of reusable triggers expected for a catch Event.",
+					"description_de":"Das Attribut EreignisDefinitionsRef (EreignisDefinition) definiert einen wiederverwendbaren Auslösertyp für ein eintretendes Ereignis.",
+					"readonly":false,
+					"optional":true,
+					"length":"",
+					"wrapLines":true
+				},
+				{
+					"id":"eventdefinitions",
+					"type":"String",
+					"title":"EventDefinitions",
+					"title_zh_cn":"事件定义",
+					"title_de":"EreignisDefinitionen",
+					"value":"",
+					"description":"EventDefinitions (EventDefinition) is an attribute that defines the type of contained triggers expected for a catch Event.",
+					"description_de":"Das Attribut EreignisDefinitions (EreignisDefinition) definiert die beinhaltenten Auslöser für ein eintretendes Ereignis.",
+					"readonly":false,
+					"optional":true,
+					"length":"",
+					"wrapLines":true
+				},
+				{
+					"id":"datainputassociations",
+					"type":"String",
+					"title":"DataInputAssociations",
+					"title_zh_cn":"数据输入协会",
+					"title_de":"Daten Ausgangs-Assoziationen",
+					"value":"",
+					"description":"The Data Associations of the throw Event.",
+					"description_de":"Die Daten-Assoziationen für ein auslösendes Ereignis.",
+					"readonly":false,
+					"optional":true,
+					"length":"",
+					"wrapLines":true
+				},
+				{
+					"id":"datainput",
+					"type":"String",
+					"title":"Data Input",
+					"title_zh_cn":"数据输入",
+					"title_de":"Daten-Eingang",
+					"value":"",
+					"description":"The Data Associations of the throw Event.",
+					"description_de":"Die Daten-Assoziation für ein auslösendes Ereignis.",
+					"readonly":false,
+					"optional":true,
+					"length":"",
+					"wrapLines":true
+				},
+				{
+					"id":"inputset",
+					"type":"String",
+					"title":"InputSet",
+					"title_zh_cn":"输入设置",
+					"title_de":"Ausgabe-Menge",
+					"value":"",
+					"description":"The InputSet for the throw Event.",
+					"description_de":"Die Ausgabe-Sätze für ein auslösendes Ereignis.",
+					"readonly":false,
+					"optional":true,
+					"length":"",
+					"wrapLines":true
+				}
+ 			]
+ 		},
+ 		{
+ 			"name" : "compensationThrowing",
+ 			"properties" : [
+ 				{
+ 					"id":"waitforcompletion",
+					"type":"Boolean",
+					"title":"Wait for completion",
+					"title_zh_cn":"等待完成",
+					"title_de":"Auf Fertigstellung warten",
+					"value":true,
+					"popular":true,
+					"description":"Determine whether a throw compensation is performed synchronously or asynchronously.",
+					"description_de":"Gibt an, ob die erzeugt Kompensierung synchron oder asynchron aufgerufen wird.",
+					"readonly":false,
+					"optional":true
+ 				}
+ 			]
+ 		},
+ 		{
+ 			"name" : "compensation",
+ 			"properties" : [
+ 				{
+ 					"id":"activityref",
+					"type":"String",
+					"title":"Activity reference",
+					"title_zh_cn":"活动参考",
+					"title_de":"Aktivitätsreferenz",
+					"value":"",
+					"popular":true,
+					"description":"The activity related to the compensation event",
+					"description_de":"Die Kompensierung betreffende Aktivität",
+					"readonly":false,
+					"optional":true
+ 				}
+ 			]
+ 		},
+ 		{
+ 			"name":"interrupting",
+ 			"properties":[
+ 				{
+					"id":"isinterrupting",
+					"type":"Boolean",
+					"title":"Is Interrupting",
+					"title_zh_cn":"是中断",
+					"title_de":"ist unterbrechend",
+					"value":true,
+					"description":"This attribute denotes whether the Sub-Process encompassing the Event Sub-Process should be cancelled or not.",
+					"description_de":"Dieses Attribut gibt an, ob der umfassende Subprozess abgebrochen werden soll.",
+					"inverseBoolean":false,
+					"readonly":false,
+					"optional":true,
+					"refToView": [
+						"frame",
+						"frame2"
+					]
+				}
+ 			]
+ 		},
+ 		{
+			"name":"indform",
+			"properties":[{
+					"id":"admin",
+					"type":"memberpermission",
+					"title":"Admin",
+					"title_zh_cn":"管理员",
+					"title_de":"Admin",
+					"description":"Admin filed permission set",
+					"description_de":"Admin filed permission set",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			},
+			{
+					"id":"reader",
+					"type":"memberpermissionend",
+					"title":"Reader",
+					"title_zh_cn":"读者",
+					"title_de":"Reader",
+					"description":"Reader filed permission set",
+					"description_de":"Reader filed permission set",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			},
+			{
+					"id":"process",
+					"type":"memberpermissionprocess",
+					"title":"Process",
+					"title_zh_cn":"过程",
+					"title_de":"Process",
+					"description":"Process filed permission set",
+					"description_de":"Process filed permission set",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			},
+			{			
+					"id":"endscript",
+					"type":"endnodescript",
+					"title":"End Script",
+					"title_zh_cn":"结束脚本",
+					"title_de":"End Script",
+					"description":"End Script",
+					"description_de":"End Script",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			},
+			{
+					"id":"urgemessage",
+					"type":"urgemessagestart",
+					"title":"Urge Message",
+					"title_zh_cn":"恳请留言",
+					"title_de":"Urge Message",
+					"description":"Urge Message set",
+					"description_de":"Urge Message set",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			},
+			{
+					"id":"notificationmessage",
+					"type":"addnotificationmessage",
+					"title":"Notification Message",
+					"title_zh_cn":"通知消息",
+					"title_de":"Notification Message",
+					"description":"Notification Message set",
+					"description_de":"Notification Message set",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			}]
+		},
+		{
+			"name":"endTypeEvent",
+			"properties":[{
+					"id":"reader",
+					"type":"memberpermissionend",
+					"title":"Reader",
+					"title_zh_cn":"读者",
+					"title_de":"Reader",
+					"description":"Reader filed permission set",
+					"description_de":"Reader filed permission set",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			},
+			{
+					"id":"startscript",
+					"type":"startnodescript",
+					"title":"Start Script",
+					"title_zh_cn":"启动脚本",
+					"title_de":"Start Script",
+					"description":"Start Script",
+					"description_de":"Start Script",
+					"readonly":false,
+					"popular" : true,
+					"optional":false
+			},{
+					"id":"isarchive",
+					"type":"isarchive",
+					"title":"Is Archive",
+					"title_zh_cn":"是存档",
+					"title_de":"Is Archive",
+					"description":"Is Archive",
+					"description_de":"Is Archive",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			},{
+					"id":"readeroption",
+					"type":"readeroptiontype",
+					"title":"Reader Option",
+					"title_zh_cn":"阅读器选项",
+					"title_de":"Reader Option",
+					"description":"Reader Option",
+					"description_de":"Reader Option",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			}]
+		},
+ 		{
+			"name":"form",
+			"properties":[{
+					"id":"form",
+					"type":"RuntimeCombo",
+					"title":"Form",
+					"title_zh_cn":"表单",
+					"title_de":"Eingangs-Nachricht-Typ",
+					"description":"This defines the nature of the Item. Possible values are Physical or Information. The default value is Information.",
+					"description_de":"Beim Typ der Nachricht kann zwischen Physisch und Information unterschieden werden.",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+					"dataurl":'/form/getAllForms',
+			},
+			{
+					"id":"jspform",
+					"type":"addjspform",
+					"title":"JSP Form",
+					"title_zh_cn":"JSP表单",
+					"title_de":"Eingangs-Nachricht-Typ",
+					"description":"This defines the nature of the Item. Possible values are Physical or Information. The default value is Information.",
+					"description_de":"Beim Typ der Nachricht kann zwischen Physisch und Information unterschieden werden.",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+				
+			},
+			{			
+					"id":"organizer",
+					"type":"customtreeselect",
+					"title":"Organizer",
+					"title_zh_cn":"组织者",
+					"title_de":"Organizer",
+					"description":"Organizer filed permission set",
+					"description_de":"Organizer filed permission set",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			},
+			{
+					"id":"coordinator",
+					"type":"formfieldpermission",
+					"title":"Co-ordinator",
+					"title_zh_cn":"统筹",
+					"title_de":"Co-ordinator",
+					"description":"Co-ordinator filed permission set",
+					"description_de":"Co-ordinator filed permission set",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			},
+			{
+					"id":"reader",
+					"type":"formmemberpermission",
+					"title":"Reader",
+					"title_zh_cn":"读者",
+					"title_de":"Reader",
+					"description":"Reader filed permission set",
+					"description_de":"Reader filed permission set",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			},
+			{
+					"id":"creator",
+					"type":"formfieldpermission",
+					"title":"Creator",
+					"title_zh_cn":"创造者",
+					"title_de":"Creator",
+					"description":"Creator filed permission set",
+					"description_de":"Creator filed permission set",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			},
+			{			
+					"id":"formfieldautomatic",
+					"type":"addformfieldautomatic",
+					"title":"Form Field Automatic",
+					"title_zh_cn":"表单域自动",
+					"title_de":"Form Field Automatic",
+					"description":"Form Field Automatic",
+					"description_de":"Form Field Automatic",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			},
+			{			
+					"id":"onread",
+					"type":"addonread",
+					"title":"On Read",
+					"title_zh_cn":"在读",
+					"title_de":"On Read",
+					"description":"add On Read",
+					"description_de":"add On Read",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			},
+			{			
+					"id":"oncreate",
+					"type":"addoncreate",
+					"title":"On Create",
+					"title_zh_cn":"在创建",
+					"title_de":"On Create",
+					"description":"add On Create",
+					"description_de":"add On Create",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			},
+			{			
+					"id":"onupdate",
+					"type":"addonupdate",
+					"title":"On Update",
+					"title_zh_cn":"关于更新",
+					"title_de":"On Update",
+					"description":"add On Update",
+					"description_de":"add On Update",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			},
+			{
+					"id":"processeduser",
+					"type":"formfieldpermission",
+					"title":"Processed User",
+					"title_zh_cn":"处理用户",
+					"title_de":"Processed User",
+					"description":"Processed User filed permission set",
+					"description_de":"Processed User filed permission set",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			},
+			{
+					"id":"workflowadministrator",
+					"type":"formfieldpermission",
+					"title":"Workflow Administrator",
+					"title_zh_cn":"工作流管理",
+					"title_de":"Workflow Administrator",
+					"description":"Workflow Administrator filed permission set",
+					"description_de":"Workflow Administrator filed permission set",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			},
+			{
+					"id":"operationorganizer",
+					"type":"operationpermission",
+					"title":"OF Organizer",
+					"title_zh_cn":"主办单位",
+					"title_de":"OF Organizer",
+					"description":"Operation Function Organizer Permission filed permission set",
+					"description_de":"Operation Function Organizer Permission filed permission set",
+					"readonly":false,
+					"popular" : true,
+					"optional":false
+			},
+			{
+					"id":"operationcoordinator",
+					"type":"operationpermission",
+					"title":"OF Co-ordinator",
+					"title_zh_cn":"协调员",
+					"title_de":"OF Co-ordinator",
+					"description":"Operation Function Co-ordinator Permission filed permission set",
+					"description_de":"Operation Function Co-ordinator Permission filed permission set",
+					"readonly":false,
+					"popular" : true,
+					"optional":false
+			},
+			{
+					"id":"operationreader",
+					"type":"operationpermission",
+					"title":"OF Reader",
+					"title_zh_cn":"阅读器",
+					"title_de":"OF Reader",
+					"description":"Operation Function Reader Permission filed permission set",
+					"description_de":"Operation Function Reader Permission filed permission set",
+					"readonly":false,
+					"popular" : true,
+					"optional":false
+			},
+			{
+					"id":"operationcreator",
+					"type":"operationpermission",
+					"title":"OF Creator",
+					"title_zh_cn":"造物主",
+					"title_de":"OF Creator",
+					"description":"Operation Function Creator Permission filed permission set",
+					"description_de":"Operation Function Creator Permission filed permission set",
+					"readonly":false,
+					"popular" : true,
+					"optional":false
+			},
+			{
+					"id":"operationprocesseduser",
+					"type":"operationpermission",
+					"title":"OF Processed User",
+					"title_zh_cn":"加工用户",
+					"title_de":"OF Processed User",
+					"description":"Operation Function Processed User Permission filed permission set",
+					"description_de":"Operation Function Processed User Permission filed permission set",
+					"readonly":false,
+					"popular" : true,
+					"optional":false
+			},
+			{
+					"id":"operationworkflowadministrator",
+					"type":"operationpermission",
+					"title":"OF Workflow Administrator",
+					"title_zh_cn":"工作流程管理员",
+					"title_de":"OF Workflow Administrator",
+					"description":"Operation Function Workflow Administrator Permission filed permission set",
+					"description_de":"Operation Function Workflow Administrator Permission filed permission set",
+					"readonly":false,
+					"popular" : true,
+					"optional":false
+			},
+			{
+					"id":"opinion",
+					"type":"addopinion",
+					"title":"Opinion",
+					"title_zh_cn":"意见",
+					"title_de":"Opinion",
+					"description":"Opinion",
+					"description_de":"Opinion",
+					"readonly":false,
+					"popular" : true,
+					"optional":false
+			},
+			{
+					"id":"processtimesetting",
+					"type":"addprocesstimesetting",
+					"title":"Process Time Setting",
+					"title_zh_cn":"过程中时间设置",
+					"title_de":"Process Time Setting",
+					"description":"to set time for process",
+					"description_de":"to set time for process",
+					"readonly":false,
+					"popular" : true,
+					"optional":false
+			},
+			{			
+					"id":"isforstartnode",
+					"type":"addisforstartnode",
+					"title":"Is For Start Node",
+					"title_zh_cn":"是起始节点",
+					"title_de":"Is For Start Node",
+					"description":"Is For Start Node",
+					"description_de":"Is For Start Node",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			}]
+		},
+		{
+			"name" : "scriptNodeType",
+			"properties":[{
+					"id":"startscript",
+					"type":"startnodescript",
+					"title":"Start Script",
+					"title_zh_cn":"启动脚本",
+					"title_de":"Start Script",
+					"description":"Start Script",
+					"description_de":"Start Script",
+					"readonly":false,
+					"popular" : true,
+					"optional":false
+			},
+			{			
+					"id":"endscript",
+					"type":"endnodescript",
+					"title":"End Script",
+					"title_zh_cn":"结束脚本",
+					"title_de":"End Script",
+					"description":"End Script",
+					"description_de":"End Script",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			},
+			{			
+					"id":"repeatedoperation",
+					"type":"skprepeatedoperation",
+					"title":"skip repeated operation",
+					"title_zh_cn":"跳过重复操作",
+					"title_de":"skip repeated operation",
+					"description":"skip repeated operation",
+					"description_de":"skip repeated operation",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			},
+			{			
+					"id":"emptypersonnel",
+					"type":"skpemptypersonnel",
+					"title":"Skip Empty Personnel",
+					"title_zh_cn":"跳空人员",
+					"title_de":"Skip Empty Personnel",
+					"description":"Skip Empty Personnel",
+					"description_de":"Skip Empty Personnel",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+			}]
+		},
+		{
+		"name" : "nodeType",
+		"properties" : [{
+				"id":"nodeType",
+				"type":"Choice",
+				"title":"NodeType",
+				"title_zh_cn":"节点类型",
+				"title_de":"Eingangs-Nachricht-Typ",
+				"value":"1",
+				"description":"Node Type specifies the nodes that are related to a user",
+				"description_de":"Beim Typ der Nachricht kann zwischen Physisch und Information unterschieden werden.",
+				"readonly":false,
+				"optional":false,
+				"popular":true,
+				"items": [
+					{
+						"id":"singleSignOff",
+						"title":"Single Sign Off",
+						"value":"1"
+					},
+					{
+						"id":"multiProcess",
+						"title":"Multi Process",
+						"value":"2"
+					},
+					{
+						"id":"multiSequence",
+						"title":"Multi Sequence",
+						"value":"3"
+					},
+					{
+						"id":"multiPlayerSingle",
+						"title":"Multi Player Single",
+						"value":"4"
+					}
+				]
+			}]
+		},
+		{
+			"name":"group",
+			"properties":[{
+					"id":"group",
+					"type":"RuntimeCombo",
+					"title":"Group",
+					"title_zh_cn":"组",
+					"title_de":"Eingangs-Nachricht-Typ",
+					"description":"This defines the nature of the Item. Possible values are Physical or Information. The default value is Information.",
+					"description_de":"Beim Typ der Nachricht kann zwischen Physisch und Information unterschieden werden.",
+					"readonly":false,
+					"popular" : true,
+					"optional":false,
+					"dataurl":'/admin/getAllGroups',
+			}]
+		},
+ 		
+		{
+			"name" : "diagram",
+			"properties" : [
+				{
+					"id":"version",
+					"type":"String",
+					"title":"Version",
+					"title_zh_cn":"版本",
+					"value":"",
+					"description":"This defines the Version number of the Diagram.",
+					"description_de":"Setzt die Versionsnummer des Diagramms.",
+					"readonly":false,
+					"optional":true,
+					"length":"50"
+				},
+				{
+					"id":"author",
+					"type":"String",
+					"title":"Author",
+					"title_zh_cn":"作者",
+					"title_de":"Autor",
+					"value":"",
+					"description":"This holds the name of the author of the Diagram.",
+					"description_de": "Name des Autors des Diagramms.",
+					"readonly":false,
+					"optional":true,
+					"length":"50"
+				},
+				{
+					"id":"language",
+					"type":"String",
+					"title":"Language",
+					"title_zh_cn":"语言",
+					"title_de":"Sprache",
+					"value":"English",
+					"value_de":"Deutsch",
+					"description":"This holds the name of the language in which text is written.",
+					"description_de":"Sprache, in welcher der Text geschrieben ist.",
+					"readonly":false,
+					"optional":true,
+					"length":"50"
+				},
+				{	
+					"id":"namespaces",
+					"type":"Complex",
+					"title":"Namespaces",
+					"title_zh_cn":"命名空间",
+					"value":"",
+					"description":"Additional namespaces and theire prefixes used in the diagram., ",
+					"description_de":"Optionale Namespaces, die im Diagramm genutzt werden.",
+					"readonly":false,
+					"optional":true,
+					"complexItems": [
+						{
+							"id":"prefix",
+							"name":"Prefix",
+							"type":"String",
+							"value":"",
+							"width":100,
+							"optional":false 
+						},
+						{
+							"id":"url",
+							"name":"URL",
+							"type":"String",
+							"value":"",
+							"width":200,
+							"optional":false 
+						}
+					]
+				},
+				{
+					"id":"targetnamespace",
+					"type":"String",
+					"title":"Target Namespace",
+					"title_zh_cn":"目标命名空间",
+					"title_de":"Ziel-Namensraum",
+					"value":"http://www.omg.org/bpmn20",
+					"description":"Defines the XML namespace of the elements inside the document.",
+					"description_de":"Definiert den XML-Namensraum, der für die Elemente im Dokument verwendet wird.",
+					"readonly":false,
+					"optional":true,
+					"length":"50"
+				},
+				{
+					"id":"expressionlanguage",
+					"type":"String",
+					"title":"ExpressionLanguage",
+					"title_zh_cn":"表达式语言",
+					"title_de":"Ausdruckssprache",
+					"value":"http://www.w3.org/1999/XPath",
+					"description":"A Language may be provided so that the syntax of expressions used in the Diagram can be understood.",
+					"description_de":"Sprache, mit welcher im Diagramm verwendete Ausdrücke beschrieben sind.",
+					"readonly":false,
+					"optional":true,
+					"length":"50"
+				},
+				{
+					"id":"typelanguage",
+					"type":"String",
+					"title":"TypeLanguage",
+					"title_zh_cn":"类型语言",
+					"title_de":"Typsprache",
+					"value":"http://www.w3.org/2001/XMLSchema",
+					"description":"This attribute identifies the type system used by the elements of this Definition.",
+					"description_de":"Definiert das Typsystem der Elemente dieses Diagramms.",
+					"readonly":false,
+					"optional":true,
+					"length":"50"
+				},
+				{
+					"id":"creationdate",
+					"type":"Date",
+					"title":"CreationDate",
+					"title_zh_cn":"创建日期",
+					"title_de":"Erstellt am",
+					"value":"",
+					"description":"This defines the date on which the Diagram was created.",
+					"description_de":"Datum an dem das Diagramm erstellt wurde.",
+					"readonly":false,
+					"optional":true,
+					"dateFormat":"j/m/y"
+				},
+				{
+					"id":"modificationdate",
+					"type":"Date",
+					"title":"ModificationDate",
+					"title_zh_cn":"修改日期",
+					"title_de":"Geändert am",
+					"value":"",
+					"description":"This defines the date on which the Diagram was last modified.",
+					"description_de":"Datum der letzten Änderung.",
+					"readonly":false,
+					"optional":true,
+					"dateFormat":"j/m/y"
+				}
+			]
+		},
+		{
+			"name": "flowElement",
+			"properties" : [
+				{
+					"id":"categories",
+					"type":"String",
+					"title":"Categories",
+					"title_zh_cn":"分类",
+					"title_de":"Kategorien",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"length":"50",
+					"wrapLines":true
+				}
+			]
+		},
+		{
+			"name" : "itemAwareElement",
+			"properties" : [
+				{
+					"id" : "itemsubjectref",
+					"type" : "String",
+					"title" : "ItemSubjectRef",
+					"title_zh_cn":"项目内容参考",
+					"title_de" : "ItemSubjectRef",
+					"description" : "Specification of the items that are stored or conveyed by the ItemAwareElement",
+					"description_de" : "",
+					"readonly" : false,
+					"optional" : true,
+					"length" : 50,
+					"wrapLines" : true
+				},
+				{
+					"id" : "datastate",
+					"type" : "String",
+					"title" : "DataState",
+					"title_zh_cn":"国家数据",
+					"title_de" : "Daten-Zustand",
+					"description" : "A reference to the DataState, which defines certain states for the data contained in the item.",
+					"description_de" : "",
+					"readonly" : false,
+					"optional" : true,
+					"length" : 50,
+					"wrapLines" : true
+				}
+			]
+		},
+		{
+			"name":"properties",
+			"properties": [
+				{
+					"id":"properties",
+					"type":"Complex",
+					"title":"Properties",
+					"title_zh_cn":"属性",
+					"title_de":"Eigenschaften",
+					"value":"",
+					"description":"Modeler-defined properties MAY be added to an Activity. These properties are local to the Activity. (e.g., Add Customer.Customer Name).",
+					"description_de":"Lokale Eigenschaften können der Aktivität hinzugefügt werden. Diese werden ausschließlich während der Abarbeitung der Aktivität angewendet.",
+					"readonly": 	false,
+					"optional": 	false,
+					"complexItems": [
+						{
+							"id":"name",
+							"name":"Name",
+							"type":"String",
+							"value":"",
+							"width":100,
+							"optional":false 
+						},
+						{
+							"id":"datastate",
+							"name":"DataState",
+							"name_de":"DatenStatus",
+							"type":"String",
+							"value":"",
+							"width":80,
+							"optional":true
+						},
+						{
+							"id":"itemkind",
+							"name":"ItemKind",
+							"name_de":"Elementart",
+							"type":"Choice",
+							"value":"Information",
+							"items" : [
+					           {
+					        	   "id":"information",
+					        	   "title":"Information",
+					        	   "value":"Information"
+					           },
+					           {
+					        	   "id":"physical",
+					        	   "title":"Physical",
+					        	   "value":"Physical"
+					           }
+							           
+							],
+							"width":80,
+							"optional":true
+						},
+						{
+							"id":"structure",
+							"name":"Structure",
+							"name_de":"Struktur",
+							"type":"String",
+							"value":"",
+							"width":100,
+							"optional":true
+						},
+						{
+							"id":"iscollection",
+							"name":"isCollection",
+							"name_de":"isKollektion",
+							"type":"Boolean",
+							"value":false,
+							"width":50,
+							"optional":true
+						}
+					]
+				}
+			]
+		},
+		{
+			"name" : "iospecification",
+			"properties" : [
+				{
+					"id":"datainputset",
+					"type":"Complex",
+					"title":"DataInputSet",
+					"title_zh_cn":"数据输入设置",
+					"title_de":"Dateneingabesatz",
+					"value":"",
+					"description":"An InputSet is a collection of DataInput elements that together define a valid set of data inputs.",
+					"description_de":"Ein Eingabesatz ist eine Zusammenstellung von Eingabe-Datenobjekten, die zusammen einen gültigen Satz von Dataeingaben definieren.",
+					"readonly":false,
+					"optional":true,
+					"complexItems": [
+						{
+							"id":"name",
+							"name":"Name",
+							"type":"String",
+							"value":"",
+							"width":100,
+							"optional":false 
+						},
+						{
+							"id":"optional",
+							"name":"Optional",
+							"type":"Boolean",
+							"value":false,
+							"width":50,
+							"optional":true
+						},
+						{
+							"id":"whileexecuting",
+							"name":"WhileExecuting",
+							"name_de":"Während der Ausführung",
+							"type":"Boolean",
+							"value":false,
+							"width":80,
+							"optional":true
+						}
+					]
+				},            
+				{
+					"id":"dataoutputset",
+					"type":"Complex",
+					"title":"DataOutputSet",
+					"title_zh_cn":"数据输出设定",
+					"title_de":"Datenausgabesatz",
+					"value":"",
+					"description":"An OutputSet is a collection of DataOutputs elements that together may be produced as output from an Activity or Event.",
+					"description_de":"Ein Ausgabesatz ist eine Zusammenstellung von Ausgabe-Datenobjekten, die zusammen als Ausgabe einer Aktivität oder eines Ereignisses produziert werden.",
+					"readonly":false,
+					"optional":true,
+					"complexItems": [
+						{
+							"id":"name",
+							"name":"Name",
+							"type":"String",
+							"value":"",
+							"width":100,
+							"optional":false 
+						},
+						{
+							"id":"optional",
+							"name":"Optional",
+							"type":"Boolean",
+							"value":false,
+							"width":50,
+							"optional":true
+						},
+						{
+							"id":"whileexecuting",
+							"name":"WhileExecuting",
+							"name_de":"Während der Ausführung",
+							"type":"Boolean",
+							"value":false,
+							"width":80,
+							"optional":true
+						}
+					]
+				}
+			]
+		},
+		{
+			"name" : "activity",
+			"properties": [
+				{
+					"id":"startquantity",
+					"type":"Integer",
+					"title":"StartQuantity",
+					"title_zh_cn":"启动数量",
+					"title_de":"Startanzahl",
+					"value":1,
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":"",
+					"min":"1"
+				},
+				{
+					"id":"completionquantity",
+					"type":"Integer",
+					"title":"CompletionQuantity",
+					"title_zh_cn":"完成数量",
+					"title_de":"Fertigstellungsanzahl",
+					"value":1,
+					"description":"Defines the number of tokens that must be generated from the activity",
+					"description_de":"Legt die Anzahl der Token fest, die von der Aktivität generiert werden müssen.",
+					"readonly":false,
+					"optional":false,
+					"refToView":"",
+					"min":"1"
+				},
+				{
+					"id":"isforcompensation",
+					"type":"Boolean",
+					"title":"Is for Compensation",
+					"title_zh_cn":"对于补偿",
+					"title_de":"ist für Kompensation",
+					"value":false,
+					"description":"A flag that identifies whether this activity is intended for the purposes of compensation.",
+					"description_de":"Ein Flag, das angibt ob diese Aktivität für Kompensierungszwecke vorgesehen ist.",
+					"readonly":false,
+					"optional":true,
+					"refToView":"compensation"
+				},
+				{
+					"id":"assignments",
+					"type":"Complex",
+					"title":"Assignments",
+					"title_zh_cn":"任务",
+					"title_de":"Zuweisungen",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"complexItems": [
+						{
+							"id":"to",
+							"name":"To",
+							"name_de":"Auf",
+							"type":"String",
+							"value":"",
+							"width":100,
+							"optional":false 
+						},
+						{
+							"id":"from",
+							"name":"From",
+							"name_de":"Aus",
+							"type":"String",
+							"value":"",
+							"width":100,
+							"optional":false
+						},
+						{
+							"id":"assigntime",
+							"name":"AssignTime",
+							"name_de":"Zuweisungszeit",
+							"type":"Choice",
+							"value":"Start",
+							"width":100,
+							"optional":true,
+							"items": [
+								{
+									"id":"c1",
+									"title":"Start",
+									"value":"Start",
+									"refToView":""
+								},
+								{
+									"id":"c2",
+									"title":"End",
+									"title_de":"Ende",
+									"value":"End",
+									"refToView":""
+								}
+							]
+						}
+					]
+				},
+				{
+					"id":"callacitivity",
+					"type":"Boolean",
+					"title":"is a Call Activity",
+					"title_zh_cn":"是受理活动",
+					"title_de":"ist eine Call Activity",
+					"value":false,
+					"description":"a Call Activity is a wrapper for a globally defined Sub-Process that is reused in the current process.",
+					"readonly":false,
+					"optional":"true",
+					"refToView":"callActivity"
+				}
+			]
+		},
+		{
+			"name":"operation",
+			"properties": [
+				{
+					"id":"operationname",
+					"type":"String",
+					"title":"OperationName",
+					"title_zh_cn":"操作名称",
+					"title_de":"Operationsname",
+					"value":"",
+					"description":"The descriptive name for the operation element.",
+					"description_de":"Bezeichnung der Operation", 
+					"readonly":false,
+					"optional":"true"
+				},
+				{
+					"id":"inmessagename",
+					"type":"String",
+					"title":"InMessageName",
+					"title_zh_cn":"在消息名称",
+					"title_de":"Eingangs-Nachricht-Name",
+					"value":"",
+					"description":"The descriptive name for the InMessage element",
+					"description_de":"Bezeichnung der Eingangs-Nachricht", 
+					"readonly":false,
+					"optional":"true"
+				},
+				{
+					"id":"inmsgitemkind",
+					"type":"Choice",
+					"title":"InMessageItemKind",
+					"title_zh_cn":"在信息类项目",
+					"title_de":"Eingangs-Nachricht-Typ",
+					"value":"Information",
+					"description":"This defines the nature of the Item. Possible values are Physical or Information. The default value is Information.",
+					"description_de":"Beim Typ der Nachricht kann zwischen Physisch und Information unterschieden werden.",
+					"readonly":false,
+					"optional":true,
+					"items": [
+						{
+							"id":"c1",
+							"title":"Physical",
+							"value":"Physical"
+						},
+						{
+							"id":"c2",
+							"title":"Information",
+							"value":"Information"
+						}
+					]
+				},
+				{
+					"id":"inmsgstructure",
+					"type":"String",
+					"title":"InMessageStructure",
+					"title_zh_cn":"在消息结构",
+					"title_de":"Eingangs-Nachricht-Struktur",
+					"value":"",
+					"description":"This defines the nature of the Item. Possible values are Physical or Information. The default value is Information.",
+					"description_de":"Beim Typ der Nachricht kann zwischen Physisch und Information unterschieden werden.",
+					"readonly":false,
+					"optional":true
+				},
+				{
+					"id":"inmsgimport",
+					"type":"Complex",
+					"title":"InMessageImport",
+					"title_zh_cn":"在信息导入",
+					"title_de":"Eingangs-Nachricht-Import",
+					"value":"",
+					"description":"Identifies the location of the data structure and its format. If the importType attribute is left unspecified, the typeLanguage specified in the Definitions is assumed.",
+					"description_de":"Definiert den Ort der Datenstruktur und ihr Format.",
+					"readonly":false,
+					"optional":true,
+					"complexItems": [
+						{
+				        	"id":"c1",
+				        	"type":"String",
+				        	"width":200,
+				        	"value":"",
+				        	"name":"ImportType",
+				        	"name_de":"Importtyp"
+				        },
+						{
+				        	"id":"c2",
+				        	"type":"String",
+				        	"width":100,
+				        	"value":"",
+				        	"name":"Location"
+				        },
+						{
+				        	"id":"c3",
+				        	"type":"String",
+				        	"width":200,
+				        	"value":"",
+				        	"name":"Namespace",
+				        	"name_de":"Namensraum"
+				        }
+					]
+				},
+				{
+					"id":"inmsgiscollection",
+					"type":"Boolean",
+					"title":"InMessageIsCollection",
+					"title_zh_cn":"在消息被收藏",
+					"title_de":"Eingangs-Nachricht-Ist-Liste",
+					"value":false,
+					"description":"Setting this flag to true indicates that the actual data type is a collection.",
+					"description_de":"Ture signalisiert, dass der Datentyp eine Liste ist.",
+					"readonly":false,
+					"optional":true
+				},
+				{
+					"id":"outmessagename",
+					"type":"String",
+					"title":"OutMessageName",
+					"title_zh_cn":"出消息名称",
+					"title_de":"Ausgangs-Nachricht-Name",
+					"value":"",
+					"description":"The descriptive name for the OutMessage element",
+					"description_de":"Bezeichnung der Ausgangs-Nachricht", 
+					"readonly":false,
+					"optional":"true"
+				},
+				{
+					"id":"outmsgitemkind",
+					"type":"Choice",
+					"title":"OutMessageItemKind",
+					"title_zh_cn":"出消息类项目",
+					"title_de":"Ausgangs-Nachricht-Typ",
+					"value":"Information",
+					"description":"This defines the nature of the Item. Possible values are Physical or Information. The default value is Information.",
+					"description_de":"Beim Typ der Nachricht kann zwischen Physisch und Information unterschieden werden.",
+					"readonly":false,
+					"optional":true,
+					"items": [
+						{
+							"id":"c1",
+							"title":"Physical",
+							"value":"Physical"
+						},
+						{
+							"id":"c2",
+							"title":"Information",
+							"value":"Information"
+						}
+					]
+				},
+				{
+					"id":"outmsgstructure",
+					"type":"String",
+					"title":"OutMessageStructure",
+					"title_zh_cn":"出消息结构",
+					"title_de":"Ausgangs-Nachricht-Struktur",
+					"value":"",
+					"description":"This defines the nature of the Item. Possible values are Physical or Information. The default value is Information.",
+					"description_de":"Beim Typ der Nachricht kann zwischen Physisch und Information unterschieden werden.",
+					"readonly":false,
+					"optional":true
+				},
+				{
+					"id":"outmsgimport",
+					"type":"Complex",
+					"title":"OutMessageImport",
+					"title_zh_cn":"出进口留言",
+					"title_de":"Ausgangs-Nachricht-Import",
+					"value":"",
+					"description":"Identifies the location of the data structure and its format. If the importType attribute is left unspecified, the typeLanguage specified in the Definitions is assumed.",
+					"description_de":"Definiert den Ort der Datenstruktur und ihr Format.",
+					"readonly":false,
+					"optional":true,
+					"complexItems": [
+						{
+				        	"id":"c1",
+				        	"type":"String",
+				        	"width":200,
+				        	"value":"",
+				        	"name":"ImportType",
+				        	"name_de":"Importtyp"
+				        },
+						{
+				        	"id":"c2",
+				        	"type":"String",
+				        	"width":100,
+				        	"value":"",
+				        	"name":"Location"
+				        },
+						{
+				        	"id":"c3",
+				        	"type":"String",
+				        	"width":200,
+				        	"value":"",
+				        	"name":"Namespace",
+				        	"name_de":"Namensraum"
+				        }
+					]
+				},
+				{
+					"id":"outmsgiscollection",
+					"type":"Boolean",
+					"title":"OutMessageIsCollection",
+					"title_zh_cn":"出的信息是收集",
+					"title_de":"Ausgangs-Nachricht-Ist-Liste",
+					"value":false,
+					"description":"Setting this flag to true indicates that the actual data type is a collection.",
+					"description_de":"Ture signalisiert, dass der Datentyp eine Liste ist.",
+					"readonly":false,
+					"optional":true
+				}
+			]
+		},
+		{
+			"name" : "loopcharacteristics",
+			"properties" : [
+				{
+					"id":"looptype",
+					"type":"Choice",
+					"title":"LoopType",
+					"title_zh_cn":"环型",
+					"title_de":"Schleifentyp",
+					"value":"None",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":"",
+					"items": [
+						{
+							"id":"c1",
+							"title":"None",
+							"title_zh_cn":"无",
+							"title_de":"Keine Schleife",
+							"value":"None",
+							"refToView":"none"
+						},
+						{
+							"id":"c2",
+							"title":"Standard",
+							"title_zh_cn":"标准",
+							"title_de":"Standard",
+							"value":"Standard",
+							"icon" : "activity/list/looptype.standard.png",
+							"refToView":"loop"
+						},
+						{
+							"id":"c3",
+							"title":"MI Parallel",
+							"title_zh_cn":"MI并行",
+							"title_de":"MI parallel",
+							"value":"Parallel",
+							"icon" : "activity/list/mi.parallel.png",
+							"refToView":"parallel"
+						},
+						{
+							"id":"c4",
+							"title":"MI Sequential",
+							"title_zh_cn":"MI顺序",
+							"title_de":"MI sequentialisiert",
+							"value":"Sequential",
+							"icon" : "activity/list/mi.sequential.png",
+							"refToView":"sequential"
+						}	
+					]
+				},
+				{
+					"id":"testbefore",
+					"type":"Boolean",
+					"title":"TestBefore",
+					"title_zh_cn":"测试前",
+					"title_de":"",
+					"value":false,
+					"description":"Flag that controls whether the loop condition is evaluated at the beginning (testBefore = true) or at the end (testBefore = false)of the loop iteration.",
+					"description_de":"Gibt an ob die Schleifen-Bedingung vor (true) oder nach (false) dem Schleifendurchlauf überprüft wird."
+				},
+				{
+					"id":"loopcondition",
+					"type":"String",
+					"title":"LoopCondition",
+					"title_zh_cn":"循环条件",
+					"title_de":"Schleifenbedingung",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":false
+				},
+				{
+					"id":"loopmaximum",
+					"type":"Integer",
+					"title":"LoopMaximum",
+					"title_zh_cn":"最大循环",
+					"title_de":"Schleifenmaximum",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"min":"0"
+				},
+				{
+					"id":"loopcardinality",
+					"type":"String",
+					"title":"LoopCardinality",
+					"title_zh_cn":"循环基数",
+					"title_de":"Anzahl Schleifen",
+					"value":"",
+					"description":"A numeric Expression that controls the number of Activity instances that will be created. This Expression MUST evaluate to an integer.",
+					"readonly":false,
+					"optional":true
+				},
+				{
+					"id":"loopdatainput",
+					"type":"String",
+					"title":"LoopDataInput",
+					"title_zh_cn":"回路数据输入",
+					"title_de":"Schleifen-Datan-Eingabe",
+					"value":"",
+					"description":"A reference to a DataInput which is part of the Activity’s InputOutputSpecification. This DataInput is used to determine the number of Activity instances, one Activity instance per item in the collection of data stored in that DataInput element.",
+					"readonly":false,
+					"optional":true
+				},
+				{
+					"id":"loopdataoutput",
+					"type":"String",
+					"title":"LoopDataInput",
+					"title_zh_cn":"回路数据输入",
+					"title_de":"Schleifen-Datan-Ausgabe",
+					"value":"",
+					"description":"A reference to a DataOutput which is part of the Activity’s InputOutputSpecification.",
+					"readonly":false,
+					"optional":true
+				},
+				{
+					"id":"inputdataitem",
+					"type":"String",
+					"title":"InputDataItem",
+					"title_zh_cn":"输入数据项",
+					"title_de":"Eingabe-Daten-Element",
+					"value":"",
+					"description":"A Property, representing for every Activity instance the single item of the collection stored in the loopDataInput.",
+					"readonly":false,
+					"optional":true
+				},
+				{
+					"id":"outputdataitem",
+					"type":"String",
+					"title":"InputDataItem",
+					"title_zh_cn":"输入数据项",
+					"title_de":"Ausgabe-Daten-Element",
+					"value":"",
+					"description":"A Property, representing for every Activity instance the single item of the collection stored in the loopDataOutput.",
+					"readonly":false,
+					"optional":true
+				},
+				{
+					"id":"behavior",
+					"type":"Choice",
+					"title":"Behavior",
+					"title_zh_cn":"行为",
+					"title_de":"Schleifen-Verhalten",
+					"description":"The attribute behavior acts as a shortcut for specifying when events shall be thrown from an Activity instance that is about to complete. It can assume values of none, one, all, and complex.",
+					"description_de":"Das Schleifen-Verhalten definiert das Auslöseverhalten von Ereignissen, wenn die Instanz einer Aktivität beendet wird. Mögliche Werte sind none, one, all und complex.",
+					"value":"all",
+					"items": [
+				        {
+				        	"id":"cnone",
+				        	"value":"None",
+				        	"title":"None"
+				        },
+				        {
+				        	"id":"cone",
+				        	"value":"One",
+				        	"title":"One"
+				        },
+				        {
+				        	"id":"call",
+				        	"value":"All",
+				        	"title":"All"
+				        },
+				        {
+				        	"id":"ccomplex",
+				        	"value":"Complex",
+				        	"title":"Complex"
+				        }
+					]
+				},
+				{
+					"id":"complexbehaviordefinition",
+					"type":"Complex",
+					"title":"ComplexBehaviorDefinition:",
+					"title_zh_cn":"复杂行为的定义",
+					"title_de":"Komplexe Verhaltensdefinition",
+					"description":"Controls when and which Events are thrown in case behavior is set to complex.",
+					"description_de":"Kontrolliert wann und welche Ereignisse ausgelöst werden, wenn das Verhalten complex ausgewählt ist.",
+					"value":"",
+					"optional":true,
+					"readonly":false,
+					"complexItems": [
+				        {
+				        	"id":"cexpression",
+				        	"type":"String",
+				        	"width":200,
+				        	"value":"",
+				        	"name":"Condition",
+				        	"name_de":"Bedingung"
+				        },
+				        {
+				        	"id":"ceventdefinition",
+				        	"type":"Choice",
+				        	"value":"signal",
+				        	"width":100,
+				        	"name":"EventDefinition",
+				        	"name_de":"Ereignis-Definition",
+				        	"items":[
+			        	        {
+			        	        	"id":"cnone",
+			        	        	"value":"None",
+			        	        	"title":"None"
+			        	        },
+			        	        {
+			        	        	"id":"cmessage",
+			        	        	"value":"Message",
+			        	        	"title":"Message"
+			        	        },
+			        	        {
+			        	        	"id":"cescalation",
+			        	        	"value":"Escalation",
+			        	        	"title":"Escalation"
+			        	        },
+			        	        {
+			        	        	"id":"cerror",
+			        	        	"value":"Error",
+			        	        	"title":"Error"
+			        	        },
+			        	        {
+			        	        	"id":"ccancel",
+			        	        	"value":"Cancel",
+			        	        	"title":"Cancel"
+			        	        },
+			        	        {
+			        	        	"id":"ccompensation",
+			        	        	"value":"Compensation",
+			        	        	"title":"Compensation"
+			        	        },
+			        	        {
+			        	        	"id":"csignal",
+			        	        	"value":"Signal",
+			        	        	"title":"Signal"
+			        	        },
+			        	        {
+			        	        	"id":"cterminate",
+			        	        	"value":"Terminate",
+			        	        	"title":"Terminate"
+			        	        }
+				        	]
+				        }
+					]
+				},
+				{
+					"id":"completioncondition",
+					"type":"String",
+					"title":"CompletionCondition:",
+					"title_zh_cn":"完成情况",
+					"title_de":"Beendigungsbedingung",
+					"description":"This attribute defines a Boolean Expression that when evaluated to true, cancels the remaining Activity instances and produces a token.",
+					"description_de":"Alle verbleibenden Aktivitätsinstanzen werden abgebrochen, falls die hier definierte Bedingung wahr wird.",
+					"value":""
+				},
+				{
+		        	"id":"onebehavioreventref:",
+		        	"type":"Choice",
+		        	"value":"signal",
+		        	"title":"OneBehaviorEventRef",
+		        	"title_zh_cn":"一个行为事件参考",
+		        	"title_de":"Einzel-Verhalten-Ereignis",
+		        	"description":"The EventDefinition which is thrown when behavior is set to one and the first internal Activity instance has completed.",
+		        	"items":[
+	        	        {
+	        	        	"id":"cnone",
+	        	        	"value":"None",
+	        	        	"title":"None"
+	        	        },
+	        	        {
+	        	        	"id":"cmessage",
+	        	        	"value":"Message",
+	        	        	"title":"Message"
+	        	        },
+	        	        {
+	        	        	"id":"cescalation",
+	        	        	"value":"Escalation",
+	        	        	"title":"Escalation"
+	        	        },
+	        	        {
+	        	        	"id":"cerror",
+	        	        	"value":"Error",
+	        	        	"title":"Error"
+	        	        },
+	        	        {
+	        	        	"id":"ccancel",
+	        	        	"value":"Cancel",
+	        	        	"title":"Cancel"
+	        	        },
+	        	        {
+	        	        	"id":"ccompensation",
+	        	        	"value":"Compensation",
+	        	        	"title":"Compensation"
+	        	        },
+	        	        {
+	        	        	"id":"csignal",
+	        	        	"value":"Signal",
+	        	        	"title":"Signal"
+	        	        },
+	        	        {
+	        	        	"id":"cterminate",
+	        	        	"value":"Terminate",
+	        	        	"title":"Terminate"
+	        	        }
+		        	]
+		        },
+		        {
+		        	"id":"nonebehavioreventref",
+		        	"type":"Choice",
+		        	"value":"signal",
+		        	"title":"NoneBehaviorEventRef",
+		        	"title_zh_cn":"无行为事件参考",
+		        	"title_de":"Ohne-Verhalten-Ereignis",
+		        	"items":[
+	        	        {
+	        	        	"id":"cnone",
+	        	        	"value":"None",
+	        	        	"title":"None"
+	        	        },
+	        	        {
+	        	        	"id":"cmessage",
+	        	        	"value":"Message",
+	        	        	"title":"Message"
+	        	        },
+	        	        {
+	        	        	"id":"cescalation",
+	        	        	"value":"Escalation",
+	        	        	"title":"Escalation"
+	        	        },
+	        	        {
+	        	        	"id":"cerror",
+	        	        	"value":"Error",
+	        	        	"title":"Error"
+	        	        },
+	        	        {
+	        	        	"id":"ccancel",
+	        	        	"value":"Cancel",
+	        	        	"title":"Cancel"
+	        	        },
+	        	        {
+	        	        	"id":"ccompensation",
+	        	        	"value":"Compensation",
+	        	        	"title":"Compensation"
+	        	        },
+	        	        {
+	        	        	"id":"csignal",
+	        	        	"value":"Signal",
+	        	        	"title":"Signal"
+	        	        },
+	        	        {
+	        	        	"id":"cterminate",
+	        	        	"value":"Terminate",
+	        	        	"title":"Terminate"
+	        	        }
+		        	]
+		        }
+			]
+		},
+		{
+			"name" : "task",
+			"properties" : [
+				{
+					"id":"tasktype",
+					"type":"Choice",
+					"title":"TaskType",
+					"title_zh_cn":"任务类型",
+					"title_de":"Tasktyp",
+					"value":"User",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":"",
+					"popular":true,
+					"items":[
+						{
+							"id":"c1",
+							"title":"None",
+							"title_zh_cn":"无",
+							"title_de":"Kein Typ",
+							"value":"None",
+							"refToView":"none"
+						},
+						{
+							"id":"c2",
+							"title":"Send",
+							"title_zh_cn":"发送",
+							"title_de":"Sendend",
+							"value":"Send",
+							"icon" : "activity/list/type.send.png",
+							"refToView":"sendTask"
+						},
+						{
+							"id":"c3",
+							"title":"Receive",
+							"title_zh_cn":"接受",
+							"title_de":"Empfangend",
+							"value":"Receive",
+							"icon" : "activity/list/type.receive.png",
+							"refToView":"receiveTask"
+						},
+						{
+							"id":"c4",
+							"title":"User",
+							"title_zh_cn":"用户",
+							"title_de":"Benutzer",
+							"value":"User",
+							"icon" : "activity/list/type.user.png",
+							"refToView":"userTask"
+						},
+						{
+							"id":"c5",
+							"title":"Manual",
+							"title_zh_cn":"手册",
+							"title_de":"Manuell",
+							"value":"Manual",
+							"icon" : "activity/list/type.manual.png",
+							"refToView":"manualTask"	
+						},
+						{
+							"id":"c6",
+							"title":"Service",
+							"title_zh_cn":"服务",
+							"title_de":"Service",
+							"value":"Service",
+							"icon" : "activity/list/type.service.png",
+							"refToView":"serviceTask"
+						},
+						{
+							"id":"c7",
+							"title":"Business Rule",
+							"title_zh_cn":"业务规则",
+							"title_de":"Geschäftsregel",
+							"value":"Business Rule",
+							"icon" : "activity/list/type.business.rule.png",
+							"refToView":"businessRuleTask"
+						},
+						{
+							"id":"c8",
+							"title":"Script",
+							"title_zh_cn":"脚本",
+							"title_de":"Skript",
+							"value":"Script",
+							"icon" : "activity/list/type.script.png",
+							"refToView":"scriptTask"
+						}
+					]
+				},
+				{
+					"id":"implementation",
+					"type":"Choice",
+					"title":"Implementation",
+					"title_zh_cn":"履行",
+					"title_de":"Implementierung",
+					"value":"webService",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":"",
+					"items": [
+						{
+							"id":"c1",
+							"title":"HumanTaskWebService",
+							"value":"humanTaskWebService",
+							"refToView":""
+						},
+						{
+							"id":"c2",
+							"title":"BuisnessRuleWebService",
+							"value":"BuisnessRuleWebService",
+							"refToView":""
+						},
+						{
+							"id":"c1",
+							"title":"WebService",
+							"value":"webService",
+							"refToView":""
+						},
+						{
+							"id":"c2",
+							"title":"Other",
+							"value":"other",
+							"refToView":""
+						},
+						{
+							"id":"c2",
+							"title":"Unspecified",
+							"value":"unspecified",
+							"refToView":""
+						}
+					]
+				},
+				{
+					"id":"resources",
+					"type":"String",
+					"title":"Resource",
+					"title_zh_cn":"资源",
+					"title_de":"Ressourcen",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"popular":true,
+					"complexItems": [
+						{
+							"id":"resource_type",
+							"name":"Type",
+							"name_zh_cn":"类型",
+							"name_de":"Typ",
+							"type":"Choice",
+							"value":"",
+							"width":100,
+							"optional":false,
+							"items": [
+							/*	{
+									"id":"c1",
+									"title":"Performer",
+									"title_de":"Performer",
+									"value":"Performer",
+									"refToView":""
+								}, */
+								{
+									"id":"c2",
+									"title":"HumanPerformer",
+									"title_zh_cn":"人类演员",
+									"title_de":"HumanPerformer",
+									"value":"HumanPerformer",
+									"refToView":""
+								},
+								{
+									"id":"c3",
+									"title":"PotentialOwner",
+									"title_zh_cn":"潜在所有者",
+									"title_de":"PotentialOwner",
+									"value":"PotentialOwner",
+									"refToView":""
+								}
+							]
+						},
+						{
+							"id":"resource",
+							"name":"Resource",
+							"name_zh_cn":"资源",
+							"name_de":"Ressource",
+							"type":"String",
+							"value":"",
+							"width":200,
+							"optional":true
+						},
+						{
+							"id":"resourceassignmentexpr",
+							"name":"ResourceAssignmentExpression",
+							"type":"RuntimeCombo",
+							"value":"",
+							"width":200,
+							"optional":true
+						},
+						{
+							"id":"language",
+							"name":"Language",
+							"type":"String",
+							"value":"",
+							"width":100,
+							"optional":true
+						},
+						{
+							"id":"evaluatestotype",
+							"name":"EvaluatesToType",
+							"type":"String",
+							"value":"",
+							"width":200,
+							"optional":true
+						}
+					]
+				},
+				{
+					"id":"messageref",
+					"type":"String",
+					"title":"MessageRef",
+					"title_zh_cn":"参考消息",
+					"title_de":"Nachrichten-Referenz",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":"",
+					"length":"50"
+				},
+				{
+					"id":"operationref",
+					"type":"String",
+					"title":"OperationRef",
+					"title_zh_cn":"操作参考",
+					"title_de":"Operations-Referenz",
+					"value":"",
+					"description":"ID-Reference to an operation definition.",
+					"description_de":"ID-Referenz zur Definition einer Operation.",
+					"readonly":false,
+					"optional":true
+				},
+				{
+					"id":"instantiate",
+					"type":"Boolean",
+					"title":"Instantiate",
+					"title_zh_cn":"实例",
+					"title_de":"Instanziieren",
+					"value":false,
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":""
+				},
+				{
+					"id":"script",
+					"type":"Text",
+					"title":"Script",
+					"title_zh_cn":"脚本",
+					"title_de":"Skript",
+					"value":"",
+					"description":"Script that can be run when the Task is performed. Related to the Script TaskType, if a script is not included, then the Task will act equivalent to a TaskType of None.",
+					"readonly":false,
+					"optional":true
+				},
+				{
+					"id":"script_language",
+					"type":"String",
+					"title":"ScriptLanguage",
+					"title_zh_cn":"脚本语言",
+					"title_de":"Skript Sprache",
+					"value":"",
+					"description":"Defines the script language. The script language MUST be provided if a script is provided.",
+					"readonly":false,
+					"optional":true
+				},
+				{
+					"id":"bgcolor",
+					"type":"Color",
+					"title":"BackgroundColor",
+					"title_zh_cn":"背景颜色",
+					"title_de":"Hintergrundfarbe",
+					"value":"#ffffcc",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":"fill_el",
+					"fill":true,
+					"stroke":false
+				}		
+			]
+		},
+		{
+			"name" : "subprocess",
+			"properties" : [
+				{
+					"id": "subprocesstype",
+					"type": "Choice",
+					"title": "subProcessType",
+					"title_zh_cn":"子类型",
+					"title_de":"Subprozesstyp",
+					"value": "Embedded",
+					"description": "SubProcessType is an attribute that defines whether the Sub-Process details are embedded within the higher level Process or refers to another, re-usable Process. The default is Embedded.",
+					"description_de":"Der Subprozesstyp gibt an, ob die Subprozessdetails in einen übergeordneten Prozess eingebettet sind oder auf einen anderen wiederverwendbaren Prozess verweisen.",
+					"optional": false,
+					"refToView": "",
+					"items": [
+						{
+							"id": "choice1",
+							"title":"Embedded",
+							"value":"Embedded"
+						},
+						{
+							"id": "choice2",
+							"title": "Independent",
+							"value": "Independent"
+						},
+						{
+							"id": "choice3",
+							"title": "Reference",
+							"value": "Reference"
+						}
+					]
+				},
+				{
+					"id":"isatransaction",
+					"type":"Boolean",
+					"title":"is a Transaction",
+					"title_zh_cn":"是一个交易",
+					"title_de":"ist eine Transaktion",
+					"value":false,
+					"description":"A Transaction is a set of activities that logically belongs together; it might follow a specified transaction protocol.",
+					"readonly":false,
+					"optional":false,
+					"refToView":"border"
+				},
+				{
+					"id":"transaction",
+					"type":"String",
+					"title":"TransactionRef",
+					"title_zh_cn":"交易参考",
+					"title_de":"Transaktions-Referenz",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"length":"50"
+				},
+				{
+					"id":"transactionmethod",
+					"type":"Choice",
+					"title":"TransactionMethod",
+					"title_zh_cn":"交易方法",
+					"title_de":"Transaktions-Methode",
+					"value":"compensate",
+					"description":"The technique that will be used to undo a transaction that has been cancelled.",
+					"readonly":false,
+					"optional":true,
+					"items": [
+						{
+							"id":"c1",
+							"title":"Compensate",
+							"value":"compensate"
+						},
+						{
+							"id":"c2",
+							"title":"Store",
+							"value":"store"
+						},
+						{
+							"id":"c3",
+							"title":"Image",
+							"value":"image"
+						}
+					]
+				},
+				{
+					"id":"isadhoc",
+					"type":"Boolean",
+					"title":"isAdHoc",
+					"title_zh_cn":"是的即席",
+					"title_de":"ist Ad-hoc",
+					"value":false,
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":"adhoc"
+				},
+				{
+					"id":"adhocordering",
+					"type":"Choice",
+					"title":"AdHocOrdering",
+					"title_zh_cn":"即席订购",
+					"title_de":"Ad-hoc Anordnung",
+					"value":"Sequential",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":"",
+					"items": [
+						{
+							"id":"c1",
+							"title":"Sequential",
+							"title_de":"sequentiell",
+							"value":"sequential"
+						},
+						{
+							"id":"c2",
+							"title":"Parallel",
+							"title_de":"parallel",
+							"value":"parallel"
+						}
+					]
+				},
+				{
+					"id":"adhoccompletioncondition",
+					"type":"String",
+					"title":"AdHocCompletionCondition",
+					"title_zh_cn":"即席完成情况",
+					"title_de":"Ad-hoc Fertigstellungsbedingung",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":""
+				},
+				{
+					"id":"adhoccancelremaininginstances",
+					"type":"Boolean",
+					"title":"AdhocCancelRemainingInstances",
+					"title_zh_cn":"即席取消剩余实例",
+					"title_de":"Ad-hoc Abbruch laufender Instanzen",
+					"value":true,
+					"description":"This attribute is used only if ordering is parallel. It determines whether running instances are cancelled when the completionCondition becomes true.",
+					"readonly":false,
+					"optional":true
+				},
+				{
+					"id":"entry",
+					"type":"DiagramLink",
+					"title":"SubProcessRef",
+					"title_zh_cn":"子流程参考",
+					"title_de":"Subprozess-Referenz",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":"u"
+				},
+				{
+					"id":"diagramref",
+					"type":"String",
+					"title":"DiagramRef",
+					"title_zh_cn":"参考图",
+					"title_de":"Diagramm-Referenz",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":""
+				},
+				{
+					"id":"processref",
+					"type":"String",
+					"title":"ProcessRef",
+					"title_zh_cn":"流程参考",
+					"title_de":"Prozess-Referenz",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":""
+				},
+				{
+					"id":"inputmaps",
+					"type":"String",
+					"title":"InputMaps",
+					"title_zh_cn":"输入地图",
+					"title_de":"Eingabe-Mengen",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":""
+				},
+				{
+					"id":"outputmaps",
+					"type":"String",
+					"title":"OutputMaps",
+					"title_zh_cn":"输出地图",
+					"title_de":"Ausgabe-Mengen",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":""
+				}
+			]
+		},
+		{
+			"name" : "gateway",
+			"properties" : [
+				{
+					"id":"assignments",
+					"type":"Complex",
+					"title":"Assignments",
+					"title_zh_cn":"任务",
+					"title_de":"Zuweisungen",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"complexItems": [
+						{
+							"id":"to",
+							"name":"To",
+							"name_de":"Auf",
+							"type":"String",
+							"value":"",
+							"width":100,
+							"optional":false 
+						},
+						{
+							"id":"from",
+							"name":"From",
+							"name_de":"Aus",
+							"type":"String",
+							"value":"",
+							"width":100,
+							"optional":false
+						},
+						{
+							"id":"assigntime",
+							"name":"AssignTime",
+							"name_de":"Zuweisungszeit",
+							"type":"Choice",
+							"value":"Start",
+							"width":100,
+							"optional":true,
+							"items": [
+								{
+									"id":"c1",
+									"title":"Start",
+									"title_de":"Start",
+									"value":"Start",
+									"refToView":""
+								},
+								{
+									"id":"c2",
+									"title":"End",
+									"title_de":"Ende",
+									"value":"End",
+									"refToView":""
+								}
+							]
+						}
+					]
+				},
+				{
+					"id":"pool",
+					"type":"String",
+					"title":"Pool",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"length":""
+				},
+				{
+					"id":"lanes",
+					"type":"String",
+					"title":"Lanes",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"length":""
+				},
+				{
+					"id":"gates",
+					"type":"String",
+					"title":"Gates",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"length":"50",
+					"wrapLines":true
+				},
+				{
+					"id":"gates_outgoingsequenceflow",
+					"type":"String",
+					"title":"[Gates] OutgoingSequenceFlow",
+					"title_zh_cn":"[盖茨]外出顺序流",
+					"title_de":"[Gates] Ausgehender Steuerfluss",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"length":"50",
+					"wrapLines":true
+				},
+				{
+					"id":"gates_assignments",
+					"type":"String",
+					"title":"[Gates] Assignments",
+					"title_zh_cn":"[盖茨]分配",
+					"title_de":"[Gates] Zuweisungen",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"length":"50",
+					"wrapLines":true
+				}
+			]
+		},
+		{
+			"name" : "artifact",
+			"properties" : [
+				{
+					"id":"pool",
+					"type":"String",
+					"title":"Pool",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"length":""
+				},
+				{
+					"id":"lanes",
+					"type":"String",
+					"title":"Lanes",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"length":""
+				}
+			]
+		},
+		{
+			"name":"process",
+			"properties":[
+				{
+					"id":"processtype",
+					"type":"Choice",
+					"title":"ProcessType",
+					"title_zh_cn":"流程类型",
+					"title_de":"Prozesstyp",
+					"value":"None",
+					"description":"The processType attribute Provides additional information about the level of abstraction modeled by this Process.",
+					"description_de":"Beschreibt den Abstraktionsgrad des beinhaltenden Prozesses.",
+					"readonly":false,
+					"optional":false,
+					"popular" : true,
+					"items": [
+						{
+							"id":"c1",
+							"title":"None",
+							"value":"None"
+						},
+						{
+							"id":"c2",
+							"title":"Executable",
+							"value":"Executable"
+						},
+						{
+							"id":"c3",
+							"title":"Non-Executable",
+							"value":"Non-Executable"
+						},
+						{
+							"id":"c4",
+							"title":"Public",
+							"value":"Public"
+						}
+					]
+				},
+				{
+					"id":"isclosed",
+					"type":"Boolean",
+					"title":"isClosed",
+					"title_zh_cn":"被关闭",
+					"title_de":"IstGeschlossen",
+					"value":false,
+					"description":"A Boolean value specifying whether interactions, such as sending and receiving Messages and Events, not modeled in the Process can occur when the Process is executed or performed. If the value is true, they MAY NOT occur. If the value is false, they MAY occur.",
+					"readonly":false,
+					"optional":false
+				}
+			]
+		},
+		{
+			"name" : "pool",
+			"properties" : [
+				{
+					"id" : "multiinstance",
+					"type" : "Boolean",
+					"title" : "is Multi Instance Participant",
+					"title_zh_cn":"是多实例参与者",
+					"title_de" : "ist Mehrfach-Beteiligung",
+					"value" : false,
+					"description" : "",
+					"description_de" : "Legt fest, ob der Teilnehmer mehrfach beteiligt ist (Multi Instance).",
+					"readonly" : false,
+					"optional" : true,
+					"refToView" : "multiInstance"
+				},
+				{
+					"id":"boundaryvisible",
+					"type":"Boolean",
+					"title":"BoundaryVisible",
+					"title_zh_cn":"可见边界",
+					"title_de":"Umrandung sichtbar",
+					"value":true,
+					"description":"Defines if the rectangular boundary for the Pool is visible.",
+					"description_de":"Gibt an, ob die rechteckige Umrandung des Pools sichtbar ist.",
+					"readonly":false,
+					"optional":false,
+					"refToView": ["border", "c", "caption", "captionDisableAntialiasing"],
+					"visible":false
+				},
+				{
+					"id":"processname",
+					"type":"String",
+					"title":"ProcessName",
+					"title_zh_cn":"进程名称",
+					"title_de":"Prozessname",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":"",
+					"length":"30"
+				},
+				{
+					"id":"status",
+					"type":"Choice",
+					"title":"Status",
+					"value":"None",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"popular" : true,
+					"items": [
+						{
+							"id":"c1",
+							"title":"None",
+							"value":"None"
+						},
+						{
+							"id":"c2",
+							"title":"Ready",
+							"value":"Ready"
+						},
+						{
+							"id":"c3",
+							"title":"Active",
+							"value":"Active"
+						},
+						{
+							"id":"c4",
+							"title":"Cancelled",
+							"value":"Cancelled"
+						},
+						{
+							"id":"c5",
+							"title":"Aborting",
+							"value":"Aborting"
+						},
+						{
+							"id":"c6",
+							"title":"Aborted",
+							"value":"Aborted"
+						},
+						{
+							"id":"c7",
+							"title":"Completing",
+							"value":"Completing"
+						},
+						{
+							"id":"c8",
+							"title":"Completed",
+							"value":"Completed"
+						}
+					]
+				},
+				{
+					"id":"adhoc",
+					"type":"Boolean",
+					"title":"AdHoc",
+					"value":false,
+					"description":"",
+					"readonly":false,
+					"optional":false
+				},
+				{
+					"id":"adhocordering",
+					"type":"Choice",
+					"title":"AdHocOrdering",
+					"title_zh_cn":"即席订购",
+					"title_de":"Ad-Hoc Anordnung",
+					"value":"Parallel",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"items": [
+						{
+							"id":"c1",
+							"title":"Sequential",
+							"value":"Sequential",
+							"refToView":""
+						},
+						{
+							"id":"c2",
+							"title":"Parallel",
+							"value":"Parallel",
+							"refToView":""
+						}
+					]
+				},
+				{
+					"id":"adhoccompletioncondition",
+					"type":"String",
+					"title":"AdHocCompletionCondition",
+					"title_zh_cn":"即席完成情况",
+					"title_de":"Ad-hoc Fertigstellungsbedingung",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"length":"50"
+				},
+				{
+					"id":"suppressjoinfailure",
+					"type":"Boolean",
+					"title":"SuppressJoinFailure",
+					"value":false,
+					"description":"",
+					"readonly":false,
+					"optional":false
+				},
+				{
+					"id":"enableinstancecompensation",
+					"type":"Boolean",
+					"title":"EnableBooleanCompensation",
+					"value":false,
+					"description":"",
+					"readonly":false,
+					"optional":false
+				},
+				{
+					"id":"processcategories",
+					"type":"String",
+					"title":"ProcessCategories",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"length":"50",
+					"wrapLines":true
+				},
+				{
+					"id":"processdocumentation",
+					"type":"String",
+					"title":"Process Documentation",
+					"title_zh_cn":"工艺文档",
+					"title_de":"Prozess-Dokumentation",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"length":"",
+					"wrapLines":true
+				}
+			]
+		},
+		{
+			"name" : "dataAssociation",
+			"properties" : [
+			    {
+					"id":"assignments",
+					"type":"Complex",
+					"title":"Assignments",
+					"title_zh_cn":"任务",
+					"title_de":"Zuweisungen",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"popular":true,
+					"complexItems": [
+						{
+							"id":"to",
+							"name":"To",
+							"name_de":"Auf",
+							"type":"String",
+							"value":"",
+							"width":100,
+							"optional":false 
+						},
+						{
+							"id":"from",
+							"name":"From",
+							"name_de":"Aus",
+							"type":"String",
+							"value":"",
+							"width":100,
+							"optional":false
+						},
+						{
+							"id":"language",
+							"name":"Language",
+							"name_de":"Sprache",
+							"type":"String",
+							"value":"",
+							"width":100,
+							"optional":true
+						}
+					]
+			    },
+			    {
+					"id":"transformation",
+					"title":"Transformation",
+					"type":"String",
+					"value":"",
+					"optional":true,
+					"popular":true
+				}
+			]
+		}
+	],
+	"stencils" : [
+ 		{
+			"type":				"node",
+			"id":				"BPMNDiagram",
+			"title":			"BPMN-Diagram",
+			"title_zh_cn":		"BPMN-图表",
+			"title_de":			"BPMN-Diagramm",
+			"groups":			["Diagram"],
+			"description":		"A BPMN 2.0 Diagram.",
+			"description_de":	"Ein BPMN 2.0 Diagramm",
+			"view":				"diagram.svg",
+			"icon":				"diagram.png",
+			"mayBeRoot":		true,
+			"hide":				true,
+			"propertyPackages" : ["baseAttributes","diagram"],
+			"roles":			["canContainArtifacts"]
+		},
+		
+		// Acitvities
+		
+		{
+			"type" : 			"node",
+			"id": 				"Task",
+			"title" : 			"Task",
+			"title_zh_cn" : 	"任务",
+			"title_de" : 		"Task",
+			"groups" : 			["Activities"],
+			"groups_zh_cn" : 	["活动"],
+			"groups_de" :		["Aktivitäten"],
+			"description" : 	"A task is a unit of work - the job to be performed.",
+			"description_de" : 	"Eine Task ist eine Arbeitseinheit. Sie repräsentiert die Aufgabe, die zu tun ist.",
+			"view" : 			"activity/task.svg",
+			"icon" : 			"activity/task.png",
+			"palette" : 		"palette/activities.png",
+			"propertyPackages" :[
+				"baseTaskAttributes",
+				"flowElement",
+				"activity",
+				"task",
+				"loopcharacteristics",
+				"properties",
+				"iospecification",
+				"form",
+				"nodeType",
+				"scriptNodeType"
+			],
+			"roles" : 			[
+				"all",
+				"sequence_start",
+				"sequence_end",
+				"from_task_event",
+				"to_task_event",
+				"FromEventbasedGateway",
+				"messageflow_start",
+				"messageflow_end",
+				"fromtoall",
+				"ActivitiesMorph"
+			]
+		},
+		{
+			"type" : 			"node",
+			"id" :				"CollapsedSubprocess",
+			"title" : 			"Collapsed Subprocess",
+			"title_zh_cn" : 	"倒塌的子过程",
+			"title_de" :		"Zugeklappter Unterprozess",
+			"groups" :			["Activities"],
+			"groups_zh_cn" : 	["活动"],
+			"groups_de" :		["Aktivitäten"],
+			"description" :		"A subprocess is a decomposable activity. It can be linked to another process diagram.",
+			"description_de" :	"Ein Unterprozess ist eine verfeinerbare Aktivität. Er kann mit einem anderen Prozessdiagramm verlinkt werden.",
+			"view" :			"activity/subprocess.collapsed.svg",
+			"icon" :			"activity/subprocess.png",
+			"propertyPackages" :[
+				"baseAttributes",
+				"collapsedSubprocessAttributes",
+				"flowElement",
+				"activity",
+				"subprocess",
+				"loopcharacteristics",
+				"bgColor",
+				"properties",
+				"iospecification"
+				
+			],
+			"properties" :		[
+				{
+					"id":"activitytype",
+					"type":"String",
+					"title":"ActivityType",
+					"title_zh_cn":"活动类型",
+					"title_de":"Aktivitätstyp",
+					"value":"Sub-Process",
+					"value_de":"Unterprozess",
+					"description":"The Type of Activity.",
+					"description_de":"Typ der Aktivität",
+					"readonly":true,
+					"optional":false,
+					"length":""
+				},
+				{
+					"id":"bgcolor",
+					"type":"Color",
+					"title":"BackgroundColor",
+					"title_zh_cn":"背景颜色",
+					"title_de":"Hintergrundfarbe",
+					"value":"#ffffcc",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":"fill_el",
+					"fill":true,
+					"stroke":false
+				}	
+			],
+			"roles": 			[
+				"all",
+				"sequence_start",
+				"sequence_end",
+				"messageflow_start",
+				"messageflow_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"ActivitiesMorph"
+			]
+		},
+		{
+			"type" : 			"node",
+			"id" :				"Subprocess",
+			"title" :			"Expanded Subprocess",
+			"title_zh_cn" : 	"扩展子过程",
+			"title_de" :		"Aufgeklappter Unterprozess",
+			"groups" :			["Activities"],
+			"groups_zh_cn" : 	["活动"],
+			"groups_de" :		["Aktivitäten"],
+			"description" :		"A subprocess is a decomposable activity. An expanded subprocess contains a valid BPMN diagram.",
+			"description_de" :	"Ein Unterprozess ist eine verfeinerte Aktivität. Ein aufgeklappter Unterprozess enthält in sich ein eigenes BPMN Diagramm, welches direkt innerhalb modelliert wird.",
+			"view" :			"activity/subprocess.expanded.svg",
+			"icon" :			"activity/expanded.subprocess.png",
+ 			"layout" : 			[
+ 									{"type" : "layout.bpmn2_0.subprocess"},
+ 									{"type" : "layout.container.dockers"},
+ 									{
+ 										"type" : "layout.container.minBounds",
+ 										"options" : {
+ 											"fixedX" : true,
+ 											"ignoreChildsWithId" : [
+ 												"http://b3mn.org/stencilset/bpmn2.0#Lane",
+ 												"http://b3mn.org/stencilset/bpmn2.0#StartNoneEvent"
+ 											]
+ 										}
+ 									}
+ 								],
+			"propertyPackages" :[
+				"baseAttributes",
+				"flowElement",
+				"activity",
+				"subprocess",
+				"loopcharacteristics",
+				"properties",
+				"iospecification"
+			],
+			"properties" :		[
+				{
+					"id":"activitytype",
+					"type":"String",
+					"title":"ActivityType",
+					"title_zh_cn":"活动类型",
+					"title_de":"Aktivitätstyp",
+					"value":"Sub-Process",
+					"value_de":"Unterprozess",
+					"description":"The Type of Activity.",
+					"description_de":"Typ der Aktivität",
+					"readonly":true,
+					"optional":false,
+					"length":""
+				},
+				{
+					"id":"bgcolor",
+					"type":"Color",
+					"title":"BackgroundColor",
+					"title_zh_cn":"背景颜色",
+					"title_de":"Hintergrundfarbe",
+					"value":"#ffffff",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":"fill_el",
+					"fill":true,
+					"stroke":false
+				}	
+			],
+			"roles"	:			[
+				"all",
+				"sequence_start",
+				"sequence_end",
+				"messageflow_start",
+				"messageflow_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"canContainArtifacts",
+				"ActivitiesMorph"
+			]
+		},
+		{
+			"type" : 			"node",
+			"id" :				"CollapsedEventSubprocess",
+			"title" : 			"Collapsed Event-Subprocess",
+			"title_zh_cn" : 	"倒塌的事件子流程",
+			"title_de" :		"Zugeklappter Ereignis-Unterprozess",
+			"groups" :			["Activities"],
+			"groups_zh_cn" : 	["活动"],
+			"groups_de" :		["Aktivitäten"],
+			"description" :		"An Event-Subprocess is placed within another subprocess. It becomes active when its start event gets triggered and can interrupt the Subprocess context or run in parallel (non-interrupting). It can be linked to another diagram.",
+			"description_de" :	"Ein Ereignis-Unterprozess wird innnerhalb eines anderen Unterprozesses platziert. Er wird dann aktiv, wenn sein Startereignis ausgelöst wird und kann den Unterprozesskontext unterbrechen oder parallel laufen (nicht-unterbrechend). Dieser Unterprozess kann mit einem anderen Diagramm verknüpft werden.",
+			"view" :			"activity/event.subprocess.collapsed.svg",
+			"icon" :			"activity/event.subprocess.collapsed.png",
+			"propertyPackages" :[
+				"baseAttributes",
+				"flowElement",
+				"activity",
+				"subprocess",
+				"interrupting",
+				"loopcharacteristics",
+				"properties",
+				"iospecification"
+			],
+			"properties" :		[
+				{
+					"id":"activitytype",
+					"type":"String",
+					"title":"ActivityType",
+					"title_zh_cn":"活动类型",
+					"title_de":"Aktivitätstyp",
+					"value":"Event-Sub-Process",
+					"value_de":"Ereignis-Unterprozess",
+					"description":"The Type of Activity.",
+					"description_de":"Typ der Aktivität",
+					"readonly":true,
+					"optional":false,
+					"length":""
+				},
+				{
+					"id":"startevent",
+					"type":"Choice",
+					"title":"Start-Event",
+					"title_zh_cn":"启动事件",
+					"title_de":"Start-Ereignis",
+					"value":"Message",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"items":[
+						{
+							"id":"c1",
+							"title":"Message",
+							"title_zh_cn":"信息",
+							"title_de" : "Nachricht",
+							"value":"Message",
+							"icon" : "activity/list/event.message.png",
+							"refToView":"message"
+						},
+						{
+							"id":"c2",
+							"title":"Timer",
+							"title_zh_cn":"定时器",
+							"title_de" : "Timer",
+							"value":"Timer",
+							"icon" : "activity/list/event.timer.png",
+							"refToView":"timer"
+						},
+						{
+							"id":"c3",
+							"title":"Escalation",
+							"title_zh_cn":"升级",
+							"title_de" : "Eskalation",
+							"value":"Escalation",
+							"icon" : "activity/list/event.escalation.png",
+							"refToView":"escalation"
+						},
+						{
+							"id":"c4",
+							"title":"Conditional",
+							"title_zh_cn":"条件",
+							"title_de" : "Bedingung",
+							"value":"Conditional",
+							"icon" : "activity/list/event.conditional.png",
+							"refToView":"conditional"
+						},
+						{
+							"id":"c5",
+							"title":"Error",
+							"title_zh_cn":"错误",
+							"title_de" : "Fehler",
+							"value":"Error",
+							"icon" : "activity/list/event.error.png",
+							"refToView":"error"	
+						},
+						{
+							"id":"c6",
+							"title":"Compensation",
+							"title_zh_cn":"赔偿金",
+							"title_de" : "Kompensation",
+							"value": "Compensation",
+							"icon" : "activity/list/event.compensation.png",
+							"refToView":"compensationStart"
+						},
+						{
+							"id":"c7",
+							"title":"Signal",
+							"title_zh_cn":"信号",
+							"title_de" : "Signal",
+							"value":"Signal",
+							"icon" : "activity/list/event.signal.png",
+							"refToView":"signal"
+						},
+						{
+							"id":"c8",
+							"title":"Multiple",
+							"title_zh_cn":"多种",
+							"title_de" : "Mehrere",
+							"value":"Multiple",
+							"icon" : "activity/list/event.multiple.png",
+							"refToView":"multiple"
+						},
+						{
+							"id":"c9",
+							"title":"Multiple (Parallel)",
+							"title_zh_cn":"多重（并行）",
+							"title_de" : "Mehrere (Parallel)",
+							"value":"MultipleParallel",
+							"icon" : "activity/list/event.multiple.parallel.png",
+							"refToView":"multipleParallel"
+						}
+					]
+				},
+				{
+					"id":"bgcolor",
+					"type":"Color",
+					"title":"BackgroundColor",
+					"title_zh_cn":"背景颜色",
+					"title_de":"Hintergrundfarbe",
+					"value":"#ffffff",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":"fill_el",
+					"fill":true,
+					"stroke":false
+				}	
+			],
+			"roles": 			[
+				"all",
+				"fromtoall",
+				"canContainArtifacts",
+				"EventActivitiesMorph"
+			]
+		},
+		{
+			"type" : 			"node",
+			"id" :				"EventSubprocess",
+			"title" :			"Event-Subprocess",
+			"title_zh_cn" : 	"事件子流程",
+			"title_de" :		"Ereignis-Unterprozess",
+			"groups" :			["Activities"],
+			"groups_zh_cn" : 	["活动"],
+			"groups_de" :		["Aktivitäten"],
+			"description" :		"An Event-Subprocess is placed within another Subprocess. It becomes active when its start event gets triggered and can interrupt the Subprocess context or run in parallel (non-interrupting).",
+			"description_de" :	"Ein Ereignis-Unterprozess wird innerhalb eines anderen Unterprozesses platziert. Er wird aktiv, wenn sein Startereignis ausgelöst wird und kann den Unterprozesskontext unterbrechen oder parallel laufen (nicht-unterbrechend).",
+			"view" :			"activity/event.subprocess.svg",
+			"icon" :			"activity/event.subprocess.png",
+ 			"layout" : 			[{"type" : "layout.bpmn2_0.subprocess"}],
+			"propertyPackages" :[
+				"baseAttributes",
+				"flowElement",
+				"activity",
+				"subprocess",
+				"loopcharacteristics",
+				"properties",
+				"iospecification"
+			],
+			"properties" :		[
+				{
+					"id":"activitytype",
+					"type":"String",
+					"title":"ActivityType",
+					"title_zh_cn":"活动类型",
+					"title_de":"Aktivitätstyp",
+					"value":"Event-Sub-Process",
+					"value_de":"Ereignis-Unterprozess",
+					"description":"The Type of Activity.",
+					"description_de":"Typ der Aktivität",
+					"readonly":true,
+					"optional":false,
+					"length":""
+				},
+				{
+					"id":"bgcolor",
+					"type":"Color",
+					"title":"BackgroundColor",
+					"title_zh_cn":"背景颜色",
+					"title_de":"Hintergrundfarbe",
+					"value":"#ffffff",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":"fill_el",
+					"fill":true,
+					"stroke":false
+				},	
+				{
+					"id":"isatransaction",
+					"type":"Boolean",
+					"title":"is a Transaction",
+					"title_zh_cn":"是一个交易",
+					"title_de":"ist eine Transaktion",
+					"value":false,
+					"description":"A Transaction is a set of activities that logically belongs together; it might follow a specified transaction protocol.",
+					"readonly":true,
+					"optional":false
+				},
+				{
+					"id":"callacitivity",
+					"type":"Boolean",
+					"title":"is a Call Activity",
+					"title_zh_cn":"是受理活动",
+					"title_de":"ist eine Call Activity",
+					"value":false,
+					"description":"a Call Activity is a wrapper for a globally defined Sub-Process that is reused in the current process.",
+					"readonly":true,
+					"optional":"true"
+				}
+			],
+			"roles"	:			[
+				"all",
+				"fromtoall",
+				"canContainArtifacts",
+				"EventActivitiesMorph"
+			]
+		},
+		
+		// Gateways
+		
+		{
+			"type" : 			"node",
+			"id" :				"Exclusive_Databased_Gateway",
+			"title" :			"Data-based Exclusive (XOR) Gateway",
+			"title_zh_cn":"基于数据的互斥（XOR）网关",
+			"title_de" : 		"Daten-basiertes exklusives Gateway",
+			"description" :		"When splitting, it routes the sequence flow to exactly one of the outgoing branches based on conditions. When merging, it awaits one incoming branch to complete before triggering the outgoing flow.",
+			"description_de" :	"Bei einer Verzweigung wird der Sequenzfluss abhängig von Verzweigungsbedingungen zu genau einer ausgehenden Kante geleitet. Bei einer Zusammenführung wird auf eine der eingehenden Kante gewartet, um den ausgehenden Sequenzfluss zu aktivieren.",
+			"groups" : 			["Gateways"],
+			"groups_zh_cn" : 	["网关"],
+			"view" : 			"gateway/exclusive.databased.svg",
+			"icon" : 			"gateway/exclusive.databased.png",
+			"palette" : 		"palette/gateway.png",
+			"propertyPackages" :[
+				"baseAttributes",
+				"flowElement",
+				"gateway",
+				"bgColor"
+			],
+			"properties" :		[
+				{
+					"id":"gatewaytype",
+					"type":"String",
+					"title":"Gateway type",
+					"title_zh_cn":"网关型",
+					"title":"Gateway-Typ",
+					"value":"XOR",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"length":""
+				},
+				{
+					"id":"xortype",
+					"type":"String",
+					"title":"XOR type",
+					"title_zh_cn":"XOR类型",
+					"title_de":"XOR-Typ",
+					"value":"Data",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"length":""
+				},
+				{
+					"id":"markervisible",
+					"type":"Boolean",
+					"title":"X-Marker visible",
+					"title_zh_cn":"X-标记可见",
+					"title_de":"X-Marker sichtbar",
+					"value":"true",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":"cross"
+				},		
+				{
+					"id":"defaultgate",
+					"type":"String",
+					"title":"Default gate",
+					"title_zh_cn":"默认门",
+					"title_de":"Standardgate",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"length":"50",
+					"wrapLines":true
+				},
+				{
+					"id":"gate_outgoingsequenceflow",
+					"type":"String",
+					"title":"[Gate] OutgoingSequenceFlow",
+					"title_zh_cn":"[门]外出顺序流",
+					"title_de":"[Gate] Ausgehender Steuerfluss",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"length":"50"
+				},
+				{
+					"id":"gate_assignments",
+					"type":"String",
+					"title":"[Gate] Assignments",
+					"title_zh_cn":"[门]分配",
+					"title_de":"[Gates] Zuweisungen",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"length":"50",
+					"wrapLines":true
+				}	
+			],
+			"roles": 			[
+				"all",
+				"sequence_start",
+				"sequence_end",
+				"choreography_sequence_start",
+				"choreography_sequence_end",
+				"fromtoall",
+				"GatewaysMorph"
+			]
+		},
+		{
+			"type" : 			"node",
+			"id" : 				"EventbasedGateway",
+			"title" :			"Event-based Gateway",
+			"title_zh_cn":"基于事件的网关",
+			"title_de" :		"Ereignis-basiertes Gateway",
+			"groups" :			["Gateways"],
+			"groups_zh_cn" : 	["网关"],
+			"description" :		"Is always followed by catching events or receive tasks. Sequence flow is routed to the subsequent event/task which happens first.",
+			"description_de" :	"Wenn der Sequenzfluss verzweigt wird, werden alle ausgehenden Kanten simultan aktiviert. Bei der Zusammenführung wird auf alle eingehenden Kanten gewartet, bevor der ausgehende Sequenzfluss aktiviert wird.",
+			"view" :			"gateway/eventbased.svg",
+			"icon" :			"gateway/eventbased.png",
+			"propertyPackages" :[
+				"baseAttributes",
+				"flowElement",
+				"gateway",
+				"bgColor"
+			],
+			"properties" :		[
+				{
+					"id":"eventtype",
+					"type":"Choice",
+					"title":"Type",
+					"title_zh_cn":"类型",
+					"title_de":"Typ",
+					"value":"exclusive",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"items":[
+						{
+							"id":"c1",
+							"title":"Exclusive (standard)",
+							"title_zh_cn":"独家（标准）",
+							"title_de" : "Exklusiv (Standard)",
+							"value":"exclusive",
+							"icon" : "gateway/list/eventbased.exclusive.png",
+							"refToView":"default"
+						},
+						{
+							"id":"c2",
+							"title":"Exclusive Instantiation",
+							"title_zh_cn":"独家实例化",
+							"title_de" : "Exklusive Instantiierung",
+							"value":"instantiate_exclusive",
+							"icon" : "gateway/list/eventbased.exclusive.png",
+							"refToView":["default","instantiate"]
+						},
+						{
+							"id":"c3",
+							"title":"Parallel Instantiation",
+							"title_zh_cn":"并行实例化",
+							"title_de" : "Parallele Instantiierung",
+							"value":"instantiate_parallel",
+							"icon" : "gateway/list/eventbased.parallel.png",
+							"refToView":["parallel","instantiate"]
+						}
+					]
+				}
+			],
+			"roles":			[
+				"all",
+				"sequence_end",
+				"choreography_sequence_start",
+				"choreography_sequence_end",
+				"fromtoall",
+				"GatewaysMorph",
+				"EventbasedGateway"
+			]
+		},
+		{
+			"type" : 			"node",
+			"id" :				"ParallelGateway",
+			"title" :			"Parallel Gateway",
+			"title_zh_cn":"并行网关",
+			"title_de" :		"Paralleles Gateway",
+			"groups" :			["Gateways"],
+			"groups_zh_cn" : 	["网关"],
+			"description" :		"When used to split the sequence flow, all outgoing branches are activated simultaneously. When merging parallel branches it waits for all incoming branches to complete before triggering the outgoing flow.",
+			"description_de" :	"Wenn der Sequenzfluss verzweigt wird, werden alle ausgehenden Kanten simultan aktiviert. Bei der Zusammenführung wird auf alle eingehenden Kanten gewartet, bevor der ausgehende Sequenzfluss aktiviert wird.",
+			"view" :			"gateway/parallel.svg",
+			"icon" :			"gateway/parallel.png",
+			"propertyPackages" :[
+				"baseAttributes",
+				"flowElement",
+				"gateway",
+				"bgColor"
+			],
+			"properties" : [
+				{
+					"id":"gatewaytype",
+					"type":"String",
+					"title":"GatewayType",
+					"title_zh_cn":"网关类型",
+					"title_de":"Gatewaytyp",
+					"value":"AND",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"length":""
+				}
+			],
+			"roles": 			[
+				"all",
+				"sequence_start",
+				"sequence_end",
+				"choreography_sequence_start",
+				"choreography_sequence_end",
+				"fromtoall",
+				"GatewaysMorph"
+			]
+		},
+		{
+			"type" : 			"node",
+			"id" :				"InclusiveGateway",
+			"title" :			"Inclusive Gateway",
+			"title_zh_cn":"包容性网关",
+			"title_de" :		"Inklusives Gateway",
+			"groups" :			["Gateways"],
+			"groups_zh_cn" : 	["网关"],
+			"description" :		"When splitting, one or more branches are activated based on branching conditions. When merging, it awaits all active incoming branches to complete.",
+			"description_de" :	"Bei einer Verzweigung werden eine oder mehrere Kanten abhängig von Verzweigungsbedingungen aktiviert. Bei einer Vereinigung wird auf alle eingehenden aktiven Kanten gewartet.",
+			"view" :			"gateway/inclusive.svg",
+			"icon" :			"gateway/inclusive.png",
+			"propertyPackages" :[
+				"baseAttributes",
+				"flowElement",
+				"gateway",
+				"bgColor"
+			],
+			"properties" :		[
+				{
+					"id":"gatewaytype",
+					"type":"String",
+					"title":"GatewayType",
+					"title_zh_cn":"网关类型",
+					"title_de":"Gatewaytyp",
+					"value":"OR",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"length":""
+				},
+				{
+					"id":"defaultgate",
+					"type":"String",
+					"title":"DefaultGate",
+					"title_zh_cn":"默认门",
+					"title_de":"Standardgate",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"length":"50",
+					"wrapLines":true
+				},
+				{
+					"id":"gate_outgoingsequenceflow",
+					"type":"String",
+					"title":"[Gate] OutgoingSequenceFlow",
+					"title_zh_cn":"[门]外出顺序流",
+					"title_de":"[Gate] Ausgehender Steuerfluss",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"length":"50"
+				},
+				{
+					"id":"gate_assignments",
+					"type":"String",
+					"title":"[Gate] Assignments",
+					"title_zh_cn":"[门]分配",
+					"title":"[Gates] Zuweisungen",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"length":"50",
+					"wrapLines":true
+				}
+			],
+			"roles": 			[
+				"all",
+				"sequence_start",
+				"sequence_end",
+				"choreography_sequence_start",
+				"choreography_sequence_end",
+				"fromtoall",
+				"GatewaysMorph"
+			]
+		},
+		{
+			"type": "node",
+			"id":"ComplexGateway",
+			"title":"Complex Gateway",
+			"title_zh_cn":"复杂的网关",
+			"title_de":"Komplexes Gateway",
+			"groups":	["Gateways"],
+			"groups_zh_cn" : 	["网关"],
+			"description":"It triggers one or more branches based on complex conditions or verbal descriptions. Use it sparingly as the semantics might not be clear.",
+			"description_de":"Eine oder mehrere Kanten werden abhängig von komplexen Bedingungen oder verbalen Beschreibungen aktiviert. Es sollte nur benutzt werden, wenn sich das Verhalten nicht durch andere Gateways ausdrücken lässt.",
+			"view":"gateway/complex.svg",
+			"icon":"gateway/complex.png",
+			"propertyPackages" : [
+				"baseAttributes",
+				"flowElement",
+				"gateway",
+				"bgColor"
+			],
+			"properties" : [
+				{
+					"id":"gatewaytype",
+					"type":"String",
+					"title":"GatewayType",
+					"title_zh_cn":"网关类型",
+					"title_de":"Gatewaytyp",
+					"value":"Complex",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"length":""
+				},
+				{
+					"id":"activationcondition",
+					"type":"String",
+					"title":"ActivationCondition",
+					"title_zh_cn":"激活条件",
+					"title_de":"Aktivierungsbedingung",
+					"value":"",
+					"popular":true,
+					"description":"Determines which combination of incoming tokens will be synchronized for activation of the Gateway.",
+					"readonly":false,
+					"optional":true
+				},
+				{
+					"id":"incomingcondition",
+					"type":"String",
+					"title":"IncomingCondition",
+					"title_zh_cn":"来电条件",
+					"title_de":"Eingangsbedingung",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"length":"50"
+				},
+				{
+					"id":"outgoingcondition",
+					"type":"String",
+					"title":"OutgoingCondition",
+					"title_zh_cn":"即将离任的条件",
+					"title_de":"Ausgangsbedingung",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"length":"50"
+				}
+			],
+			"roles": [
+				"all",
+				"sequence_start",
+				"sequence_end",
+				"choreography_sequence_start",
+				"choreography_sequence_end",
+				"fromtoall",
+				"GatewaysMorph"
+			]
+		},
+		
+		// Swimlanes
+		
+		{
+			"type" : 			"node",
+			"id" :				"Pool",
+			"title" :			"Pool",
+			"title_zh_cn":"池",
+			"groups" :			["Swimlanes"],
+			"groups_zh_cn" : 	["泳道"],
+			"groups_de" :		["Rollen"],
+			"description" :		"Pools and Lanes represent responsibilities for activities in a process. A pool or a lane can be an organization, a role, or a system.",
+			"description_de" :	"Pools repräsentieren Organisationseinheiten und können durch Lanes weiter aufgefächert bzw. unterstrukturiert werden.",
+			"view" :			"swimlane/pool.svg",
+			"icon" :			"swimlane/pool.png",
+			"palette" : 		"palette/swimlanes.png",
+			"propertyPackages": [
+				"baseAttributes",
+				"pool",
+				"process",
+				"bgColor"
+			],
+			"roles" : 			[
+				"all",
+				"messageflow_start",
+				"messageflow_end",
+				"fromtoall",
+				"canContainArtifacts"				
+			],
+			"layout" : [{"type" : "layout.bpmn2_0.pool"}]
+		},
+		{
+			"type" : 			"node",
+			"id" :				"CollapsedPool",
+			"title" :			"Collapsed Pool",
+			"title_zh_cn":"倒塌的游泳池",
+			"title_de" :		"Zugeklappter Pool",
+			"groups" :			["Swimlanes"],
+			"groups_zh_cn" : 	["泳道"],
+			"groups_de" :		["Rollen"],
+			"description" :		"Collapsed Pools hide all internals of the contained processes.",
+			"description_de" :	"Ein zugeklappter Pool (anonym) kommt zum Einsatz, wenn der innere Ablauf eines Kommunikationspartners keine unmittelbare Rolle spielt.",
+			"view" :			"swimlane/collapsed.pool.svg",
+			"icon" :			"swimlane/lane.png",
+			"propertyPackages": [
+				"baseAttributes",
+				"pool",
+				"process",
+				"bgColor"
+			],
+			"properties" : 		[
+				{
+					"id":"bgcolor",
+					"type":"Color",
+					"title":"BackgroundColor",
+					"title_de":"Hintergrundfarbe",
+					"value":"#ffffff",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":"fill_el",
+					"fill":true,
+					"stroke":false
+				}
+			],
+			"roles" :		 	[
+				"all",
+				"messageflow_start",
+				"messageflow_end",
+				"fromtoall"				
+			]
+		},
+		{
+			"type" : 			"node",
+			"id" :				"Lane",
+			"title" :			"Lane",
+			"title_zh_cn":"车道",
+			"groups" :			["Swimlanes"],
+			"groups_zh_cn" : 	["泳道"],
+			"groups_de" :		["Rollen"],
+			"description" :		"Pools and Lanes represent responsibilities for activities in a process. A pool or a lane can be an organization, a role, or a system. Lanes sub-divide pools or other lanes hierarchically.",
+			"description_de" :	"Pools und Lanes repräsentieren Rollen. Lanes repräsentieren Verantwortlichkeiten, wie etwa Organisationseinheiten, Stellen oder IT-Systeme. Lanes können hierarchisch in weitere Unter-Lanes untergliedert sein.",
+			"view" :			"swimlane/lane.svg",
+			"icon" :			"swimlane/lane.png",
+			"propertyPackages": [
+				"baseAttributes"
+			],
+			"properties" : 		[
+				{
+					"id":"parentpool",
+					"type":"String",
+					"title":"ParentPool",
+					"title_zh_cn":"家长游泳池",
+					"title_de":"Elternpool",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":"",
+					"length":"30"
+				},
+				{
+					"id":"parentlane",
+					"type":"String",
+					"title":"ParentLane",
+					"title_zh_cn":"家长里",
+					"title_de":"Elternlane",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"length":"30"
+				},
+				{
+					"id":"showcaption",
+					"type":"Boolean",
+					"title":"ShowCaption",
+					"title_zh_cn":"显示字幕",
+					"title_de":"Zeige Beschriftung",
+					"value":"true",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"refToView": ["caption", "captionDisableAntialiasing"],
+					"fill":true,
+					"visible":false,
+					"stroke":false,
+					"hidden":true
+				}
+			],
+			"roles": 			[
+				"PoolChild",
+				"fromtoall",
+				"canContainArtifacts"				
+			],
+			"layout" : [
+						{"type" : "layout.bpmn11.lane"},
+						{
+							"type" : "layout.container.minBounds",
+							"options" : {
+								"ignoreChildsWithId" : [
+									"http://b3mn.org/stencilset/bpmn2.0#Lane"
+								]
+							}
+						}
+			]
+		},
+        {
+            "type" :            "node",
+            "id" :              "processparticipant",
+            "title" :           "Additional Participant",
+            "title_zh_cn":"其他参与者",
+            "title_de" :        "Zusätzlicher Beteiligter",
+            "groups" :          ["Swimlanes"],
+            "groups_zh_cn" : 	["泳道"],
+            "groups_de" :       ["Rollen"],
+            "description" :     "he additional participant can be connected to a task or sub process. It is used to visualize additional associations of roles or individuals to the respective activity (e.g. responsibility, informed persons, etc.).",
+            "description_de" :  "Ein zusätzlicher Beteiligter kann an einen Task oder Unterprozess angeheftet werden. Mit ihm können zusätzliche Beziehungen einer Rolle oder Person zu der jeweiligen Aufgabe abgebildet werden (z.B. fachliche Verantwortung, Benachrichtigte Personen, etc.).",
+            "view" :            "swimlane/process.participant.svg",
+            "icon" :            "swimlane/process.participant.png",
+            "defaultAlign" :    "northeast",
+            "propertyPackages": [
+                "baseAttributes",
+                "flowElement",
+                "artifact",
+                "bgColor"
+            ],
+            "roles": [
+                "all",
+                "from_participant",
+                "to_participant",
+                "fromtoall",
+                "eventSubprocessElement"
+            ]
+        },
+		
+		// Artifacts
+		
+		{
+			"type" : 			"node",
+			"id" : 				"Group",
+			"title" :			"Group",
+			"title_zh_cn":"组",
+			"title_de" :		"Gruppe",
+			"groups" :			["Artifacts"],
+			"groups_zh_cn" : 	["文物"],
+			"groups_de" :		["Artefakte"],
+			"description" :		"An arbitrary set of objects can be defined as a Group to show that they logically belong together.",
+			"description_de" :	"Mehrere Objekte, die logisch in Verbindung stehen, können in einer Gruppe zusammengefasst werden.",
+			"view" :			"artifact/group.svg",
+			"icon":				"artifact/group.png",
+			"palette" : 		"palette/artifacts.png",
+			"propertyPackages" : [
+				"baseAttributes",
+				"flowElement",
+				"artifact"
+			],
+			"properties" : [
+				{
+					"id":"artifacttype",
+					"type":"String",
+					"title":"ArtifactType",
+					"title_zh_cn":"工件类型",
+					"title_de":"Artefakttyp",
+					"value":"Group",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"length":""
+				}
+			],
+			"roles": [
+				"all",
+				"fromtoall",
+				"canContainArtifacts"
+			]
+		},
+		{
+			"type" : 			"node",
+			"id" : 				"TextAnnotation",
+			"title" :			"Text Annotation",
+			"title_zh_cn":"文本注释",
+			"title_de" :		"Text-Anmerkung",
+			"groups" :			["Artifacts"],
+			"groups_zh_cn" : 	["文物"],
+			"groups_de" :		["Artefakte"],
+			"description" :		"Any object can be associated with a Text Annotation to provide additional documentation.",
+			"description_de" :	"Jedes Objekt kann durch eine Text-Anmerkung kommentiert werden.",
+			"view" :			"artifact/text.annotation.svg",
+			"icon" :			"artifact/text.annotation.png",
+			"defaultAlign" :	"northeast",
+			"propertyPackages": [
+				"baseAttributes",
+				"flowElement",
+				"artifact"
+			],
+			"properties" : 		[
+				{
+					"id":"text",
+					"type":"String",
+					"title":"Text",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"text",
+					"length":"",
+					"wrapLines":true
+				},
+				{
+					"id":"artifacttype",
+					"type":"String",
+					"title":"ArtifactType",
+					"title_zh_cn":"工件类型",
+					"title_de":"Artefakttyp",
+					"value":"Annotation",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"length":""
+				}
+			],
+			"roles": [
+				"all",
+				"from_artifact",
+				"to_artifact",
+				"TextAnnotationMorph"
+			]
+		},
+		
+		// Data Objects
+		
+	/*	{
+			"type" : 			"node",
+			"id" :				"DataObject",
+			"title" :			"Data Object",
+			"title_zh_cn":"数据对象",
+			"title_de" :		"Datenobjekt",
+			"description" :		"A Data Object represents information flowing through the process, such as business documents, e-mails or letters.",
+			"description_de" :	"Ein Datenobjekt repräsentiert Informationen, die durch den Prozess fließen, wie z.B. Dokumente, Emails oder Briefe.",
+			"groups" :			["Data Objects"],
+			"groups_de":		["Datenobjekte"],
+			"view" :			"dataobject/data.object.svg",
+			"icon" :			"dataobject/data.object.png",
+			"palette" : 	"palette/dataobjects.png",
+			"defaultAlign" :	"southeast",
+			"propertyPackages":	[
+				"baseAttributes",
+				"flowElement",
+				"properties",
+				"bgColor"
+			],
+			"properties" :		[
+				{
+					"id":"state",
+					"type":"String",
+					"title":"State",
+					"title_zh_cn":"状态",
+					"title_de":"Zustand",
+					"value":"",
+					"description":"",
+					"refToView":"text_state",
+					"readonly":false,
+					"optional":true,
+					"directlyEditable":false
+				},
+				{
+					"id":"input_output",
+					"type":"Choice",
+					"title":"Input/Output",
+					"title_zh_cn":"输入/输出",
+					"title_de":"Eingang/Ausgang",
+					"value":"None",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"refToView":"",
+					"items":[
+						{
+							"id":"c1",
+							"title":"None",
+							"value":"None",						
+							"refToView":"none"
+						},
+						{
+							"id":"c2",
+							"title":"Input",
+							"value":"Input",
+							"icon" : "dataobject/list/input.png",
+							"refToView":"input"
+						},
+						{
+							"id":"c3",
+							"title":"Output",
+							"value":"Output",
+							"icon" : "dataobject/list/output.png",
+							"refToView":"output"
+						}
+					]
+				},		
+				{
+					"id" : "iscollection",
+					"type" : "Boolean",
+					"title" : "is Collection",
+					"title_zh_cn":"为收藏",
+					"title_de" : "ist Listen-Datenobjekt",
+					"value" : false,
+					"description" : "A Collection Data Object represents a collection of information, e.g. a list of order items.",
+					"description_de" : "Ein Listen-Datenobjekt repräsentiert eine Liste von Informationen, z.B. eine Liste mit Bestellpositionen.",
+					"readonly" : false,
+					"optional" : true,
+					"refToView" : "collection"
+				}
+			],
+			"roles" : 			[
+				"all",
+				"from_task_event",
+				"to_task_event",
+				"fromtoall",
+				"DataObjectMorph"
+			]
+		},
+		{
+			"type" : 			"node",
+			"id" :				"ITSystem",
+			"title" :			"IT System",
+			"title_zh_cn":"IT系统",
+			"title_de" :		"IT-System",
+			"groups" :			["Artifacts"],
+			"groups_zh_cn" : 	["文物"],
+			"groups_de" :		["Artefakte"],
+			"description" : 	"An IT System can be associated with an activity. It is a system or application used while fulfilling the activity.",
+			"description_de" : 	"Ein IT-System kann mittels Assoziation mit einer Aktivität verbunden werden. Es handelt sich um ein System oder eine Software-Applikation die im Laufe der Aktivität verwendet wird.",
+			"view" :			"dataobject/it.system.svg",
+			"icon" : 			"dataobject/it.system.png",
+			"propertyPackages" : [
+				"baseAttributes",
+				"flowElement"				
+			],
+			"properties" : [
+				{
+					"id":"bgcolor",
+					"type":"Color",
+					"title":"BackgroundColor",
+					"title_zh_cn":"背景颜色",
+					"title_de":"Hintergrundfarbe",
+					"value":"#e1e1e1",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":"fill_el",
+					"fill":true,
+					"stroke":false
+				}
+			],
+			"roles" :			[
+			    "all",
+			    "from_task_event",
+			    "to_task_event",
+			    "fromtoall",
+			    "DataObjectMorph"
+			]
+		},
+		{
+			"type" : 			"node",
+			"id" :				"DataStore",
+			"title" :			"Data Store",
+			"title_zh_cn":"数据存储",
+			"title_de" :		"Datenspeicher",
+			"groups" :			["Data Objects"],
+			"groups_de":		["Datenobjekte"],
+			"description" :		"A Data Store is a place where the process can read or wirte date, e.g. a database or a filling cabinet. It persists beyond the lifetime of the process instance.",
+			"description_de" :	"Ein Datenspeicher ist ein Ort wo der Prozess Daten lesen oder schreiben kann, z.B. eine Datenbank oder ein Aktenschrank. Er existiert unabhängig von der Lebensdauer der Prozessinstanz.",
+			"view" :			"dataobject/data.store.svg",
+			"icon" :			"dataobject/data.store.png",
+			"propertyPackages": [
+				"baseAttributes",
+				"flowElement",
+				"itemAwareElement",
+				"bgColor"
+			],
+			"properties" :		[
+				{
+					"id" : "capacity",
+					"type" : "Integer",
+					"title" : "Capacity",
+					"title_zh_cn":"容量",
+					"title_de" : "Kapazität",
+					"description" : "",
+					"readonly" : false,
+					"optional" : true,
+					"length" : ""
+				},
+				{
+					"id" : "isUnlimited",
+					"type" : "Boolean",
+					"title" : "is Unlimited",
+					"title_zh_cn":"是无限的",
+					"title_de" : "nicht begrenzt",
+					"value" : false,
+					"description" : "",
+					"readonly" : false,
+					"optional" : true
+				},
+				{
+					"id" : "dataStoreRef",
+					"type" : "String",
+					"title" : "DataStoreRef",
+					"title_zh_cn":"数据存储文献",
+					"title_de" : "DataStoreRef",
+					"description" : "",
+					"readonly" : false,
+					"optional" : true,
+					"length": 50,
+					"wrapLines" : true
+				},
+				{
+					"id":"bgcolor",
+					"type":"Color",
+					"title":"BackgroundColor",
+					"title_zh_cn":"背景颜色",
+					"title_de":"Hintergrundfarbe",
+					"value":"#ffffff",
+					"description":"",
+					"readonly":false,
+					"optional":false,
+					"refToView":"fill_el",
+					"fill":true,
+					"stroke":false
+				}
+			],
+			"roles" :			[
+				"all",
+				"fromtoall",
+				"to_task_event",
+				"from_task_event",
+				"DataObjectMorph"
+			]
+		},
+		{
+			"type" :			"node",
+			"id" :				"Message",
+			"title" :			"Message",
+			"title_zh_cn":"信息",
+			"title_de" : 		"Nachricht",
+			"groups" :			["Data Objects"],
+			"groups_de":		["Datenobjekte"],
+			"description" :		"A Message is used to depict the contents of a communication between two Participants.",
+			"description_de" :	"Eine Nachricht weist auf den Inhalt einer Kommunikation zwischen zwei Teilnehmern hin.",
+			"view" :			"dataobject/message.svg",
+			"icon" :			"dataobject/message.png",
+			"propertyPackages":	[
+				"baseAttributes",
+				"flowElement",
+				"itemAwareElement"
+			],
+			"properties" :		[
+				{
+					"id" : "structureref",
+					"type" : "String",
+					"title" : "StructureRef",
+					"title_zh_cn":"参考架构",
+					"title_de" : "Struktur-Referenz",
+					"description" : "",
+					"readonly" : false,
+					"optional" : true,
+					"length" : 50,
+					"wrapLines" : true
+				},
+				{
+					"id" : "initiating",
+					"type" : "Boolean",
+					"title" : "is initiating",
+					"title_zh_cn":"为启动",
+					"title_de" : "ist initiierend",
+					"description" : "",
+					"value" : true,
+					"inverseBoolean":true,
+					"refToView" : ["nonInitiating", "nonInitiating2"],
+					"readonly" : false,
+					"optional" : true
+				},
+				{
+					"id":"bgcolor",
+					"type":"Color",
+					"title":"BackgroundColor",
+					"title_zh_cn":"背景颜色",
+					"title_de":"Hintergrundfarbe",
+					"value":"#ffffff",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"refToView":["bg_frame","bg_frame2"],
+					"fill":true,
+					"stroke":false,
+					"hidden":true
+				}
+			],
+			"roles" :			[
+				"all",
+				"fromtoall",
+				"DataObjectMorph"
+			]
+		},*/
+		
+		// Start Events
+		
+		{
+			"type" : 			"node",
+			"id": 				"StartNoneEvent",
+			"title": 			"Start Event",
+			"title_zh_cn":"启动事件",
+			"title_de" : 		"Start-Ereignis",
+			"groups" : 			["Start Events"],
+			"groups_zh_cn" : 	["活动启动"],
+			"groups_de" : 		["Start-Ereignisse"],
+			"description" : 	"Untyped start event.",
+			"description_de" : 	"Ein nicht weiter typisiertes Start-Ereignis.",
+			"view" : 			"startevent/none.svg",
+			"icon" : 			"startevent/none.png",
+			"palette" : 	"palette/startevents.png",
+			"propertyPackages":	[
+				"baseAttributes",
+				"catchEventAttributes",
+				"bgColor",
+				"indform"
+			],
+			"roles" : [
+				"all",
+				"Startevents_all",
+				"sequence_start",
+				"choreography_sequence_start",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"StartEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"None",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		{
+			"type" :		 	"node",
+			"id" :				"StartMessageEvent",
+			"title" : 			"Start Message Event",
+			"title_zh_cn":"启动消息事件",
+			"title_de" :		"Nachrichten-Startereignis",
+			"groups" :			["Start Events"],
+			"groups_zh_cn" : 	["活动启动"],
+			"groups_de" : 		["Start-Ereignisse"],
+			"description" :		"A process instance is started on receive of a message.",
+			"description_de" :	"Eine Prozess-Instanz wird genau dann gestartet, wenn eine Nachricht eintrifft.",
+			"view" :			"startevent/message.svg",
+			"icon" :			"startevent/message.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"catchEventAttributes",
+				"interrupting",
+				"bgColor",
+				"form"
+			],
+			"roles": [
+				"all",
+				"messageflow_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"sequence_start",
+				"Startevents_all",
+				"StartEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Message",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		{
+			"type" :			"node",
+			"id" :				"StartTimerEvent",
+			"title" :			"Start Timer Event",
+			"title_zh_cn":"启动计时器事件",
+			"title_de" :		"Zeit-Startereignis",
+			"groups" :			["Start Events"],
+			"groups_zh_cn" : 	["活动启动"],
+			"groups_de" : 		["Start-Ereignisse"],
+			"description" :		"A process instance is started on cyclic timer events, points in time, after time spans or timeouts.",
+			"description_de" :	"Eine Prozess-Instanz wird gestartet, wenn periodische zeitliche Ereignisse, Zeitpunkte, Zeitspannen oder Zeitüberschreitungen eintreten.",
+			"view" :			"startevent/timer.svg",
+			"icon" :			"startevent/timer.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"catchEventAttributes",
+				"interrupting",
+				"bgColor",
+				"form"
+			],
+			"roles" : 			[
+				"all",
+				"sequence_start",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"Startevents_all",
+				"choreography_sequence_start",
+				"StartEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Timer",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"StartEscalationEvent",
+			"title":"Start Escalation Event",
+			"title_zh_cn":"开始升级事件",
+			"title_de":"Eskalations-Startereignis",
+			"groups":["Start Events"],
+			"groups_zh_cn" : 	["活动启动"],
+			"groups_de":["Start-Ereignisse"],
+			"description":"Reacts on an escalation to another role in the organization. This event is only used inside of a event subprocess.",
+			"description_de":"Dieses Ereignis wird ausgelöst, wenn eine Eskalation zu einer anderen Rolle in der Organisation (z.B. Vorgesetzter) eintritt. Die Verwendung ist ausschließlich innerhalb eines Ereignis-Unterprozesses vorgesehen.",
+			"view":"startevent/escalation.svg",
+			"icon":"startevent/escalation.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"catchEventAttributes",
+				"interrupting",
+				"bgColor",
+				"form"
+			],
+			"roles" : [
+			    "all",
+				"eventSubprocessElement",
+				"sequence_start",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"Startevents_all",
+				"StartEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Escalation",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		{
+			"type" : 			"node",
+			"id" :				"StartConditionalEvent",
+			"title" :			"Start Conditional Event",
+			"title_zh_cn":"启动条件事件",
+			"title_de" :		"Bedingungs-Startereignis",
+			"groups" :			["Start Events"],
+			"groups_zh_cn" : 	["活动启动"],
+			"groups_de" :		["Start-Ereignisse"],
+			"description" :		"A process instance is started based on changed business conditions or matching business rules.",
+			"description_de" :	"Eine Prozess-Instanz wird als Reaktion auf veränderte Bedingungen oder Geschäftsregeln gestartet.",
+			"view" :			"startevent/conditional.svg",
+			"icon" 	:			"startevent/conditional.png",
+			"propertyPackages": [
+				"baseAttributes",
+				"catchEventAttributes",
+				"interrupting",
+				"condition",
+				"bgColor",
+				"form"
+			],
+			"roles" : 			[
+				"all",
+				"sequence_start",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"Startevents_all",
+				"choreography_sequence_start",
+				"StartEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Conditional",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"StartErrorEvent",
+			"title":"Start Error Event",
+			"title_zh_cn":"启动错误事件",
+			"title_de":"Fehler-Startereignis",
+			"groups":["Start Events"],
+			"groups_zh_cn" : 	["活动启动"],
+			"groups_de":["Start-Ereignisse"],
+			"description":"Catches named errors. This event is only used inside of a event subprocess.",
+			"description_de":"Dieses Ereignis wird ausgelöst um auf benannte Fehler zu reagieren. Die Verwendung ist ausschließlich innerhalb eines Ereignis-Unterprozesses vorgesehen.",
+			"view":"startevent/error.svg",
+			"icon":"startevent/error.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"catchEventAttributes",
+				"bgColor",
+				"form"
+			],
+			"roles": [
+				"all",
+				"sequence_start",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"Startevents_all",
+				"StartEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Error",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		/*{
+			"type": "node",
+			"id":"StartCompensationEvent",
+			"title":"Start Compensation Event",
+			"title_zh_cn":"启动补偿事件",
+			"title_de":"Kompensations-Startereignis",
+			"groups":["Start Events"],
+			"groups_zh_cn" : 	["活动启动"],
+			"groups_de":["Start-Ereignisse"],
+			"description":"Compensation handling. This event is only used inside of a event subprocess.",
+			"description_de":"Behandeln von Kompensierung. Die Verwendung ist ausschließlich innerhalb eines Ereignis-Unterprozesses vorgesehen.",
+			"view":"startevent/compensation.svg",
+			"icon":"startevent/compensation.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"catchEventAttributes",
+				"bgColor",
+				"compensation",
+				"form"
+			],
+			"roles": [
+				"all",
+				"sequence_start",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"Startevents_all",
+				"StartEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Compensation",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		{
+			"type" : 			"node",
+			"id" :				"StartSignalEvent",
+			"title" :			"Start Signal Event",
+			"title_zh_cn":"启动信号事件",
+			"title_de" :		"Signal-Startereignis",
+			"groups" :			["Start Events"],
+			"groups_zh_cn" : 	["活动启动"],
+			"groups_de" :		["Start-Ereignisse"],
+			"description" :		"A process instance is started based on signalling across different processes. (One signal thrown can be caught multiple times)",
+			"description_de" :	"Eine Prozess-Instanz wird auf Basis von Signalen über mehrere Prozesse hinweg gestartet. (Auf dasselbe Signal kann an mehreren Stellen reagiert werden)",
+			"view" :			"startevent/signal.svg",
+			"icon" :			"startevent/signal.png",
+			"propertyPackages": [
+				"baseAttributes",
+				"catchEventAttributes",
+				"interrupting",
+				"bgColor",
+				"form"
+			],
+			"roles" : 			[
+				"all",
+				"sequence_start",
+				"Startevents_all",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"choreography_sequence_start",
+				"StartEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Signal",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		{
+			"type" :		 	"node",
+			"id" :				"StartMultipleEvent",
+			"title" :			"Start Multiple Event",
+			"title_zh_cn":"启动多个事件",
+			"title_de" :		"Mehrfach-Startereignis",
+			"groups" :			["Start Events"],
+			"groups_zh_cn" : 	["活动启动"],
+			"groups_de" :		["Start-Ereignisse"],
+			"description" :		"A process instance is started upon occurence of one out of a set of possible events.",
+			"description_de" :	"Eine Prozess-Instanz wird beim Eintreten eines von mehreren möglichen Ereignissen gestartet.",
+			"view" :			"startevent/multiple.svg",
+			"icon" :			"startevent/multiple.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"catchEventAttributes",
+				"interrupting",
+				"bgColor",
+				"form"
+			],
+			"roles" : 			[
+				"all",
+				"messageflow_end",
+				"sequence_start",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"Startevents_all",
+				"choreography_sequence_start",
+				"StartEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Multiple",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"StartParallelMultipleEvent",
+			"title":"Start Parallel Multiple Event",
+			"title_zh_cn":"开始并行多事件",
+			"title_de":"Mehrfach/Parallel-Startereignis",
+			"groups":["Start Events"],
+			"groups_zh_cn" : 	["活动启动"],
+			"groups_de":["Start-Ereignisse"],
+			"description":"A process instance is started upon occurence of all possible events.",
+			"description_de":"Eine Prozess-Instanz wird nach dem Eintreten von allen möglichen Ereignissen gestartet.",
+			"view":"startevent/multiple.parallel.svg",
+			"icon":"startevent/multiple.parallel.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"catchEventAttributes",
+				"interrupting",
+				"bgColor",
+				"form"
+			],
+			"roles" :			[
+				"all",
+				"messageflow_end",
+				"sequence_start",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"Startevents_all",
+				"choreography_sequence_start",
+				"StartEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Parallel Multiple",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},*/
+		
+		// Intermediate Events Catching
+		
+		{
+			"type": "node",
+			"id":"IntermediateMessageEventCatching",
+			"title":"Intermediate Message Event",
+			"title_zh_cn":"中间消息事件",
+			"title_de":"Nachrichten-Zwischenereignis",
+			"groups":["Catching Intermediate Events"],
+			"groups_zh_cn" : 	["捕捉中间事件"],
+			"groups_de":["Zwischen-Ereignisse (eintretend)"],
+			"description":"This event reacts on the arrival of a message.",
+			"description_de":"Das Nachrichten-Zwischenereignis wartet bis auf den Empfang einer Nachricht und setzt daraufhin die Prozessausführung fort.",
+			"view":"intermediateevent/message.catching.svg",
+			"icon":"catching/message.png",
+			"palette" : 	"palette/catching.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"interrupting",
+				"boundaryevent",
+				"bgColor"
+			],
+			"roles":[
+				"all",
+				"messageflow_end",
+				"sequence_start",
+				"sequence_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"FromEventbasedGateway",
+				"IntermediateEventOnSubprocessBoundary",
+				"IntermediateEventOnActivityBoundary",
+				"EventOnChoreographyActivityBoundary",
+				"IntermediateEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Message",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"refToView":"",
+					"length":""
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"IntermediateTimerEvent",
+			"title":"Intermediate Timer Event",
+			"title_zh_cn":"中间计时器事件",
+			"title_de":"Zeit-Zwischenereignis",
+			"groups":["Catching Intermediate Events"],
+			"groups_zh_cn" : 	["捕捉中间事件"],
+			"groups_de":["Zwischen-Ereignisse (eintretend)"],
+			"description":"Process execution is delayed until a certain point in time is reached or a particular duration is over.",
+			"description_de":"Im Laufe der Prozessausführung muss für eine bestimmte zeitlich festgelegte Dauer bzw. auf das Eintreten eines Zeitpunktes gewartet werden bis die Ausführung fortgesetzt wird.",
+			"view":"intermediateevent/timer.svg",
+			"icon":"catching/timer.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"interrupting",
+				"boundaryevent",
+				"bgColor"
+			],
+			"roles":[
+				"all",
+				"sequence_start",
+				"sequence_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"choreography_sequence_start",
+				"choreography_sequence_end",
+				"FromEventbasedGateway",
+				"IntermediateEventOnSubprocessBoundary",
+				"IntermediateEventOnActivityBoundary",
+				"EventOnChoreographyActivityBoundary",
+				"IntermediateEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Timer",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"refToView":"",
+					"length":""
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"IntermediateEscalationEvent",
+			"title":"Intermediate Escalation Event",
+			"title_zh_cn":"中间事件升级",
+			"title_de":"Eskalations-Zwischenereignis",
+			"groups":["Catching Intermediate Events"],
+			"groups_zh_cn" : 	["捕捉中间事件"],
+			"groups_de":["Zwischen-Ereignisse (eintretend)"],
+			"description":"This event reacts on the escalation of a case. It needs to be attached to the boundary of an activity.",
+			"description_de":"Reagiert auf die Eskalation des Vorgangs. Dieses Ereignis muss zwingend an den Rand einer Aktivität angeheftet werden.",
+			"view":"intermediateevent/escalation.catching.svg",
+			"icon":"catching/escalation.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"catchEventAttributes",
+				"interrupting",
+				"boundaryevent",
+				"bgColor"
+			],
+			"roles":[
+			    "all",
+				"eventSubprocesElement",
+				"sequence_start",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"IntermediateEventOnSubprocessBoundary",
+				"IntermediateEventOnActivityBoundary",
+				"IntermediateEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Escalation",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"refToView":"",
+					"length":""
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"IntermediateConditionalEvent",
+			"title":"Intermediate Conditional Event",
+			"title_zh_cn":"中级条件事件",
+			"title_de":"Bedingungs-Zwischenereignis",
+			"groups":["Catching Intermediate Events"],
+			"groups_zh_cn" : 	["捕捉中间事件"],
+			"groups_de":["Zwischen-Ereignisse (eintretend)"],
+			"description":"Process execution is delayed until a changed business condition or business rule matches.",
+			"description_de":"Im Laufe der Prozessausführung muss auf eine veränderte Bedingung oder eintretende Geschäftsregeln gewartet werden bis die Ausführung fortgesetzt wird.",
+			"view":"intermediateevent/conditional.svg",
+			"icon":"catching/conditional.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"catchEventAttributes",
+				"interrupting",
+				"boundaryevent",
+				"condition",
+				"bgColor"
+			],
+			"roles":[
+				"all",
+				"sequence_start",
+				"sequence_end",
+				"choreography_sequence_start",
+				"choreography_sequence_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"FromEventbasedGateway",
+				"IntermediateEventOnSubprocessBoundary",
+				"IntermediateEventOnActivityBoundary",
+				"EventOnChoreographyActivityBoundary",
+				"IntermediateEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Rule",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"refToView":"",
+					"length":""
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"IntermediateLinkEventCatching",
+			"title":"Intermediate Link Event",
+			"title_zh_cn":"中间环节事件",
+			"title_de":"Link-Zwischenereignis",
+			"groups":["Catching Intermediate Events"],
+			"groups_zh_cn" : 	["捕捉中间事件"],
+			"groups_de":["Zwischen-Ereignisse (eintretend)"],
+			"description":"Off-page connectors. Two corresponding link events correspond to a sequence flow.",
+			"description_de":"Ein auslösendes und ein eintretendes Link-Ereignis mit dem selben Namen entspricht einer gedachten Sequenzfluss-Kante.",
+			"view":"intermediateevent/link.catching.svg",
+			"icon":"catching/link.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"catchEventAttributes",
+				"bgColor"
+			],
+			"roles":[
+				"all",
+				"sequence_start",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"choreography_sequence_start",
+				"IntermediateEventsMorph"
+			],
+			"properties": [
+				{
+                    "id":"entry",
+                    "type":"DiagramLink",
+                    "title":"Diagram Link",
+                    "title_zh_cn":"图链接",
+                    "title_de":"Diagram Link",
+                    "value":"",
+                    "description":"",
+                    "readonly":false,
+					"refToView" : "diagramLink",
+                    "optional":false
+                },
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Link",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"refToView":"",
+					"length":""
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"IntermediateErrorEvent",
+			"title":"Intermediate Error Event",
+			"title_zh_cn":"中间错误事件",
+			"title_de":"Fehler-Zwischenereignis",
+			"groups":["Catching Intermediate Events"],
+			"groups_zh_cn" : 	["捕捉中间事件"],
+			"groups_de":["Zwischen-Ereignisse (eintretend)"],
+			"description":"Catches a named error, which was thrown be an inner scope (e.g. subprocess). This event needs to be attached to the boundary of an activity.",
+			"description_de":"Behandelt einen in einem inneren Scope geworfenen Fehler (z.B. aus einem Unterprozess). Dieses Ereignis muss zwingend an den Rand einer Aktivität angeheftet werden.",
+			"view":"intermediateevent/error.svg",
+			"icon":"catching/error.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"catchEventAttributes",
+				"boundaryevent",
+				"bgColor"
+			],
+			"roles":[
+				"all",
+				"sequence_start",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"IntermediateEventOnSubprocessBoundary",
+				"IntermediateEventOnActivityBoundary",
+				"IntermediateEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Error",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"refToView":"",
+					"length":""
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"IntermediateCancelEvent",
+			"title":"Intermediate Cancel Event",
+			"title_zh_cn":"中级取消事件",
+			"title_de":"Abbruch-Zwischenereignis",
+			"groups":["Catching Intermediate Events"],
+			"groups_zh_cn" : 	["捕捉中间事件"],
+			"groups_de":["Zwischen-Ereignisse (eintretend)"],
+			"description":"Reacts on a transaction, which was cancelled inside an inner scope (e.g. subprocess). This event needs to be attached to the boundary of an activity.",
+			"description_de":"Behandelt eine in einem inneren Scope abgebrochene Transaktion (z.B. aus einem Unterprozess). Dieses Ereignis muss zwingend an den Rand einer Aktivität angeheftet werden.",
+			"view":"intermediateevent/cancel.svg",
+			"icon":"catching/cancel.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"catchEventAttributes",
+				"boundaryevent",
+				"bgColor"
+			],
+			"roles":[
+				"all",
+				"sequence_start",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"IntermediateEventOnSubprocessBoundary",
+				"EventOnChoreographyActivityBoundary",
+				"IntermediateEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Cancel",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"refToView":"",
+					"length":""
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"IntermediateCompensationEventCatching",
+			"title":"Intermediate Compensation Event",
+			"title_zh_cn":"中级赔偿事件",
+			"title_de":"Kompensations-Zwischenereignis",
+			"groups":["Catching Intermediate Events"],
+			"groups_zh_cn" : 	["捕捉中间事件"],
+			"groups_de":["Zwischen-Ereignisse (eintretend)"],
+			"description":"Compensation handling in case of partially failed operations. This event needs to be attached to the boundary of an activity.",
+			"description_de":"Eine gezielte Kompensation aufgrund von teilweise fehlgeschlagenen Operationen. Dieses Ereignis muss zwingend an den Rand einer Aktivität angeheftet werden.",
+			"view":"intermediateevent/compensation.catching.svg",
+			"icon":"catching/compensation.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"catchEventAttributes",
+				"boundaryevent",
+				"compensation",
+				"bgColor"
+			],
+			"roles":[
+				"all",
+				"from_task_event",
+				"fromtoall",
+				"EventOnChoreographyActivityBoundary",
+				"IntermediateEventOnSubprocessBoundary",
+				"IntermediateEventOnActivityBoundary",
+				"IntermediateEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Compensation",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"refToView":"",
+					"length":""
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"IntermediateSignalEventCatching",
+			"title":"Intermediate Signal Event",
+			"title_zh_cn":"中间信号事件",
+			"title_de":"Signal-Zwischenereignis",
+			"groups":["Catching Intermediate Events"],
+			"groups_zh_cn" : 	["捕捉中间事件"],
+			"groups_de":["Zwischen-Ereignisse (eintretend)"],
+			"description":"Process execution is delayed until a particular signal is catched. Signalling can happen across different processes.",
+			"description_de":"Im Laufe der Prozessausführung wird auf das Auffangen eines Signals gewartet bis die Ausführung fortgesetzt wird. Die Signalgebung kann über verschiedene Prozesse hinweg stattfinden.",
+			"view":"intermediateevent/signal.catching.svg",
+			"icon":"catching/signal.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"catchEventAttributes",
+				"interrupting",
+				"boundaryevent",
+				"bgColor"
+			],
+			"roles":[
+				"all",
+				"sequence_start",
+				"sequence_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"choreography_sequence_start",
+				"choreography_sequence_end",
+				"FromEventbasedGateway",
+				"IntermediateEventOnSubprocessBoundary",
+				"IntermediateEventOnActivityBoundary",
+				"IntermediateEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Signal",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"refToView":"",
+					"length":""
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"IntermediateMultipleEventCatching",
+			"title":"Intermediate Multiple Event",
+			"title_zh_cn":"中间多事件",
+			"title_de":"Mehrfach-Zwischenereignis",
+			"groups":["Catching Intermediate Events"],
+			"groups_zh_cn" : 	["捕捉中间事件"],
+			"groups_de":["Zwischen-Ereignisse (eintretend)"],
+			"description":"Process execution is delayed until one out of a set of possible events is triggered.",
+			"description_de":"Im Laufe der Prozessausführung wird auf eines von mehreren möglichen Ereignissen gewartet bis die Ausführung fortgesetzt wird.",
+			"view":"intermediateevent/multiple.catching.svg",
+			"icon":"catching/multiple.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"catchEventAttributes",
+				"interrupting",
+				"boundaryevent",
+				"bgColor"
+			],
+			"roles":[
+				"all",
+				"sequence_start",
+				"sequence_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"messageflow_end",
+				"choreography_sequence_start",
+				"choreography_sequence_end",
+				"FromEventbasedGateway",
+				"IntermediateEventOnSubprocessBoundary",
+				"IntermediateEventOnActivityBoundary",
+				"IntermediateEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Multiple",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"refToView":"",
+					"length":""
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"IntermediateParallelMultipleEventCatching",
+			"title":"Intermediate Parallel Multiple Event",
+			"title_zh_cn":"中间的并行多事件",
+			"title_de":"Mehrfach/Parallel-Zwischenereignis",
+			"groups":["Catching Intermediate Events"],
+			"groups_zh_cn" : 	["捕捉中间事件"],
+			"groups_de":["Zwischen-Ereignisse (eintretend)"],
+			"description":"Process execution is delayed until all possible events have been triggered.",
+			"description_de":"Im Laufe der Prozessausführung wird auf das Eintreten von allen Ereignissen gewartet bis die Ausführung fortgesetzt wird.",
+			"view":"intermediateevent/multiple.parallel.svg",
+			"icon":"catching/multiple.parallel.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"catchEventAttributes",
+				"interrupting",
+				"boundaryevent",
+				"bgColor"
+			],
+			"roles":[
+				"all",
+				"messageflow_end",
+				"sequence_start",
+				"sequence_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"choreography_sequence_start",
+				"choreography_sequence_end",
+				"IntermediateEventOnSubprocessBoundary",
+				"IntermediateEventOnActivityBoundary",
+				"IntermediateEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Multiple",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"refToView":"",
+					"length":""
+				}
+			]
+		},
+		
+		// Intermediate Events Throwing
+		
+		{
+			"type": "node",
+			"id":"IntermediateEvent",
+			"title":"Intermediate Event",
+			"title_zh_cn":"中间事件",
+			"title_de":"Zwischen-Ereignis",
+			"groups":["Throwing Intermediate Events"],
+			"groups_zh_cn" : 	["投掷中间事件"],
+			"groups_de":["Zwischen-Ereignisse (auslösend)"],
+			"description":"This event marks the occurrence of a particular business event. Process execution is not delayed.",
+			"description_de":"Dieses Ereignis markiert das Erreichen eines definierten Zustandes im Prozess. Die Prozessausführung wird durch das Ereignis nicht verzögert.",
+			"view":"intermediateevent/none.svg",
+			"icon":"throwing/none.png",
+			"palette" : 	"palette/throwing.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"throwEventAttributes",
+				"bgColor"
+			],
+			"roles":[
+				"all",
+				"sequence_start",
+				"sequence_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"choreography_sequence_end",
+				"choreography_sequence_start",
+				"IntermediateEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"None",
+					"description":"",
+					"readonly":true,
+					"optional":false,
+					"refToView":"",
+					"length":""
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"IntermediateMessageEventThrowing",
+			"title":"Intermediate Message Event",
+			"title_zh_cn":"中间消息事件",
+			"title_de":"Nachrichten-Zwischenereignis",
+			"groups":["Throwing Intermediate Events"],
+			"groups_zh_cn" : 	["投掷中间事件"],
+			"groups_de":["Zwischen-Ereignisse (auslösend)"],
+			"description":"The throwing message event sends a message to a communication partner and afterwards continues process execution.",
+			"description_de":"Das auslösende Nachrichten-Zwischenereignis versendet eine Nachricht und setzt daraufhin die Prozessausführung unmittelbar fort.",
+			"view":"intermediateevent/message.throwing.svg",
+			"icon":"throwing/message.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"throwEventAttributes",
+				"bgColor"
+			],
+			"roles":[
+				"all",
+				"messageflow_start",
+				"sequence_start",
+				"sequence_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"IntermediateEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Message",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"IntermediateEscalationEventThrowing",
+			"title":"Intermediate Escalation Event",
+			"title_zh_cn":"中间事件升级",
+			"title_de":"Eskalations-Zwischenereignis",
+			"groups":["Throwing Intermediate Events"],
+			"groups_zh_cn" : 	["投掷中间事件"],
+			"groups_de":["Zwischen-Ereignisse (auslösend)"],
+			"description":"This event triggers the escalation of the case to another role in the organisation. After this, process execution is resumed.",
+			"description_de":"Symbolisiert die Eskalation des Vorgangs zu einer anderen Rolle in der Organisation (z.B. Vorgesetzter). Die Prozessausführung wird unmittelbar fortgesetzt.",
+			"view":"intermediateevent/escalation.throwing.svg",
+			"icon":"throwing/escalation.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"throwEventAttributes",
+				"bgColor"
+			],
+			"roles":[
+			    "all",
+				"eventSubprocessElement",
+				"sequence_start",
+				"sequence_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"IntermediateEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Escalation",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"IntermediateLinkEventThrowing",
+			"title":"Intermediate Link Event",
+			"title_zh_cn":"中间环节事件",
+			"title_de":"Link-Zwischenereignis",
+			"groups":["Throwing Intermediate Events"],
+			"groups_zh_cn" : 	["投掷中间事件"],
+			"groups_de":["Zwischen-Ereignisse (auslösend)"],
+			"description":"Off-page connectors. Two corresponding link events correspond to a sequence flow.",
+			"description_de":"Ein auslösendes und ein eintretendes Link-Ereignis mit dem selben Namen entspricht einer gedachten Sequenzfluss-Kante.",
+			"view":"intermediateevent/link.throwing.svg",
+			"icon":"throwing/link.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"throwEventAttributes",
+				"bgColor"
+			],
+			"roles":[
+				"all",
+				"sequence_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"choreography_sequence_end",
+				"IntermediateEventsMorph"
+			],
+			"properties": [
+			     {
+                    "id":"entry",
+                    "type":"DiagramLink",
+                    "title":"Diagram Link",
+                    "title_zh_cn":"图链接",
+                    "title_de":"Diagram Link",
+                    "value":"",
+                    "description":"",
+					"refToView": "diagramLink",
+                    "readonly":false,
+                    "optional":false
+                },
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Link",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"IntermediateCompensationEventThrowing",
+			"title":"Intermediate Compensation Event",
+			"title_zh_cn":"中级赔偿事件",
+			"title_de":"Kompensations-Zwischenereignis",
+			"groups":["Throwing Intermediate Events"],
+			"groups_zh_cn" : 	["投掷中间事件"],
+			"groups_de":["Zwischen-Ereignisse (auslösend)"],
+			"description":"Triggers a compensation.",
+			"description_de":"Auslösen einer Kompensation.",
+			"view":"intermediateevent/compensation.throwing.svg",
+			"icon":"throwing/compensation.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"throwEventAttributes",
+				"bgColor",
+				"compensationThrowing",
+				"compensation"
+			],
+			"roles":[
+				"all",
+				"sequence_start",
+				"sequence_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"IntermediateEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Compensation",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"IntermediateSignalEventThrowing",
+			"title":"Intermediate Signal Event",
+			"title_zh_cn":"中间信号事件",
+			"title_de":"Signal-Zwischenereignis",
+			"groups":["Throwing Intermediate Events"],
+			"groups_zh_cn" : 	["投掷中间事件"],
+			"groups_de":["Zwischen-Ereignisse (auslösend)"],
+			"description":"The throwing signal event fires up a signal. Afterwards it continues process execution. One signal thrown can be caught multiple times by different catching signal events.",
+			"description_de":"Das auslösende Signal-Zwischenereignis erzeugt ein Signal und setzt daraufhin die Prozessausführung unmittelbar fort. Ein Signal kann von mehreren eintretenden Signal-Ereignissen aufgefangen werden.",
+			"view":"intermediateevent/signal.throwing.svg",
+			"icon":"throwing/signal.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"throwEventAttributes",
+				"bgColor"
+			],
+			"roles":[
+				"all",
+				"sequence_start",
+				"sequence_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"IntermediateEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Signal",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"IntermediateMultipleEventThrowing",
+			"title":"Intermediate Multiple Event",
+			"title_zh_cn":"中间多事件",
+			"title_de":"Mehrfach-Zwischenereignis",
+			"groups":["Throwing Intermediate Events"],
+			"groups_zh_cn" : 	["投掷中间事件"],
+			"groups_de":["Zwischen-Ereignisse (auslösend)"],
+			"description":"The throwing multiple event throws one out of a set of possible events. Afterwards it continues process execution.",
+			"description_de":"Das auslösende Mehrfach-Zwischenereignis löst eines von mehreren möglichen Ereignissen aus und setzt daraufhin die Prozessausführung unmittelbar fort.",
+			"view":"intermediateevent/multiple.throwing.svg",
+			"icon":"throwing/multiple.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"throwEventAttributes",
+				"bgColor"
+			],
+			"roles":[
+				"all",
+				"messageflow_start",
+				"sequence_start",
+				"sequence_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"IntermediateEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Multiple",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		
+		// End Events
+		
+		{
+			"type" : "node",
+			"id": "EndNoneEvent",
+			"title": "End Event",
+			"title_zh_cn":"活动结束",
+			"title_de" : "End-Ereignis",
+			"groups" : ["End Events"],
+			"groups_zh_cn" : 	["活动结束"],
+			"groups_de" : ["End-Ereignisse"],
+			"description" : "The untyped end event typically marks the standard end of a process.",
+			"description_de" : "Untypisiertes End-Ereignis, welches ein normales Ende eines Prozesses markiert.",
+			"view" : "endevent/none.svg",
+			"icon" : "endevent/none.png",
+			"palette" : 	"palette/endevents.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"throwEventAttributes",
+				"bgColor",
+				"endTypeEvent"
+			],
+			"roles" : [
+				"all",
+				"sequence_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"choreography_sequence_end",
+				"Endevents_all",
+				"EndEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"None",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"EndMessageEvent",
+			"title":"End Message Event",
+			"title_zh_cn":"结束消息事件",
+			"title_de":"Nachrichten-Endereignis",
+			"groups":["End Events"],
+			"groups_zh_cn" : 	["活动结束"],
+			"groups_de":["End-Ereignisse"],
+			"description":"At the end of the process, a message is sent.",
+			"description_de":"Zum Abschluss des Prozesses wird noch eine Nachricht versendet.",
+			"view":"endevent/message.svg",
+			"icon":"endevent/message.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"throwingEventAttributes",
+				"bgColor"
+			],
+			"roles": [
+				"all",
+				"messageflow_start",
+				"sequence_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"Endevents_all",
+				"EndEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Message",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"EndEscalationEvent",
+			"title":"End Escalation Event",
+			"title_zh_cn":"结束事件升级",
+			"title_de":"Eskalations-Endereignis",
+			"groups":["End Events"],
+			"groups_zh_cn" : 	["活动结束"],
+			"groups_de":["End-Ereignisse"],
+			"description":"The case is escalated with the end of the process.",
+			"description_de":"Zum Ende des Prozesses findet eine Eskalation statt.",
+			"view":"endevent/escalation.svg",
+			"icon":"endevent/escalation.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"throwingEventAttributes",
+				"bgColor"
+			],
+			"roles": [
+			    "all",
+				"eventSubprocessElement",
+				"EndEventsMorph",
+				"Endevents_all",
+				"sequence_end"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Escalation",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"EndErrorEvent",
+			"title":"End Error Event",
+			"title_zh_cn":"结束错误事件",
+			"title_de":"Fehler-Endereignis",
+			"groups":["End Events"],
+			"groups_zh_cn" : 	["活动结束"],
+			"groups_de":["End-Ereignisse"],
+			"description":"The process ends in an error state. As result a named error is thrown.",
+			"description_de":"Der Prozess endet in einem Fehlerzustand. Es wird abschließend ein benannter Fehler geworfen.",
+			"view":"endevent/error.svg",
+			"icon":"endevent/error.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"catchEventAttributes",
+				"bgColor"
+			],
+			"roles": [
+				"all",
+				"sequence_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"Endevents_all",
+				"EndEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Error",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"EndCancelEvent",
+			"title":"Cancel End Event",
+			"title_zh_cn":"取消事件结束",
+			"title_de":"Abbruch-Endereignis",
+			"groups":["End Events"],
+			"groups_zh_cn" : 	["活动结束"],
+			"groups_de":["End-Ereignisse"],
+			"description":"Triggering cancellation of a transaction.",
+			"description_de":"Auslösen eines Abbruchs einer Transaktion.",
+			"view":"endevent/cancel.svg",
+			"icon":"endevent/cancel.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"catchEventAttributes",
+				"bgColor"
+			],
+			"roles":[
+				"all",
+				"sequence_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"Endevents_all",
+				"EndEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_zh_cn":"触发",
+					"title_de":"Auslöser",
+					"value":"Cancel",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		/*{
+			"type": "node",
+			"id":"EndCompensationEvent",
+			"title":"End Compensation Event",
+			"title_de":"Kompensations-Endereignis",
+			"groups":["End Events"],
+			"groups_zh_cn" : 	["活动结束"],
+			"groups_de":["End-Ereignisse"],
+			"description":"Triggering compensation as final process step.",
+			"description_de":"Als Abschluss des Prozesses wird eine Kompensationsanforderung geworfen.",
+			"view":"endevent/compensation.svg",
+			"icon":"endevent/compensation.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"throwingEventAttributes",
+				"bgColor",
+				"compensationThrowing",
+				"compensation"
+			],
+			"roles": [
+				"all",
+				"sequence_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"Endevents_all",
+				"EndEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_de":"Auslöser",
+					"value":"Compensation",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"EndSignalEvent",
+			"title":"End Signal Event",
+			"title_de":"Signal-Endereignis",
+			"groups":["End Events"],
+			"groups_zh_cn" : 	["活动结束"],
+			"groups_de":["End-Ereignisse"],
+			"description":"At the end of the process, a signal is thrown. (One signal thrown can be caught multiple times)",
+			"description_de":"Zum Ende des Prozesses wird abschließend ein Signal hochgeworfen. (Auf dasselbe Signal kann an mehreren Stellen reagiert werden)",
+			"view":"endevent/signal.svg",
+			"icon":"endevent/signal.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"catchEventAttributes",
+				"bgColor"
+			],
+			"roles": [
+				"all",
+				"sequence_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"Endevents_all",
+				"EndEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_de":"Auslöser",
+					"value":"Signal",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"EndMultipleEvent",
+			"title":"End Multiple Event",
+			"title_de":"Mehrfach-Endereignis",
+			"groups":["End Events"],
+			"groups_zh_cn" : 	["活动结束"],
+			"groups_de":["End-Ereignisse"],
+			"description":"At the end of the process, one out of a set of possible events is triggered.",
+			"description_de":"Zum Ende des Prozesses wird abschließend eines von mehreren möglichen Ereignissen ausgelöst.",
+			"view":"endevent/multiple.svg",
+			"icon":"endevent/multiple.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"throwEventAttributes",
+				"bgColor"
+			],
+			"roles": [
+				"all",
+				"messageflow_start",
+				"sequence_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"Endevents_all",
+				"EndEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_de":"Auslöser",
+					"value":"Multiple",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},
+		{
+			"type": "node",
+			"id":"EndTerminateEvent",
+			"title":"Terminate End Event",
+			"title_de":"Terminierungs-Endereignis",
+			"groups":["End Events"],
+			"groups_zh_cn" : 	["活动结束"],
+			"groups_de":["End-Ereignisse"],
+			"description":"Triggering the immediate termination of a process instance. All steps still in execution in parallel branches are terminated.",
+			"description_de":"Löst die sofortige Beendigung einer Prozess-Instanz und aller seiner noch in Ausführung befindlichen (parallelen) Arbeitsschritte.",
+			"view":"endevent/terminate.svg",
+			"icon":"endevent/terminate.png",
+			"propertyPackages":[
+				"baseAttributes",
+				"throwEventAttributes",
+				"bgColor"
+			],
+			"roles": [
+				"all",
+				"sequence_end",
+				"to_task_event",
+				"from_task_event",
+				"fromtoall",
+				"choreography_sequence_end",
+				"EndEventsMorph"
+			],
+			"properties": [
+				{
+					"id":"trigger",
+					"type":"String",
+					"title":"Trigger",
+					"title_de":"Auslöser",
+					"value":"Terminate",
+					"description":"",
+					"readonly":true,
+					"optional":false
+				}
+			]
+		},*/
+		
+		// Edges
+		
+		{
+			"type": "edge",
+			"id":"SequenceFlow",
+			"title":"Sequence Flow",
+			"title_zh_cn":"顺序流",
+			"title_de":"Sequenzfluss",
+			"description":"Sequence Flow defines the execution order of activities.",
+			"description_de":"Ein Sequenzfluss definiert die Reihenfolge der Ausführung von Aktivitäten.",
+			"groups":["Connecting Objects"],
+			"groups_zh_cn" : 	["连接对象"],
+			"groups_de":["Konnektoren"],
+			"view":"connector/sequenceflow.svg",
+			"icon":"connector/sequenceflow.png",
+			"palette" : 	"palette/connecting.png",
+			"propertyPackages":[
+				"baseAttributes"
+			],
+			"roles": [
+				"all",
+				"ConnectingObjectsMorph"
+			],
+			"properties":[
+				{
+					"id":"ConditionType",
+					"type":"Choice",
+					"title":"ConditionType",
+					"title_zh_cn":"条件类型",
+					"title_de":"Bedingungstyp",
+					"value":"None",
+					"description":"Determine the typ of the flow object.",
+					"description_de":"Legt den Typ des Flussobjekts fest.",
+					"readonly":false,
+					"optional":false,
+					"popular":true,
+					"items": [
+						{
+							"id":"none",
+							"title":"Standard",
+							"title_zh_cn":"标准",
+							"title_de":"Standard",
+							"value":"None"
+						},
+						{
+							"id":"expression",
+							"title":"Conditional Flow",
+							"title_zh_cn":"有条件的流量",
+							"title_de":"Bedingter Fluss",
+							"value":"Expression",
+							"icon" : "connector/list/type.expression.png",
+							"refToView":""
+						},
+						{
+							"id":"default",
+							"title":"Default Flow",
+							"title_zh_cn":"默认流",
+							"title_de":"Standardfluss",
+							"value":"Default",
+							"icon" : "connector/list/type.default.png",
+							"refToView":"default"
+						}
+					]
+				},
+				{
+					"id":"conditionexpression",
+					"type":"choosecondition",
+					"title":"Condition Expression",
+					"title_zh_cn":"条件表达式",
+					"title_de":"Condition Expression",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"length":"",
+					"refToView":"condition",
+					"wrapLines":true,
+					"popular":true
+				},
+				{
+					"id":"transactorsrelationship",
+					"type":"transactorsrelationship",
+					"title":"Transactors Relationship",
+					"title_zh_cn":"办理人关系",
+					"title_de":"Transactors Relationship",
+					"value":"",
+					"description":"",
+					"readonly":false,
+					"optional":true,
+					"length":"",
+					"refToView":"condition",
+					"wrapLines":true,
+					"popular":true
+				},
+				{
+					"id":"isimmediate",
+					"type":"Boolean",
+					"title":"isImmediate",
+					"title_zh_cn":"是立即",
+					"title_de":"Sofortige Ausführung",
+					"value":"",
+					"description":"An optional Boolean value specifying whether Activities or Choreography Activities not in the model containing the Sequence Flow can occur between the elements connected by the Sequence Flow. If the value is true, they MAY NOT occur. If the value is false, they MAY occur. Also see the isClosed attribute on Process, Choreography, and Collaboration.",
+					"readonly":false,
+					"optional":false
+				},
+				{
+					"id":"showdiamondmarker",
+					"type":"Boolean",
+					"title":"is conditional flow",
+					"title_zh_cn":"是有条件的流",
+					"title_de":"ist bedingter Fluss",
+					"value":false,
+					"description":"System intern variable to set the Diamond invisible, if sourceShape is a gateway and ConditionType is set to Expression",
+					"readonly":true,
+					"optional":false,
+					"visible":false,
+					"refToView":"conditional"
+				}
+			]
+		},
+		{
+			"type": "edge",
+			"id":"Association_Undirected",
+			"title":"Association (undirected)",
+			"title_zh_cn":"协会（无向）",
+			"title_de":"Ungerichtete Assoziation",
+			"description":"Attaching a data object with an Undirected Association to a sequence flow indicates hand-over of information between the activities involved.",
+			"description_de":"Die Zuordnung eines Datenobjekts zu einem Sequenzfluss über eine ungerichtete Assoziation weist auf eine Informationsübergabe zwischen den Aktivitäten hin.",
+			"groups":["Connecting Objects"],
+			"groups_zh_cn" : 	["连接对象"],
+			"groups_de":["Konnektoren"],
+			"view":"connector/association.undirected.svg",
+			"icon":"connector/association.undirected.png",
+			"roles": [
+				"all",
+				"ConnectingObjectsMorph"
+			],			
+			"propertyPackages" : [
+			    "dataAssociation"
+			],
+			"properties" : [
+				{
+					"id":"type",
+					"type":"Choice",
+					"title":"Responsibilities",
+					"title_zh_cn":"责任",
+					"title_de":"Verantwortlichkeiten",
+					"value":" ",
+					"description":"Describes the type of the responsibility according to RACI.",
+					"description_de":"Beschreibt die Verantwortlichkeiten nach dem RACI-Modell.",
+					"readonly":false,
+					"optional":true,
+					"refToView":"name",
+					"items": [
+						{
+							"id":"c1",
+							"title":"None",
+							"title_zh_cn":"无",
+							"title_de":"Keine",
+							"value":" "
+						},
+						{
+							"id":"c2",
+							"title":"responsible",
+							"title_zh_cn":"主管",
+							"title_de":"führt durch",
+							"value":"performs"
+						},
+						{
+							"id":"c3",
+							"title":"accountable",
+							"title_zh_cn":"问责",
+							"title_de":"erteilt Freigabe",
+							"value":"approves"
+						},
+						{
+							"id":"c4",
+							"title":"consulted",
+							"title_zh_cn":"咨询",
+							"title_de":"wird konsultiert",
+							"value":"consulted"
+						},
+						{
+							"id":"c5",
+							"title":"informed",
+							"title_zh_cn":"知情",
+							"title_de":"wird informiert",
+							"value":"isNotified"
+						}
+					]
+				}
+           ]
+		},
+		{
+			"type": "edge",
+			"id":"Association_Unidirectional",
+			"title":"Association (unidirectional)",
+			"title_zh_cn":"协会（单向）",
+			"title_de":"Gerichtete Assoziation",
+			"description":"A Directed Association indicates information flow. A data object can be read at the start of an activity or written upon completion.",
+			"description_de":"Eine gerichtete Assoziation zeigt den Informationsfluss. Ausgehende Kanten zeigen Schreiben, eingehende zeigen Lesen an.",
+			"groups":["Connecting Objects"],
+			"groups_zh_cn" : 	["连接对象"],
+			"groups_de":["Konnektoren"],
+			"view":"connector/association.unidirectional.svg",
+			"icon":"connector/association.unidirectional.png",
+			"roles": [
+				"all",
+				"ConnectingObjectsMorph",
+				"Directed_Association"
+			],
+			"propertyPackages" : [
+			    "dataAssociation"
+			],
+			"properties" : [
+                {
+                    "id":"text",
+                    "type":"String",
+                    "title":"Name",
+                    "title_zh_cn":"名字",
+                    "title_de":"Name",
+                    "value":"",
+                    "description":"",
+                    "readonly":false,
+                    "optional":true,
+                    "length":"",
+                    "refToView":"name",
+                    "wrapLines":true,
+					"popular":true
+                }
+           ]
+		},
+		{
+			"type": "edge",
+			"id":"Association_Bidirectional",
+			"title":"Association (bidirectional)",
+			"title_zh_cn":"协会（双向）",
+			"title_de":"Beidseitige Assoziation",
+			"description":"A Bidirected Association indicates that the data object is modified, i.e. read and written during the execution of an actvity.",
+			"description_de":"Eine beidseitig gericEhtete Assoziation zeigt, dass das Datenobjekt während der Ausführung einer Aktivität verändert, d.h. gelesen und geschrieben wird.",
+			"groups":["Connecting Objects"],
+			"groups_zh_cn" : 	["连接对象"],
+			"groups_de":["Konnektoren"],
+			"view":"connector/association.bidirectional.svg",
+			"icon":"connector/association.bidirectional.png",
+			"roles": [
+				"all",
+				"ConnectingObjectsMorph",
+				"Directed_Association"
+			],			
+			"propertyPackages" : [
+			    "dataAssociation"
+			],
+			"properties" : [
+                {
+                    "id":"text",
+                    "type":"String",
+                    "title":"Name",
+                    "title_zh_cn":"名字",
+                    "title_de":"Name",
+                    "value":"",
+                    "description":"",
+                    "readonly":false,
+                    "optional":true,
+                    "length":"",
+                    "refToView":"name",
+                    "wrapLines":true,
+					"popular":true
+                }
+           ]
+		},
+		{
+			"type": "edge",
+			"id":"MessageFlow",
+			"title":"Message Flow",
+			"title_zh_cn":"消息流",
+			"title_de":"Nachrichtenfluss",
+			"description":"Message Flow symbolizes information flow across organizational boundaries. Message flow can be attached to pools, activities, or message events. The order of message exchanges can be specified by combining message flow and sequence flow.",
+			"description_de":"Nachrichtenflüsse symbolisieren Informationen, die über organisatorische Grenzen hinweg fließen. Nachrichtenflüsse können an Pools, Aktivitäten oder Nachrichten-Ereignissen angeheftet sein. Die Abfolge von Nachrichtenaustauschen kann spezifiziert werden, indem Nachrichtenfluss und Sequenzfluss kombiniert werden.",
+			"groups":["Connecting Objects"],
+			"groups_zh_cn" : 	["连接对象"],
+			"groups_de":["Konnektoren"],
+			"view":"connector/messageflow.svg",
+			"icon":"connector/messageflow.png",
+			"propertyPackages":[
+				"baseAttributes"
+			],
+			"roles": [
+				"ConnectingObjectsMorph",
+				"MessageContainer"
+			]
+		}
+	],
+	
+	"rules" : {
+		"cardinalityRules": [
+			{
+				"role":"Startevents_all",
+				"incomingEdges": [
+					{
+						"role":"SequenceFlow",
+						"maximum":0
+						
+					}
+				]
+			},
+			{
+				"role":"Endevents_all",
+				"outgoingEdges": [
+					{
+						"role":"SequenceFlow",
+						"maximum":0
+						
+					}
+				]
+			}
+		],
+		"connectionRules": [
+			{
+				"role":"SequenceFlow",
+				"connects": [
+					{
+						"from":"sequence_start",
+						"to":["sequence_end"]
+					},
+					{
+						"from":"choreography_sequence_start",
+						"to":["choreography_sequence_end"]
+					},
+					{
+						"from":"Exclusive_Eventbased_Gateway",
+						"to":["FromEventbasedGateway"]
+					},{
+						"from" : "EventbasedGateway",
+						"to" : ["FromEventbasedGateway"]
+					}
+				]
+			},
+			{
+				"role":"MessageFlow",
+				"connects": [
+					{
+						"from":"messageflow_start",
+						"to":["messageflow_end"]
+					}
+				]
+			},
+			{
+				"role":"ChoreographyMessageFlowStart",
+				"connects": [
+					{
+						"from":"messageflow_start",
+						"to":["choreography_messageflow_end"]
+					}
+				]
+			},
+			{
+				"role":"ChoreographyMessageFlowEnd",
+				"connects": [
+					{
+						"from":"choreography_messageflow_start",
+						"to":["messageflow_end"]
+					}
+				]
+			},
+			{
+				"role":"IntermediateEventOnActivityBoundary",
+				"connects": [
+					{
+						"from":"Task",
+						"to":["IntermediateEventOnActivityBoundary"]
+					}
+				]
+			},
+			{
+				"role":"IntermediateEventOnSubprocessBoundary",
+				"connects": [
+					{
+						"from":"CollapsedSubprocess",
+						"to":["IntermediateEventOnSubprocessBoundary"]
+					},
+					{
+						"from":"Subprocess",
+						"to":["IntermediateEventOnSubprocessBoundary"]
+					}
+				]
+			},
+			{
+				"role":"EventOnChoreographyActivityBoundary",
+				"connects": [
+					{
+						"from":"ChoreographyMorph",
+						"to":["EventOnChoreographyActivityBoundary"]
+					}
+				]
+			},
+			{
+				"role" : "Directed_Association",
+				"connects" : [
+					{
+						"from" : "from_task_event",
+						"to" : ["DataObject"]
+					},
+					{
+						"from" : "from_task_event",
+						"to" : ["DataStore"]
+					},
+					{
+						"from" : "from_task_event",
+						"to" : ["ITSystem"]
+					},
+					{
+						"from" : "DataObject",
+						"to" : ["to_task_event"]
+					},
+					{
+						"from" : "DataStore",
+						"to" : ["to_task_event"]
+					},
+					{
+						"from" : "ITSystem",
+						"to" : ["to_task_event"]
+					},
+					{
+						"from" : "IntermediateCompensationEventCatching",
+						"to" : ["to_task_event"]
+					}
+				]
+			},
+			{
+				"role" : "Association_Undirected",
+				"connects" : [
+					{
+						"from" : "SequenceFlow",
+						"to" : ["DataObject"]
+					},
+					{
+						"from" : "DataObject",
+						"to" : ["SequenceFlow"]
+					},
+					{
+						"from" : "DataObject",
+						"to" : ["MessageFlow"]
+					},
+					{
+						"from" : "MessageFlow",
+						"to" : ["DataObject"]
+					},
+					{
+						"from" : "ITSystem",
+						"to" : ["to_task_event"]
+					},
+					{
+						"from" : "from_task_event",
+						"to" : ["ITSystem"]
+					},
+					{
+						"from" : "DataStore",
+						"to" : ["to_task_event"]
+					},
+					{
+						"from" : "from_task_event",
+						"to" : ["DataStore"]
+					},
+					{
+						"from" : "fromtoall",
+						"to" : ["TextAnnotation"]
+					},
+					{
+						"from" : "TextAnnotation",
+						"to" : "fromtoall"
+					},
+					{
+						"from" : "Message",
+						"to" : ["MessageFlow"]
+					},
+					{
+						"from" : "MessageFlow",
+						"to" : ["Message"]
+					},
+					{
+						"from" : "Message",
+						"to" : ["ChoreographyElement"]
+					},
+					{
+						"from" : "ChoreographyElement",
+						"to" : ["Message"]
+					},
+					{
+						"from" : "ChoreographyElement",
+						"to" : ["TextAnnotation"]
+					},
+					{
+						"from" : "TextAnnotation",
+						"to" : "ChoreographyElement"
+					},
+					{
+					   "from" : "ActivitiesMorph",
+					   "to" : ["to_participant"]
+					},
+					{
+					   "from" : "to_participant",
+					   "to" : ["ActivitiesMorph"]
+					}
+				]
+			}
+		],
+		"containmentRules" : [
+			{
+				"role" : "BPMNDiagram",
+				"contains" : ["all"]
+			},
+			{
+				"role" : "EventSubprocess",
+				"contains" : [
+					"eventSubprocessElement",
+					"sequence_start",
+					"sequence_end"
+				]
+			},
+			{
+				"role" : "Pool",
+				"contains" : [
+					"Lane"
+				]
+			},
+			{
+				"role" : "Lane",
+				"contains" : [
+					"Lane",
+					"sequence_start",
+					"sequence_end",
+					"DataObjectMorph",
+					"TextAnnotationMorph",
+					"from_participant"
+				]
+			},
+			{
+				"role" : "Subprocess",
+				"contains" : [
+					"sequence_start",
+					"sequence_end",
+					"from_task_event",
+					"to_task_event",
+					"EventSubprocess",
+					"CollapsedEventSubprocess",
+					"TextAnnotation",
+					"from_participant"
+				]
+			},
+			{
+				"role" : "MessageContainer",
+				"contains" : ["Message"]
+			},
+			{
+				"role" : "ChoreographyElement",
+				"contains" : ["ChoreographyParticipant"]
+			},
+			{
+				"role" : "ChoreographySubprocessExpanded",
+				"contains":	[
+								"ChoreographyElement",
+								"choreography_sequence_start",
+								"choreography_sequence_end",
+								"Message",
+								"TextAnnotation"
+																
+							]
+			}
+		],
+		"morphingRules": [
+			{
+				"role": "ActivitiesMorph",
+				"baseMorphs": ["Task"],
+				"preserveBounds" : true
+			},
+			{
+				"role": "EventActivitiesMorph",
+				"baseMorphs": ["CollapsedEventSubprocess"]
+			},
+			{
+				"role": "GatewaysMorph",
+				"baseMorphs": ["Exclusive_Databased_Gateway"]
+			},
+			{
+				"role": "StartEventsMorph",
+				"baseMorphs": ["StartNoneEvent"],
+				"showInShapeMenu":false
+			},
+			{
+				"role": "IntermediateEventsMorph",
+				"baseMorphs": ["IntermediateEvent"]
+			},
+			{
+				"role": "EndEventsMorph",
+				"baseMorphs": ["EndNoneEvent"]
+			},
+			{
+				"role": "TextAnnotationMorph",
+				"baseMorphs": ["TextAnnotation"]
+			},
+			{
+				"role": "DataObjectMorph",
+				"baseMorphs": ["DataObject"]
+			},
+			{
+				"role": "ConnectingObjectsMorph",
+				"baseMorphs": ["SequenceFlow"]
+			},
+			{
+				"role": "ChoreographyMorph",
+				"baseMorphs": ["ChoreographyTask"]
+			},
+			{
+				"role": "AssociationMorph",
+				"baseMorphs": [""]
+			}
+		],
+		"layoutRules" : [
+			{
+				"role": "ActivitiesMorph",
+				"outs":[{"edgeRole":"MessageFlow","t":2, "r":1, "b":2, "l":1},
+						{"t":1,"r":2,"b":1,"l":2}],
+				"ins": [{"edgeRole":"MessageFlow","t":2, "r":1, "b":2, "l":1},
+						{"t":1, "r":2, "b":1, "l":2}]
+			},
+			{
+				"role": "EventActivitiesMorph",
+				"outs":[{"edgeRole":"MessageFlow","t":2, "r":1, "b":2, "l":1},
+						{"t":1,"r":2,"b":1,"l":2}],
+				"ins": [{"edgeRole":"MessageFlow","t":2, "r":1, "b":2, "l":1},
+						{"t":1, "r":2, "b":1, "l":2}]
+			},
+			{
+				"role": "ChoreographyMorph",
+				"outs":[{"edgeRole":"MessageFlow","t":2, "r":1, "b":2, "l":1},
+						{"t":1,"r":2,"b":1,"l":2}],
+				"ins": [{"edgeRole":"MessageFlow","t":2, "r":1, "b":2, "l":1},
+						{"t":1, "r":2, "b":1, "l":2}]
+			},
+			{
+				"role": "GatewaysMorph",
+				"outs": [{"t":2, "r":1, "b":2, "l":1}]
+			},
+			{
+				"role": "StartEventsMorph",
+				"outs":[{"edgeRole":"MessageFlow","t":2, "r":1, "b":2, "l":1},
+						{"t":1,"r":2,"b":1,"l":2}],
+				"ins": [{"edgeRole":"MessageFlow","t":2, "r":1, "b":2, "l":1},
+						{"t":1, "r":2, "b":1, "l":2}]
+			},
+			{
+				"role": "IntermediateEventsMorph",
+				"outs":[{"edgeRole":"MessageFlow","t":2, "r":1, "b":2, "l":1},
+						{"t":1,"r":2,"b":1,"l":2}],
+				"ins": [{"edgeRole":"MessageFlow","t":2, "r":1, "b":2, "l":1},
+						{"t":1, "r":2, "b":1, "l":2}]
+			},
+			{
+				"role": "EndEventsMorph",
+				"outs":[{"edgeRole":"MessageFlow","t":2, "r":1, "b":2, "l":1},
+						{"t":1,"r":2,"b":1,"l":2}],
+				"ins": [{"edgeRole":"MessageFlow","t":2, "r":1, "b":2, "l":1},
+						{"t":1, "r":2, "b":1, "l":2}]
+			}
+		]
+	}
+}
