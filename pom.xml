@@ -1295,33 +1295,7 @@
 		<db.source>mysql</db.source>
 	-->	
 		
-		<hibernate.dialect>org.hibernate.dialect.Oracle10gDialect</hibernate.dialect>
-		<jdbc.groupId>com.oracle</jdbc.groupId>
-		<jdbc.artifactId>ojdbc6</jdbc.artifactId>
-		<jdbc.version>11.2.0.3</jdbc.version>
-		<jdbc.driverClassName>oracle.jdbc.driver.OracleDriver</jdbc.driverClassName>
-		<!--<jdbc.url>jdbc:oracle:thin:@192.168.183.205:1521:ORCL</jdbc.url>  -->
-		
-		 <jdbc.url>jdbc:oracle:thin:@(DESCRIPTION =(ADDRESS_LIST =(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.1.120)(PORT = 1521)))(CONNECT_DATA =(SERVICE_NAME = orcl)))  </jdbc.url>
-		
-		<jdbc.username>yxxf</jdbc.username>
-		<jdbc.password>qwe123ASD</jdbc.password>
-		<jdbc.validate.query>SELECT 1 from dual</jdbc.validate.query>
-		<quartz.delegateClass>org.quartz.impl.jdbcjobstore.StdJDBCDelegate</quartz.delegateClass>
-		<quartz.class>org.quartz.impl.jdbcjobstore.UpdateLockRowSemaphore</quartz.class>
-		<quartz.selectWithLockSQL>UPDATE {0}LOCKS SET LOCK_NAME = LOCK_NAME WHERE LOCK_NAME = ? </quartz.selectWithLockSQL>
-		<db.source>oracle</db.source>
-		
-        
-		<db.tables.prefix>ETEC_</db.tables.prefix>
-		<webapp.dir>${basedir}/src/main/webapp</webapp.dir>
-		<deploy.dir>${basedir}/target</deploy.dir>
-		<target.war.name>bpmDev-1.0</target.war.name>
-		<target.lib.folder>${deploy.dir}/${target.war.name}/WEB-INF/lib</target.lib.folder>
-		<mysql.export.command>mysqldump -h ${jdbc.host} -u${jdbc.username} -p${jdbc.password} --no-create-info --complete-insert ${db.name}</mysql.export.command>
-		<mysql.import.command>mysql -u${jdbc.username} -p${jdbc.password} ${db.name} -e source</mysql.import.command>
-		<file.resource.path>${deploy.dir}/${target.war.name}/WEB-INF/</file.resource.path>
-		<log.file.path>${deploy.dir}/${target.war.name}/Log-Management</log.file.path>
+
 		
     </properties>
 </project>
